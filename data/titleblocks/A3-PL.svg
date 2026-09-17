@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  A3 portrait titleblock, Polish, for contractor tender drawings.
+  Bonsai substitutes {{Attribute}} with the sheet's IfcDocumentInformation
+  attributes (Identification, Name, Description, Revision, ...).
+  Portrait suits this flat: at 1:50 it is ~260 x 320 mm, which only fits
+  above a bottom titleblock band on a portrait sheet.
+-->
+<svg width="297mm" height="420mm" viewBox="0 0 297 420" version="1.1"
+     xmlns="http://www.w3.org/2000/svg" id="root">
+  <style>
+    .frame  { fill: none; stroke: #000000; stroke-width: 0.5; }
+    .rule   { fill: none; stroke: #000000; stroke-width: 0.25; }
+    .lbl    { font-family: 'DejaVu Sans Condensed', 'Liberation Sans', sans-serif;
+              font-size: 2.4px; fill: #444444; }
+    .val    { font-family: 'DejaVu Sans Condensed', 'Liberation Sans', sans-serif;
+              font-size: 3.6px; fill: #000000; }
+    .big    { font-family: 'DejaVu Sans Condensed', 'Liberation Sans', sans-serif;
+              font-size: 5px; font-weight: bold; fill: #000000; }
+    .huge   { font-family: 'DejaVu Sans Condensed', 'Liberation Sans', sans-serif;
+              font-size: 7px; font-weight: bold; fill: #000000; }
+  </style>
+
+  <!-- sheet border; wider binding margin on the left -->
+  <rect x="20" y="10" width="267" height="400" class="frame"/>
+
+  <!-- titleblock band across the bottom -->
+  <rect x="20" y="355" width="267" height="55" class="frame"/>
+
+  <!-- project -->
+  <line x1="20" y1="369" x2="287" y2="369" class="rule"/>
+  <text x="23" y="360.5" class="lbl">OBIEKT / PROJEKT</text>
+  <text x="23" y="367" class="big">Remont mieszkania</text>
+
+  <!-- drawing title -->
+  <line x1="20" y1="384" x2="287" y2="384" class="rule"/>
+  <text x="23" y="374" class="lbl">TYTUŁ RYSUNKU</text>
+  <text x="23" y="381.5" class="huge">{{Name}}</text>
+
+  <!-- stage / scale -->
+  <line x1="20" y1="398" x2="287" y2="398" class="rule"/>
+  <line x1="150" y1="384" x2="150" y2="398" class="rule"/>
+  <line x1="200" y1="384" x2="200" y2="398" class="rule"/>
+  <line x1="245" y1="384" x2="245" y2="398" class="rule"/>
+  <text x="23" y="389" class="lbl">STADIUM</text>
+  <text x="23" y="395" class="val">Inwentaryzacja - stan istniejący</text>
+  <text x="153" y="389" class="lbl">SKALA</text>
+  <text x="153" y="395" class="val">1:50</text>
+  <text x="203" y="389" class="lbl">NR RYSUNKU</text>
+  <text x="203" y="395" class="val">{{Identification}}</text>
+  <text x="248" y="389" class="lbl">FORMAT</text>
+  <text x="248" y="395" class="val">A3</text>
+
+  <!-- notes -->
+  <line x1="245" y1="398" x2="245" y2="410" class="rule"/>
+  <text x="23" y="402.5" class="lbl">UWAGI</text>
+  <text x="23" y="408" class="val">Wymiary w mm, w świetle wykończonych ścian. Wymiary sprawdzić na budowie przed wyceną.</text>
+  <text x="248" y="402.5" class="lbl">REWIZJA</text>
+  <text x="248" y="408" class="val">{{Revision}}</text>
+
+  <!-- north arrow; Bonsai overwrites the transform of the true-north group
+       with a plain rotate(), so the translate must live on an outer wrapper -->
+  <g transform="translate(272,30)">
+    <g data-type="true-north">
+      <path d="M 0,-9 L 3.2,5 L 0,2.2 L -3.2,5 Z" fill="#000000" stroke="none"/>
+      <text x="0" y="11.5" class="val" text-anchor="middle">N</text>
+    </g>
+  </g>
+</svg>
