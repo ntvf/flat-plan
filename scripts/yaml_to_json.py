@@ -9,12 +9,11 @@ import json
 import os
 import sys
 
-import yaml
+from model_loader import load_model
 
 
 def main(src, dst):
-    with open(src, encoding="utf-8") as f:
-        data = yaml.safe_load(f)
+    data = load_model(src)
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     with open(dst, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)

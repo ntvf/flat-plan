@@ -1,13 +1,14 @@
 # Flat Renovation Pipeline
 
 BIM pipeline for a flat renovation in Warsaw: an **as-is** (surveyed) IFC model
-with visual verification against the original scaled survey drawing, and
-(planned) a **target** state plus a contractor tender PDF package.
+with visual verification against the original scaled survey drawing, and a
+**target** state with a second bathroom. A contractor tender package is planned.
 
 ## Source of truth
 
-`data/as_is.yaml` is the single authoritative dataset — outline, rooms, walls,
-columns, service shafts, doors, windows, balcony. Everything else is generated.
+`data/as_is.yaml` is the authoritative surveyed dataset. `data/target.yaml`
+extends it through explicit additions and updates, avoiding a duplicate copy of
+retained geometry. Everything under `build/` and `exports/` is generated.
 Written dimensions from the survey are authoritative; the photo is used for
 topology and positions.
 
@@ -55,27 +56,35 @@ python3 scripts/overlay_scan.py data/as_is.yaml 7106fea6-ce4f-4979-8eac-ebf5f4a6
 Blender must be `/snap/bin/blender` (5.2 LTS, has Bonsai 0.8.6); `/usr/bin/blender`
 has no Bonsai.
 
-`make STATE=<name> model` builds another state from `data/<name>.yaml`. Drawing
-titles are still specific to the as-is sheet and will be generalized with the
-target-state schema.
+`make STATE=<name> model` builds another state from `data/<name>.yaml`.
+`make target` builds the renovated model and its sheet under
+`exports/drawings/target/`, separately from the as-is deliverables.
 
 ## Outputs
 
 - `exports/as_is.ifc` — 20 walls, 6 doors, 6 windows, 6 spaces.
+- `exports/target.ifc` — 23 walls, 7 doors, 6 windows, 7 spaces.
 - `exports/check/` — verification renders and photo overlay/diff.
 - `exports/drawings/sheets/A01 - RZUT - STAN ISTNIEJĄCY.pdf` — the dimensioned
   A3 @ 1:50 plan for contractors; also as SVG, with the raw drawing and the
   layout alongside.
+- `exports/drawings/target/sheets/A01 - RZUT - STAN PROJEKTOWANY.pdf` — the
+  separate target-state A3 @ 1:50 plan.
 
 ## Status
 
 As-is model complete and photo-verified (habitable IoU 87.3%, median inner-face
-deviation 30 mm, total 95.56 m² against the stated 95.5 m²). The dimensioned
+deviation 30 mm, total 95.56 m² against the stated 95.0 m²). The dimensioned
 A3 @ 1:50 tender plan is generated end to end.
 
-Not yet done: the target (renovated) state, bill of quantities per trade with
-contractor price columns, 3D before/after renders, and the combined tender PDF
-package.
+The target adds bathroom 9 between the storage and east façade. Its north
+plasterboard wall runs from the storage to the south edge of `SH_vent`; its
+south closure fills the 1.08 m gap beside the existing 2.30 m wall. The current
+door assumption is an 0.80 m leaf opening outward into the corridor.
+
+Not yet done: bathroom fixtures and utility routes, bill of quantities per
+trade with contractor price columns, 3D before/after renders, and the combined
+tender PDF package.
 
 Door swing directions are inferred, not surveyed; they are set explicitly per
 door via `swing: [hinge, side]` in `data/as_is.yaml` and should be confirmed

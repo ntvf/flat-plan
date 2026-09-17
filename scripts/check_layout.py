@@ -10,8 +10,8 @@ Usage: python3 scripts/check_layout.py data/as_is.yaml /tmp/check.png
 
 import sys
 
-import yaml
 from PIL import Image, ImageDraw, ImageFont
+from model_loader import load_model
 
 PX_PER_M = 80
 MARGIN = 60
@@ -40,7 +40,7 @@ def polygon_area(pts):
 
 
 def main(src, dst):
-    data = yaml.safe_load(open(src, encoding="utf-8"))
+    data = load_model(src)
     outline = data["outline"]
     rooms = data["rooms"]
 

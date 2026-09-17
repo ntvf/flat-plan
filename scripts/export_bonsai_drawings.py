@@ -18,7 +18,7 @@ import sys
 import addon_utils
 import bpy
 
-PROJECT = "/home/y68d/projects/flat-plan"
+PROJECT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 _argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 SRC_IFC = os.path.abspath(_argv[0]) if len(_argv) > 0 else os.path.join(
@@ -29,13 +29,21 @@ MODEL_JSON = os.path.abspath(_argv[2]) if len(_argv) > 2 else os.path.join(
     PROJECT, "build", "as_is.json")
 WORK_IFC = os.path.join(OUT_DIR, os.path.basename(SRC_IFC))
 
+MODEL_DATA = {}
+if os.path.exists(MODEL_JSON):
+    with open(MODEL_JSON, encoding="utf-8") as stream:
+        MODEL_DATA = json.load(stream)
+META = MODEL_DATA.get("meta", {})
+
 TITLEBLOCK = "A3-PL"
 TITLEBLOCK_SRC = os.path.join(PROJECT, "data", "titleblocks")
 SCALE = "1:50|1/50"
 
-SHEET_NAME = "RZUT - STAN ISTNIEJĄCY"
-SHEET_REVISION = "0"
-SHEET_DESCRIPTION = "Inwentaryzacja mieszkania - rzut kondygnacji"
+SHEET_NAME = META.get("sheet_name", "RZUT - STAN ISTNIEJĄCY")
+SHEET_REVISION = str(META.get("sheet_revision", "0"))
+SHEET_DESCRIPTION = META.get(
+    "sheet_description", "Inwentaryzacja mieszkania - rzut kondygnacji"
+)
 
 ADDON = "bl_ext.user_default.bonsai"
 
@@ -132,9 +140,8 @@ log("diagram_scale =", camera.data.BIMCameraProperties.diagram_scale)
 sys.path.insert(0, os.path.join(PROJECT, "scripts"))
 import annotate_drawing  # noqa: E402
 
-if os.path.exists(MODEL_JSON):
-    with open(MODEL_JSON) as fh:
-        _counts, _bounds = annotate_drawing.annotate(json.load(fh))
+if MODEL_DATA:
+    _counts, _bounds = annotate_drawing.annotate(MODEL_DATA)
 
     # Frame the drawing on the annotated extents. Bonsai's new drawings default
     # to a 50 m view, which at 1:50 is a 1000 mm canvas - the plan then sits

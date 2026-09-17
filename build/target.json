@@ -1,0 +1,800 @@
+{
+  "meta": {
+    "title": "Mieszkanie - stan projektowany",
+    "title_en": "Flat - target state",
+    "state": "target",
+    "sheet_name": "RZUT - STAN PROJEKTOWANY",
+    "sheet_description": "Projekt mieszkania - rzut kondygnacji",
+    "source_survey": "7106fea6-ce4f-4979-8eac-ebf5f4a6972b.jfif",
+    "stated_total_area": 95.0,
+    "ceiling_height": 2.7
+  },
+  "thickness": {
+    "exterior": 0.4,
+    "partition": 0.1
+  },
+  "outline": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      6.09,
+      0.0
+    ],
+    [
+      6.09,
+      0.94
+    ],
+    [
+      9.43,
+      0.94
+    ],
+    [
+      9.43,
+      13.29
+    ],
+    [
+      2.35,
+      13.29
+    ],
+    [
+      1.0,
+      12.38
+    ],
+    [
+      1.0,
+      8.28
+    ],
+    [
+      0.0,
+      8.28
+    ]
+  ],
+  "outline_thickness": {
+    "3": 0.47
+  },
+  "rooms": [
+    {
+      "id": 5,
+      "name": "Sypialnia 1",
+      "name_uk": "Спальня 1",
+      "function": "bedroom",
+      "clear": [
+        2.97,
+        4.46
+      ],
+      "polygon": [
+        [
+          0.4,
+          0.4
+        ],
+        [
+          3.37,
+          0.4
+        ],
+        [
+          3.37,
+          4.86
+        ],
+        [
+          0.4,
+          4.86
+        ]
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Sypialnia 2",
+      "name_uk": "Спальня 2",
+      "function": "bedroom",
+      "clear": [
+        2.78,
+        4.46
+      ],
+      "polygon": [
+        [
+          3.47,
+          0.4
+        ],
+        [
+          5.99,
+          0.4
+        ],
+        [
+          5.99,
+          1.34
+        ],
+        [
+          6.25,
+          1.34
+        ],
+        [
+          6.25,
+          4.86
+        ],
+        [
+          3.47,
+          4.86
+        ]
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Sypialnia 3",
+      "name_uk": "Спальня 3",
+      "function": "bedroom",
+      "clear": [
+        2.61,
+        4.54
+      ],
+      "polygon": [
+        [
+          6.35,
+          1.34
+        ],
+        [
+          8.96,
+          1.34
+        ],
+        [
+          8.96,
+          5.88
+        ],
+        [
+          6.35,
+          5.88
+        ]
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Łazienka",
+      "name_uk": "Ванна кімната",
+      "function": "bathroom",
+      "clear": [
+        1.92,
+        2.99
+      ],
+      "polygon": [
+        [
+          0.4,
+          4.96
+        ],
+        [
+          2.32,
+          4.96
+        ],
+        [
+          2.32,
+          7.95
+        ],
+        [
+          0.4,
+          7.95
+        ]
+      ],
+      "label_at": [
+        1.36,
+        5.6
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Schowek",
+      "name_uk": "Комора",
+      "function": "storage",
+      "clear": [
+        1.74,
+        2.05
+      ],
+      "polygon": [
+        [
+          3.42,
+          6.06
+        ],
+        [
+          5.16,
+          6.06
+        ],
+        [
+          5.16,
+          8.11
+        ],
+        [
+          3.42,
+          8.11
+        ]
+      ],
+      "footprint": [
+        [
+          3.32,
+          5.96
+        ],
+        [
+          5.26,
+          5.96
+        ],
+        [
+          5.26,
+          8.21
+        ],
+        [
+          3.32,
+          8.21
+        ]
+      ]
+    },
+    {
+      "id": 123,
+      "name": "Hall / Kuchnia / Salon (otwarta przestrzeń)",
+      "name_uk": "Хол / Кухня / Вітальня",
+      "function": "open_living",
+      "label_edges": true,
+      "subtract": [
+        8,
+        9
+      ],
+      "polygon": [
+        [
+          1.4,
+          8.05
+        ],
+        [
+          1.4,
+          12.17
+        ],
+        [
+          2.47,
+          12.89
+        ],
+        [
+          8.96,
+          12.89
+        ],
+        [
+          8.96,
+          8.12
+        ],
+        [
+          8.64,
+          8.12
+        ],
+        [
+          8.64,
+          7.33
+        ],
+        [
+          8.96,
+          7.33
+        ],
+        [
+          8.96,
+          6.37
+        ],
+        [
+          8.64,
+          6.37
+        ],
+        [
+          8.64,
+          5.98
+        ],
+        [
+          6.34,
+          5.98
+        ],
+        [
+          6.34,
+          4.96
+        ],
+        [
+          2.42,
+          4.96
+        ],
+        [
+          2.42,
+          8.05
+        ]
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Łazienka 2",
+      "name_uk": "Ванна кімната 2",
+      "function": "bathroom",
+      "renovation_status": "new",
+      "clear": [
+        3.38,
+        1.35
+      ],
+      "label_at": [
+        7.1,
+        6.72
+      ],
+      "polygon": [
+        [
+          5.26,
+          5.98
+        ],
+        [
+          8.64,
+          5.98
+        ],
+        [
+          8.64,
+          6.37
+        ],
+        [
+          8.96,
+          6.37
+        ],
+        [
+          8.96,
+          7.33
+        ],
+        [
+          8.64,
+          7.33
+        ],
+        [
+          5.26,
+          7.33
+        ]
+      ],
+      "footprint": [
+        [
+          5.26,
+          5.88
+        ],
+        [
+          6.34,
+          5.88
+        ],
+        [
+          6.34,
+          5.98
+        ],
+        [
+          8.64,
+          5.98
+        ],
+        [
+          8.64,
+          6.37
+        ],
+        [
+          8.96,
+          6.37
+        ],
+        [
+          8.96,
+          7.33
+        ],
+        [
+          8.64,
+          7.33
+        ],
+        [
+          8.64,
+          7.43
+        ],
+        [
+          5.26,
+          7.43
+        ]
+      ]
+    }
+  ],
+  "walls": [
+    {
+      "id": "W_bath_e",
+      "at": [
+        2.32,
+        4.96
+      ],
+      "size": [
+        0.1,
+        2.99
+      ],
+      "note": "bathroom east wall, holds D4"
+    },
+    {
+      "id": "W_store_w",
+      "at": [
+        3.32,
+        5.96
+      ],
+      "size": [
+        0.1,
+        2.25
+      ]
+    },
+    {
+      "id": "W_store_e",
+      "at": [
+        5.16,
+        5.96
+      ],
+      "size": [
+        0.1,
+        2.25
+      ]
+    },
+    {
+      "id": "W_store_n",
+      "at": [
+        3.32,
+        8.11
+      ],
+      "size": [
+        1.94,
+        0.1
+      ]
+    },
+    {
+      "id": "W_store_s",
+      "at": [
+        3.32,
+        5.96
+      ],
+      "size": [
+        1.94,
+        0.1
+      ]
+    },
+    {
+      "id": "W_258",
+      "at": [
+        6.34,
+        5.88
+      ],
+      "size": [
+        2.62,
+        0.1
+      ],
+      "note": "runs through to the east wall; only 2.30 of its north face is exposed"
+    },
+    {
+      "id": "W_bath_n",
+      "at": [
+        1.4,
+        7.95
+      ],
+      "size": [
+        1.02,
+        0.1
+      ],
+      "note": "bathroom north wall"
+    },
+    {
+      "id": "W_bath2_n",
+      "at": [
+        5.26,
+        7.33
+      ],
+      "size": [
+        3.38,
+        0.1
+      ],
+      "material": "plasterboard",
+      "renovation_status": "new",
+      "note": "north bathroom wall from storage to ventilation riser"
+    },
+    {
+      "id": "W_bath2_door",
+      "at": [
+        5.26,
+        5.88
+      ],
+      "size": [
+        1.08,
+        0.1
+      ],
+      "material": "plasterboard",
+      "renovation_status": "new",
+      "note": "bathroom closure between storage and existing 2.30 m wall"
+    }
+  ],
+  "columns": [
+    {
+      "id": "C_store",
+      "at": [
+        3.99,
+        5.96
+      ],
+      "size": [
+        0.6,
+        0.25
+      ]
+    }
+  ],
+  "shafts": [
+    {
+      "id": "SH_vent",
+      "at": [
+        8.64,
+        7.33
+      ],
+      "size": [
+        0.32,
+        0.79
+      ],
+      "service": "wentylacja / ventilation"
+    },
+    {
+      "id": "SH_san",
+      "at": [
+        8.64,
+        5.98
+      ],
+      "size": [
+        0.32,
+        0.39
+      ],
+      "service": "kanalizacja / drainage"
+    }
+  ],
+  "doors": [
+    {
+      "id": "entry",
+      "at": [
+        1.0,
+        8.4
+      ],
+      "size": [
+        0.4,
+        0.9
+      ],
+      "swing": [
+        "start",
+        "+"
+      ],
+      "note": "wejście / entrance, opens into the flat; survey shows the opening at y 8.30-9.40"
+    },
+    {
+      "id": "D4",
+      "at": [
+        2.32,
+        6.48
+      ],
+      "size": [
+        0.1,
+        0.9
+      ],
+      "swing": [
+        "start",
+        "-"
+      ],
+      "note": "0.50 from the NE corner of room 4, opens into the bathroom"
+    },
+    {
+      "id": "D8",
+      "at": [
+        3.32,
+        6.41
+      ],
+      "size": [
+        0.1,
+        0.9
+      ],
+      "swing": [
+        "start",
+        "-"
+      ],
+      "note": "west wall of room 8, 0.80 from the NW corner, opens into the corridor"
+    },
+    {
+      "id": "D5",
+      "at": [
+        2.47,
+        4.86
+      ],
+      "size": [
+        0.9,
+        0.1
+      ],
+      "swing": [
+        "start",
+        "-"
+      ],
+      "note": "against the 5/6 partition, opens into the bedroom"
+    },
+    {
+      "id": "D6",
+      "at": [
+        3.47,
+        4.86
+      ],
+      "size": [
+        0.9,
+        0.1
+      ],
+      "swing": [
+        "end",
+        "-"
+      ],
+      "note": "against the 5/6 partition, opens into the bedroom"
+    },
+    {
+      "id": "D7",
+      "at": [
+        6.25,
+        4.88
+      ],
+      "size": [
+        0.1,
+        0.9
+      ],
+      "swing": [
+        "start",
+        "+"
+      ],
+      "note": "0.90 from the corner of room 6, opens into the bedroom"
+    },
+    {
+      "id": "D9",
+      "at": [
+        5.4,
+        5.88
+      ],
+      "size": [
+        0.8,
+        0.1
+      ],
+      "swing": [
+        "start",
+        "-"
+      ],
+      "renovation_status": "new",
+      "note": "0.80 m bathroom door opening outward into the corridor"
+    }
+  ],
+  "openings": {
+    "doors": [
+      {
+        "room": "entry",
+        "width": 0.9,
+        "note": "drzwi wejściowe / entrance"
+      },
+      {
+        "room": 4,
+        "width": 0.8
+      },
+      {
+        "room": 5,
+        "width": 0.9
+      },
+      {
+        "room": 6,
+        "width": 0.8
+      },
+      {
+        "room": 7,
+        "width": 0.9
+      },
+      {
+        "room": 8,
+        "width": 0.8
+      }
+    ],
+    "windows": [
+      {
+        "room": 5,
+        "width": 1.6,
+        "wall": "south"
+      },
+      {
+        "room": 6,
+        "width": 1.6,
+        "wall": "south"
+      },
+      {
+        "room": 7,
+        "width": 1.6,
+        "wall": "south"
+      }
+    ],
+    "balcony_glazing": [
+      {
+        "width": 1.0
+      },
+      {
+        "width": 1.6
+      },
+      {
+        "width": 1.01
+      }
+    ]
+  },
+  "windows": [
+    {
+      "id": "OK5",
+      "at": [
+        1.05,
+        0.0
+      ],
+      "size": [
+        1.6,
+        0.4
+      ],
+      "sill": 0.9,
+      "head": 2.2,
+      "room": 5
+    },
+    {
+      "id": "OK6",
+      "at": [
+        4.26,
+        0.0
+      ],
+      "size": [
+        1.6,
+        0.4
+      ],
+      "sill": 0.9,
+      "head": 2.2,
+      "room": 6
+    },
+    {
+      "id": "OK7",
+      "at": [
+        6.63,
+        0.94
+      ],
+      "size": [
+        1.6,
+        0.4
+      ],
+      "sill": 0.9,
+      "head": 2.2,
+      "room": 7
+    },
+    {
+      "id": "OB1",
+      "at": [
+        2.84,
+        12.89
+      ],
+      "size": [
+        0.9,
+        0.4
+      ],
+      "sill": 0.0,
+      "head": 2.2,
+      "room": 123,
+      "note": "drzwi balkonowe / balcony door"
+    },
+    {
+      "id": "OB2",
+      "at": [
+        4.13,
+        12.89
+      ],
+      "size": [
+        1.46,
+        0.4
+      ],
+      "sill": 0.9,
+      "head": 2.2,
+      "room": 123
+    },
+    {
+      "id": "OB3",
+      "at": [
+        5.96,
+        12.89
+      ],
+      "size": [
+        1.61,
+        0.4
+      ],
+      "sill": 0.9,
+      "head": 2.2,
+      "room": 123
+    }
+  ],
+  "balcony": {
+    "area": 4.26
+  }
+}

@@ -1,0 +1,66 @@
+# Renovated state, expressed as changes to the surveyed as-is model.
+extends: as_is.yaml
+
+meta:
+  title: Mieszkanie - stan projektowany
+  title_en: Flat - target state
+  state: target
+  sheet_name: RZUT - STAN PROJEKTOWANY
+  sheet_description: Projekt mieszkania - rzut kondygnacji
+
+changes:
+  update:
+    rooms:
+      - id: 123
+        subtract: [8, 9]
+
+  add:
+    rooms:
+      - id: 9
+        name: Łazienka 2
+        name_uk: Ванна кімната 2
+        function: bathroom
+        renovation_status: new
+        clear: [3.38, 1.35]
+        label_at: [7.10, 6.72]
+        polygon:
+          - [5.26, 5.98]
+          - [8.64, 5.98]
+          - [8.64, 6.37]
+          - [8.96, 6.37]
+          - [8.96, 7.33]
+          - [8.64, 7.33]
+          - [5.26, 7.33]
+        footprint:
+          - [5.26, 5.88]
+          - [6.34, 5.88]
+          - [6.34, 5.98]
+          - [8.64, 5.98]
+          - [8.64, 6.37]
+          - [8.96, 6.37]
+          - [8.96, 7.33]
+          - [8.64, 7.33]
+          - [8.64, 7.43]
+          - [5.26, 7.43]
+
+    walls:
+      - id: W_bath2_n
+        at: [5.26, 7.33]
+        size: [3.38, 0.10]
+        material: plasterboard
+        renovation_status: new
+        note: north bathroom wall from storage to ventilation riser
+      - id: W_bath2_door
+        at: [5.26, 5.88]
+        size: [1.08, 0.10]
+        material: plasterboard
+        renovation_status: new
+        note: bathroom closure between storage and existing 2.30 m wall
+
+    doors:
+      - id: D9
+        at: [5.40, 5.88]
+        size: [0.80, 0.10]
+        swing: [start, "-"]
+        renovation_status: new
+        note: 0.80 m bathroom door opening outward into the corridor

@@ -10,8 +10,8 @@ separately from the bounding box of the wall poche.
 import sys
 
 import numpy as np
-import yaml
 from PIL import Image, ImageDraw, ImageFilter
+from model_loader import load_model
 
 POCHE_LO, POCHE_HI = 100, 185
 
@@ -35,7 +35,7 @@ def mask_bbox(mask, min_run=40):
 
 def main():
     layout_path, scan_path, out_path = sys.argv[1:4]
-    data = yaml.safe_load(open(layout_path))
+    data = load_model(layout_path)
 
     scan = Image.open(scan_path).convert("RGB")
     mask = wall_mask(scan)

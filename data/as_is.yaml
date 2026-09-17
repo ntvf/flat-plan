@@ -11,6 +11,9 @@
 meta:
   title: Mieszkanie - stan istniejący
   title_en: Flat - as-is state
+  state: as_is
+  sheet_name: RZUT - STAN ISTNIEJĄCY
+  sheet_description: Inwentaryzacja mieszkania - rzut kondygnacji
   source_survey: 7106fea6-ce4f-4979-8eac-ebf5f4a6972b.jfif
   stated_total_area: 95.00
   ceiling_height: 2.70
