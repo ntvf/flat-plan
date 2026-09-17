@@ -130,6 +130,24 @@ def main():
         d.polygon([T(p) for p in rect(win["at"], win["size"])],
                   fill=(0, 200, 255, 150), outline=(0, 90, 220, 255), width=3)
 
+    for item in data.get("equipment") or []:
+        corners = [T(p) for p in rect(item["at"][:2], item["size"][:2])]
+        if item.get("shape") == "cylinder":
+            xs, ys = zip(*corners)
+            d.ellipse((min(xs), min(ys), max(xs), max(ys)),
+                      fill=(255, 190, 0, 100), outline=(180, 110, 0, 255), width=2)
+        else:
+            d.polygon(corners, fill=(255, 190, 0, 100),
+                      outline=(180, 110, 0, 255), width=2)
+
+    for route in data.get("service_routes") or []:
+        d.line([T(point[:2]) for point in route["points"]],
+               fill=(0, 150, 130, 255), width=3)
+
+    for finish in data.get("wall_finishes") or []:
+        d.line([T(point) for point in finish["segment"]],
+               fill=(165, 70, 25, 255), width=5)
+
     for room in data["rooms"]:
         d.polygon([T(p) for p in room["polygon"]],
                   outline=(255, 0, 0, 220), width=3)

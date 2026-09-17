@@ -39,6 +39,22 @@ def polygon_area(pts):
     return abs(total) / 2.0
 
 
+def dashed_line(draw, start, end, fill, width=3, dash=10, gap=7):
+    x1, y1 = start
+    x2, y2 = end
+    length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+    if length == 0:
+        return
+    ux, uy = (x2 - x1) / length, (y2 - y1) / length
+    position = 0.0
+    while position < length:
+        finish = min(position + dash, length)
+        draw.line([(x1 + ux * position, y1 + uy * position),
+                   (x1 + ux * finish, y1 + uy * finish)],
+                  fill=fill, width=width)
+        position += dash + gap
+
+
 def main(src, dst):
     data = load_model(src)
     outline = data["outline"]
@@ -123,6 +139,40 @@ def main(src, dst):
                     outline=(0, 0, 0))
         d.text(tp((x + sw / 2, y + sh / 2)), shaft["id"].replace("SH_", ""),
                fill=(255, 255, 255), font=font, anchor="mm")
+
+    for route in data.get("service_routes", []):
+        points = [(point[0], point[1]) for point in route["points"]]
+        installations = {}
+        for segment in route.get("segments", []):
+            for index in range(segment["from"], segment["to"]):
+                installations[index] = segment["installation"]
+        for index, (start, end) in enumerate(zip(points, points[1:])):
+            style = installations.get(index, route.get("installation", ""))
+            p1, p2 = tp(start), tp(end)
+            if style in {"concealed_in_wall", "in_floor", "above_ceiling",
+                         "above_bathroom_ceiling"}:
+                dashed_line(d, p1, p2, fill=(15, 145, 130), width=4)
+            else:
+                d.line([p1, p2], fill=(15, 145, 130), width=4)
+        for point in points:
+            px, py = tp(point)
+            d.ellipse((px - 3, py - 3, px + 3, py + 3), fill=(15, 145, 130))
+
+    for finish in data.get("wall_finishes", []):
+        p1, p2 = finish["segment"]
+        d.line([tp(p1), tp(p2)], fill=(155, 70, 30), width=6)
+
+    for item in data.get("equipment", []):
+        x, y, _ = item["at"]
+        ew, ed, _ = item["size"]
+        bounds = [tp((x, y + ed)), tp((x + ew, y))]
+        if item.get("shape") == "cylinder":
+            d.ellipse(bounds, fill=(255, 225, 120), outline=(130, 85, 0), width=2)
+        else:
+            d.rectangle(bounds, fill=(255, 225, 120),
+                        outline=(130, 85, 0), width=2)
+        d.text(tp((x + ew / 2, y + ed / 2)), item["id"], fill=(100, 60, 0),
+               font=font, anchor="mm")
 
     for win in data.get("windows", []):
         x, y = win["at"]

@@ -377,11 +377,11 @@
         ],
         [
           8.64,
-          7.43
+          7.455
         ],
         [
           5.26,
-          7.43
+          7.455
         ]
       ]
     }
@@ -475,11 +475,11 @@
       ],
       "size": [
         3.38,
-        0.1
+        0.125
       ],
       "material": "plasterboard",
       "renovation_status": "new",
-      "note": "north bathroom wall from storage to ventilation riser"
+      "note": "0.125 m north bathroom wall from storage to ventilation riser"
     },
     {
       "id": "W_bath2_door",
@@ -535,12 +535,275 @@
       "service": "kanalizacja / drainage"
     }
   ],
+  "equipment": [
+    {
+      "id": "AC_living",
+      "name": "Klimatyzator ścienny",
+      "ifc_class": "IfcUnitaryEquipment",
+      "at": [
+        7.09,
+        7.455,
+        2.33
+      ],
+      "size": [
+        0.8,
+        0.22,
+        0.3
+      ],
+      "host": "W_bath2_n",
+      "room": 123,
+      "faces": "open_living",
+      "mounting": "wall",
+      "measured": {
+        "wall_position": "centre of exposed 2.30 m wall face",
+        "top_below_ceiling": 0.07
+      },
+      "note": "relocated on the as-is pipe projection x=7.49 to the open-living face of the new 0.125 m plasterboard wall",
+      "renovation_status": "relocated",
+      "support": {
+        "backing": "18 mm plywood or OSB between reinforced studs",
+        "bracket_load": "verify against selected unit"
+      },
+      "connections": {
+        "refrigerant_and_control": "reuse existing OB3 line plus bathroom-ceiling extension",
+        "condensate": "separate gravity route to SH_san; final fall to be designed"
+      }
+    },
+    {
+      "id": "HW_TANK_100L",
+      "name": "Zasobnik c.w.u. Viessmann 100 l",
+      "ifc_class": "IfcTank",
+      "at": [
+        1.4,
+        10.17,
+        0.0
+      ],
+      "size": [
+        0.6,
+        0.6,
+        1.15
+      ],
+      "shape": "cylinder",
+      "room": 123,
+      "mounting": "floor",
+      "manufacturer": "Viessmann",
+      "capacity_l": 100,
+      "measured": {
+        "offset_from_entry_door": 1.29,
+        "offset_to": "tank centre",
+        "reference": "north edge of entrance opening",
+        "adjacent_wall_length": 4.12
+      },
+      "connections": [
+        {
+          "service": "water",
+          "destination": "west wall",
+          "geometry": "not surveyed"
+        }
+      ],
+      "note": "beside the 4.12 m entrance wall; surveyed diameter, approximate height"
+    }
+  ],
+  "wall_finishes": [
+    {
+      "id": "BRICK_NORTH_OB1",
+      "material": "brick_tiles",
+      "ifc_class": "IfcCovering",
+      "segment": [
+        [
+          2.84,
+          12.88
+        ],
+        [
+          2.47,
+          12.88
+        ]
+      ],
+      "base_height": 0.8,
+      "top_height": 2.7,
+      "thickness": 0.015,
+      "room": 123,
+      "note": "from the west edge of OB1 to the 1.29 m chamfer"
+    },
+    {
+      "id": "BRICK_NW_CHAMFER",
+      "material": "brick_tiles",
+      "ifc_class": "IfcCovering",
+      "segment": [
+        [
+          2.47,
+          12.88
+        ],
+        [
+          1.4,
+          12.17
+        ]
+      ],
+      "base_height": 0.8,
+      "top_height": 2.7,
+      "thickness": 0.015,
+      "room": 123,
+      "note": "full 1.29 m north-west chamfer"
+    },
+    {
+      "id": "BRICK_WEST_TO_TANK",
+      "material": "brick_tiles",
+      "ifc_class": "IfcCovering",
+      "segment": [
+        [
+          1.4,
+          12.17
+        ],
+        [
+          1.4,
+          10.77
+        ]
+      ],
+      "base_height": 0.8,
+      "top_height": 2.7,
+      "thickness": 0.015,
+      "room": 123,
+      "note": "from chamfer to the north edge of the hot-water tank"
+    },
+    {
+      "id": "BRICK_EAST",
+      "material": "brick_tiles",
+      "ifc_class": "IfcCovering",
+      "segment": [
+        [
+          8.95,
+          9.12
+        ],
+        [
+          8.95,
+          10.62
+        ]
+      ],
+      "base_height": 0.0,
+      "top_height": 2.7,
+      "thickness": 0.015,
+      "room": 123,
+      "note": "1.50 m full-height strip beginning 1.00 m north of SH_vent"
+    }
+  ],
+  "service_routes": [
+    {
+      "id": "AC_living_lines",
+      "name": "Przewody klimatyzacji do OB3",
+      "ifc_class": "IfcPipeSegment",
+      "system": "refrigerant_and_condensate_bundle",
+      "nominal_diameter": 0.04,
+      "installation": "mixed",
+      "destination": "OB3",
+      "points": [
+        [
+          7.49,
+          5.93,
+          2.48
+        ],
+        [
+          7.49,
+          5.93,
+          0.05
+        ],
+        [
+          7.49,
+          6.08,
+          0.05
+        ],
+        [
+          7.49,
+          12.68,
+          0.05
+        ],
+        [
+          6.765,
+          12.68,
+          0.05
+        ],
+        [
+          6.765,
+          12.89,
+          0.05
+        ]
+      ],
+      "segments": [
+        {
+          "from": 0,
+          "to": 1,
+          "installation": "concealed_in_wall",
+          "host": "W_258"
+        },
+        {
+          "from": 1,
+          "to": 5,
+          "installation": "in_floor"
+        }
+      ],
+      "note": "existing concealed line set retained from OB3 to the former AC connection",
+      "renovation_status": "retained_and_reused"
+    },
+    {
+      "id": "AC_living_extension_bath_ceiling",
+      "name": "Przedłużenie przewodów nad sufitem łazienki 2",
+      "ifc_class": "IfcPipeSegment",
+      "system": "refrigerant_and_control",
+      "nominal_diameter": 0.04,
+      "installation": "mixed",
+      "source": "AC_living_lines",
+      "destination": "AC_living",
+      "renovation_status": "new",
+      "points": [
+        [
+          7.49,
+          5.93,
+          2.48
+        ],
+        [
+          7.49,
+          5.93,
+          2.63
+        ],
+        [
+          7.49,
+          7.3925,
+          2.63
+        ],
+        [
+          7.49,
+          7.3925,
+          2.48
+        ]
+      ],
+      "segments": [
+        {
+          "from": 0,
+          "to": 1,
+          "installation": "concealed_in_wall",
+          "host": "W_258"
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "installation": "above_bathroom_ceiling",
+          "room": 9
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "installation": "concealed_in_wall",
+          "host": "W_bath2_n"
+        }
+      ],
+      "note": "straight extension on the as-is x=7.49 projection; brazed joint accessible above bathroom ceiling; condensate routed separately to SH_san"
+    }
+  ],
   "doors": [
     {
       "id": "entry",
       "at": [
         1.0,
-        8.4
+        8.28
       ],
       "size": [
         0.4,
@@ -550,7 +813,7 @@
         "start",
         "+"
       ],
-      "note": "wejście / entrance, opens into the flat; survey shows the opening at y 8.30-9.40"
+      "note": "wejście / entrance; south edge touches the outer-wall step line"
     },
     {
       "id": "D4",

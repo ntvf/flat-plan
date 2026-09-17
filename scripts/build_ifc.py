@@ -11,6 +11,7 @@ Run with:
 """
 
 import json
+import math
 import os
 import sys
 
@@ -198,6 +199,26 @@ class Builder:
         self.walls.append((wall, a[0], a[1], b[0], b[1], thickness))
         return wall
 
+    def panel(self, ifc_class, name, p1, p2, thickness, z, height):
+        run = ifcopenshell.api.run
+        product = run("root.create_entity", self.model, ifc_class=ifc_class,
+                      name=name)
+        a, b = np.array(p1, dtype=float), np.array(p2, dtype=float)
+        length = float(np.linalg.norm(b - a))
+        if length < 1e-6:
+            raise ValueError(f"panel {name} has zero length")
+        rep = run("geometry.add_wall_representation", self.model, context=self.body,
+                  length=length, height=height, thickness=thickness,
+                  offset=-thickness / 2.0)
+        run("geometry.assign_representation", self.model, product=product,
+            representation=rep)
+        v = (b - a) / length
+        self.place(product, np.array([[v[0], -v[1], 0, a[0]],
+                                      [v[1], v[0], 0, a[1]],
+                                      [0, 0, 1, z],
+                                      [0, 0, 0, 1]]))
+        return product, length
+
     # -- model parts --------------------------------------------------------
     def exterior_thicknesses(self):
         """Per-edge thickness of the exterior envelope."""
@@ -292,6 +313,116 @@ class Builder:
                           x, y, 0.0, w, d, self.height)
             run("spatial.assign_container", self.model, relating_structure=self.storey,
                 products=[el])
+
+    def add_properties(self, product, name, properties):
+        properties = {key: value for key, value in properties.items()
+                      if value is not None}
+        if not properties:
+            return
+        pset = ifcopenshell.api.run("pset.add_pset", self.model, product=product,
+                                    name=name)
+        ifcopenshell.api.run("pset.edit_pset", self.model, pset=pset,
+                             properties=properties)
+
+    def build_equipment_and_routes(self):
+        run = ifcopenshell.api.run
+        equipment_count = 0
+        route_segment_count = 0
+        for item in self.data.get("equipment", []):
+            x, y, z = item["at"]
+            w, d, h = item["size"]
+            if item.get("shape") == "cylinder":
+                if abs(w - d) > 1e-9:
+                    raise ValueError(f"cylindrical equipment {item['id']} needs equal width and depth")
+                radius = w / 2.0
+                polygon = [
+                    (x + radius + radius * math.cos(2 * math.pi * i / 32),
+                     y + radius + radius * math.sin(2 * math.pi * i / 32))
+                    for i in range(32)
+                ]
+                el = self.prism(item.get("ifc_class", "IfcBuildingElementProxy"),
+                                f"{item['id']} {item['name']}", polygon, z, h)
+            else:
+                el = self.box(item.get("ifc_class", "IfcBuildingElementProxy"),
+                              f"{item['id']} {item['name']}", x, y, z, w, d, h)
+            run("spatial.assign_container", self.model, relating_structure=self.storey,
+                products=[el])
+            self.add_properties(el, "SurveyedEquipment", {
+                "AssetId": item["id"],
+                "Manufacturer": item.get("manufacturer"),
+                "CapacityLitres": item.get("capacity_l"),
+                "Shape": item.get("shape", "box"),
+                "Mounting": item.get("mounting"),
+                "Host": item.get("host"),
+                "SurveyNote": item.get("note"),
+            })
+            equipment_count += 1
+
+        for route in self.data.get("service_routes", []):
+            diameter = float(route["nominal_diameter"])
+            points = route["points"]
+            for index, (start, end) in enumerate(zip(points, points[1:]), 1):
+                x1, y1, z1 = (float(v) for v in start)
+                x2, y2, z2 = (float(v) for v in end)
+                dx, dy, dz = x2 - x1, y2 - y1, z2 - z1
+                axes = sum(abs(v) > 1e-9 for v in (dx, dy, dz))
+                if axes != 1:
+                    raise ValueError(
+                        f"service route {route['id']} segment {index} must be axis-aligned"
+                    )
+                x = min(x1, x2) - (diameter / 2 if abs(dx) < 1e-9 else 0)
+                y = min(y1, y2) - (diameter / 2 if abs(dy) < 1e-9 else 0)
+                z = min(z1, z2) - (diameter / 2 if abs(dz) < 1e-9 else 0)
+                w = abs(dx) or diameter
+                d = abs(dy) or diameter
+                h = abs(dz) or diameter
+                el = self.box(route.get("ifc_class", "IfcPipeSegment"),
+                              f"{route['id']} {index}", x, y, z, w, d, h)
+                run("spatial.assign_container", self.model,
+                    relating_structure=self.storey, products=[el])
+                self.add_properties(el, "SurveyedServiceRoute", {
+                    "RouteId": route["id"],
+                    "System": route.get("system"),
+                    "Installation": route.get("installation"),
+                    "Destination": route.get("destination"),
+                    "NominalDiameter": diameter,
+                    "SurveyNote": route.get("note"),
+                })
+                route_segment_count += 1
+        return equipment_count, route_segment_count
+
+    def build_wall_finishes(self):
+        run = ifcopenshell.api.run
+        count = 0
+        for finish in self.data.get("wall_finishes", []):
+            base = float(finish["base_height"])
+            top = float(finish["top_height"])
+            if top <= base:
+                raise ValueError(f"wall finish {finish['id']} has invalid heights")
+            product, length = self.panel(
+                finish.get("ifc_class", "IfcCovering"),
+                f"{finish['id']} {finish['material']}",
+                finish["segment"][0], finish["segment"][1],
+                float(finish["thickness"]), base, top - base,
+            )
+            run("spatial.assign_container", self.model,
+                relating_structure=self.storey, products=[product])
+            area = length * (top - base)
+            self.add_properties(product, "SurveyedWallFinish", {
+                "FinishId": finish["id"],
+                "Material": finish["material"],
+                "BaseHeight": base,
+                "TopHeight": top,
+                "GrossArea": round(area, 3),
+                "SurveyNote": finish.get("note"),
+            })
+            qto = run("pset.add_qto", self.model, product=product,
+                      name="Qto_CoveringBaseQuantities")
+            run("pset.edit_qto", self.model, qto=qto,
+                properties={"GrossArea": round(area, 3),
+                            "NetArea": round(area, 3)})
+            count += 1
+        return count
 
     def host_wall_for(self, cx, cy):
         """Find the wall whose centreline passes closest to a point."""
@@ -402,13 +533,17 @@ def main():
     b.build_bedroom_walls()
     b.build_spaces()
     b.build_columns_and_shafts()
+    equipment, route_segments = b.build_equipment_and_routes()
+    finishes = b.build_wall_finishes()
     openings, placed, orphaned = b.build_doors()
     aperture_counts, win_orphaned = b.build_windows()
     b.write(dst)
 
     total_doors = placed + aperture_counts.get("IfcDoor", 0)
     print(f"[build_ifc] walls={len(b.walls)} openings={openings} doors={total_doors} "
-          f"windows={aperture_counts.get('IfcWindow', 0)} spaces={len(data['rooms'])}")
+          f"windows={aperture_counts.get('IfcWindow', 0)} spaces={len(data['rooms'])} "
+          f"equipment={equipment} route_segments={route_segments} "
+          f"wall_finishes={finishes}")
     if orphaned:
         print(f"[build_ifc] WARNING no host wall for doors: {orphaned}")
     if win_orphaned:
