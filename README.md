@@ -30,6 +30,20 @@ Survey scan: `7106fea6-ce4f-4979-8eac-ebf5f4a6972b.jfif` (to scale, ~99 px/m).
 
 ## Rebuild after any YAML edit
 
+Install the host-Python dependencies once with:
+
+```sh
+python3 -m pip install -r requirements.txt
+```
+
+Then rebuild the complete as-is deliverable with:
+
+```sh
+make as-is
+```
+
+The individual commands remain:
+
 ```sh
 python3 scripts/check_layout.py data/as_is.yaml exports/check/as_is_transcription_check.png
 python3 scripts/yaml_to_json.py data/as_is.yaml build/as_is.json
@@ -40,6 +54,10 @@ python3 scripts/overlay_scan.py data/as_is.yaml 7106fea6-ce4f-4979-8eac-ebf5f4a6
 
 Blender must be `/snap/bin/blender` (5.2 LTS, has Bonsai 0.8.6); `/usr/bin/blender`
 has no Bonsai.
+
+`make STATE=<name> model` builds another state from `data/<name>.yaml`. Drawing
+titles are still specific to the as-is sheet and will be generalized with the
+target-state schema.
 
 ## Outputs
 
