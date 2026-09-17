@@ -127,24 +127,29 @@ def main(src, dst):
     for win in data.get("windows", []):
         x, y = win["at"]
         ww, wh = win["size"]
+        is_door = win.get("ifc_class") == "IfcDoor"
+        aperture_colour = (180, 40, 160) if is_door else (0, 90, 200)
         d.rectangle([tp((x, y + wh)), tp((x + ww, y))], fill=(215, 240, 255),
-                    outline=(0, 90, 200))
+                    outline=aperture_colour)
         # Glazing line down the middle of the reveal.
         if ww >= wh:
             d.line([tp((x, y + wh / 2)), tp((x + ww, y + wh / 2))],
-                   fill=(0, 90, 200), width=2)
+                   fill=aperture_colour, width=2)
         else:
             d.line([tp((x + ww / 2, y)), tp((x + ww / 2, y + wh))],
-                   fill=(0, 90, 200), width=2)
-        d.text(tp((x + ww / 2, y + wh / 2)), win["id"], fill=(0, 60, 150),
+                   fill=aperture_colour, width=2)
+        d.text(tp((x + ww / 2, y + wh / 2)), win["id"],
+               fill=(150, 20, 130) if is_door else (0, 60, 150),
                font=font, anchor="mm")
 
     for door in data.get("doors", []):
         x, y = door["at"]
         dw, dh = door["size"]
+        has_leaf = door.get("has_leaf", True)
+        colour = (200, 0, 0) if has_leaf else (210, 120, 0)
         d.rectangle([tp((x, y + dh)), tp((x + dw, y))], fill=(255, 255, 255),
-                    outline=(200, 0, 0))
-        d.text(tp((x + dw / 2, y + dh / 2)), door["id"], fill=(200, 0, 0), font=font,
+                    outline=colour)
+        d.text(tp((x + dw / 2, y + dh / 2)), door["id"], fill=colour, font=font,
                anchor="mm")
 
     # Room names, areas and edge lengths go on top of everything, with a white

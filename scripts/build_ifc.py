@@ -239,7 +239,6 @@ class Builder:
             ((3.47, 4.91), (6.25, 4.91), "Ściana sypialnia 2 / korytarz"),
             ((3.42, 0.40), (3.42, 4.86), "Ściana sypialnia 1 / 2"),
             ((6.30, 1.34), (6.30, 5.88), "Ściana sypialnia 3 / korytarz"),
-            ((6.35, 5.93), (8.96, 5.93), "Ściana sypialnia 3 / salon"),
         ]
         for p1, p2, name in implied:
             self.wall(p1, p2, t, name)
@@ -311,7 +310,7 @@ class Builder:
 
     def build_doors(self):
         run = ifcopenshell.api.run
-        placed, orphaned = 0, []
+        openings, leaves, orphaned = 0, 0, []
         for door in self.data.get("doors", []):
             x, y = door["at"]
             w, d = door["size"]
@@ -329,18 +328,23 @@ class Builder:
             opening = self.box("IfcOpeningElement", f"Otwór {door['id']}",
                                ox, oy, 0.0, ow, od, DOOR_HEIGHT)
             run("feature.add_feature", self.model, feature=opening, element=host)
+            openings += 1
+
+            if not door.get("has_leaf", True):
+                continue
 
             leaf = self.boxes("IfcDoor", f"Drzwi {door['id']}", (x, y, 0.0),
                               door_leaf(w, d, DOOR_HEIGHT, door.get("swing")))
             run("spatial.assign_container", self.model, relating_structure=self.storey,
                 products=[leaf])
             run("feature.add_filling", self.model, opening=opening, element=leaf)
-            placed += 1
-        return placed, orphaned
+            leaves += 1
+        return openings, leaves, orphaned
 
     def build_windows(self):
         run = ifcopenshell.api.run
-        placed, orphaned = 0, []
+        placed = {"IfcWindow": 0, "IfcDoor": 0}
+        orphaned = []
         for win in self.data.get("windows", []):
             x, y = win["at"]
             w, d = win["size"]
@@ -362,12 +366,14 @@ class Builder:
                                ox, oy, sill, ow, od, height)
             run("feature.add_feature", self.model, feature=opening, element=host)
 
-            leaf = self.boxes("IfcWindow", f"Okno {win['id']}", (x, y, sill),
+            ifc_class = win.get("ifc_class", "IfcWindow")
+            name = "Drzwi" if ifc_class == "IfcDoor" else "Okno"
+            leaf = self.boxes(ifc_class, f"{name} {win['id']}", (x, y, sill),
                               window_panes(w, d, height))
             run("spatial.assign_container", self.model,
                 relating_structure=self.storey, products=[leaf])
             run("feature.add_filling", self.model, opening=opening, element=leaf)
-            placed += 1
+            placed[ifc_class] = placed.get(ifc_class, 0) + 1
         return placed, orphaned
 
     def write(self, path):
@@ -396,12 +402,13 @@ def main():
     b.build_bedroom_walls()
     b.build_spaces()
     b.build_columns_and_shafts()
-    placed, orphaned = b.build_doors()
-    win_placed, win_orphaned = b.build_windows()
+    openings, placed, orphaned = b.build_doors()
+    aperture_counts, win_orphaned = b.build_windows()
     b.write(dst)
 
-    print(f"[build_ifc] walls={len(b.walls)} doors={placed} "
-          f"windows={win_placed} spaces={len(data['rooms'])}")
+    total_doors = placed + aperture_counts.get("IfcDoor", 0)
+    print(f"[build_ifc] walls={len(b.walls)} openings={openings} doors={total_doors} "
+          f"windows={aperture_counts.get('IfcWindow', 0)} spaces={len(data['rooms'])}")
     if orphaned:
         print(f"[build_ifc] WARNING no host wall for doors: {orphaned}")
     if win_orphaned:

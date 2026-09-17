@@ -233,10 +233,12 @@ def annotate(data):
 
     # Door swing arcs. The leaf solid is built by build_ifc.py from the same
     # swing data, so arc and leaf always agree.
-    for door in data.get("doors", []):
+    leaf_doors = [door for door in data.get("doors", [])
+                  if door.get("has_leaf", True)]
+    for door in leaf_doors:
         ann.polyline(door_swing_arc(door["at"], door["size"], door.get("swing")),
                      classes="thin")
-    log("swing arcs:", len(data.get("doors", [])))
+    log("swing arcs:", len(leaf_doors))
 
     outline = data["outline"]
     xs = [p[0] for p in outline]

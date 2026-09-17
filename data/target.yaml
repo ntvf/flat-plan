@@ -13,6 +13,12 @@ changes:
     rooms:
       - id: 123
         subtract: [8, 9]
+    doors:
+      - { id: D4, has_leaf: true }
+      - { id: D5, has_leaf: true }
+      - { id: D6, has_leaf: true }
+      - { id: D7, has_leaf: true }
+      - { id: D8, has_leaf: true }
 
   add:
     rooms:
@@ -52,15 +58,16 @@ changes:
         note: north bathroom wall from storage to ventilation riser
       - id: W_bath2_door
         at: [5.26, 5.88]
-        size: [1.08, 0.10]
+        size: [0.99, 0.10]
         material: plasterboard
         renovation_status: new
-        note: bathroom closure between storage and existing 2.30 m wall
+        note: bathroom closure from storage to the room 7 wall face
 
     doors:
       - id: D9
-        at: [5.40, 5.88]
+        at: [5.36, 5.88]
         size: [0.80, 0.10]
+        has_leaf: true
         swing: [start, "-"]
         renovation_status: new
         note: 0.80 m bathroom door opening outward into the corridor

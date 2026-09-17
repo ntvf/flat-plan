@@ -29,7 +29,7 @@ contractors can price the work from generated bills of quantities.
 - As-is state is modeled and photo-verified.
 - Existing rooms: three bedrooms, one bathroom, one storage room, and an open
   hall/kitchen/living space.
-- Current net modeled area is about 95.56 m², matching the surveyed total
+- Current net modeled area is about 95.57 m², matching the surveyed total
   closely enough for the current transcription.
 - Current generated outputs include `exports/as_is.ifc`, verification overlays
   under `exports/check/`, and an A3 1:50 as-is contractor plan PDF at
@@ -39,8 +39,11 @@ contractors can price the work from generated bills of quantities.
   door beside the existing 2.30 m wall.
 - Target outputs include `exports/target.ifc` and the target-state sheet under
   `exports/drawings/target/`.
-- The current IFC contains real doors/windows/openings, spaces with floor-area
-  quantities, service shafts, a structural column, walls, and plan annotations.
+- The as-is IFC has three exterior doors (entrance, OB2, and the east OK6
+  panel) and five unfilled interior wall openings; the target IFC adds leaves
+  to the interior openings and the new bathroom.
+  Both contain real windows/openings, spaces with floor-area quantities, service
+  shafts, a structural column, walls, and plan annotations.
 
 ## Pipeline
 

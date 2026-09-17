@@ -83,12 +83,12 @@ rooms:
     name: Schowek
     name_uk: Комора
     function: storage
-    clear: [1.74, 2.05]
-    # 0.10 plaster-panel walls; corridor is 0.90 west and 1.00 south.
-    polygon: [[3.42, 6.06], [5.16, 6.06], [5.16, 8.11], [3.42, 8.11]]
+    clear: [1.74, 1.97]
+    # 0.10 plaster-panel walls; corridor is 0.90 west and 1.02 south.
+    polygon: [[3.42, 5.98], [5.16, 5.98], [5.16, 7.95], [3.42, 7.95]]
     # Outer face of the storage's own walls. This, not the clear polygon, is
     # what the storage removes from the surrounding open space.
-    footprint: [[3.32, 5.96], [5.26, 5.96], [5.26, 8.21], [3.32, 8.21]]
+    footprint: [[3.32, 5.88], [5.26, 5.88], [5.26, 8.05], [3.32, 8.05]]
 
   # Rooms 1 + 2 + 3 are a single continuous open space: entrance hall,
   # kitchen zone and living zone. The storage (8) is an island with a corridor
@@ -122,11 +122,11 @@ rooms:
 # Partitions drawn explicitly, all 0.10 thick.
 walls:
   - { id: W_bath_e, at: [2.32, 4.96], size: [0.10, 2.99], note: "bathroom east wall, holds D4" }
-  - { id: W_store_w, at: [3.32, 5.96], size: [0.10, 2.25] }
-  - { id: W_store_e, at: [5.16, 5.96], size: [0.10, 2.25] }
-  - { id: W_store_n, at: [3.32, 8.11], size: [1.94, 0.10] }
-  - { id: W_store_s, at: [3.32, 5.96], size: [1.94, 0.10] }
-  - { id: W_258, at: [6.34, 5.88], size: [2.62, 0.10], note: "runs through to the east wall; only 2.30 of its north face is exposed" }
+  - { id: W_store_w, at: [3.32, 5.88], size: [0.10, 2.17] }
+  - { id: W_store_e, at: [5.16, 5.88], size: [0.10, 2.17] }
+  - { id: W_store_n, at: [3.32, 7.95], size: [1.94, 0.10] }
+  - { id: W_store_s, at: [3.32, 5.88], size: [1.94, 0.10] }
+  - { id: W_258, at: [6.25, 5.88], size: [2.71, 0.10], note: "overlaps the room 7 perpendicular wall to form a closed corner; 2.30 of its north face is exposed" }
   # The bathroom's north wall. West of x=1.40 the bathroom is closed by the
   # 0.40 exterior step; east of it only this 0.10 partition separates the
   # bathroom from the corridor (survey shows the thick poche stopping at the
@@ -137,7 +137,7 @@ walls:
 # and projecting into the storage (0.60 along the wall x 0.25 deep; measured
 # off the survey photo at 0.65 x 0.30 before erosion correction).
 columns:
-  - { id: C_store, at: [3.99, 5.96], size: [0.60, 0.25] }
+  - { id: C_store, at: [3.99, 5.88], size: [0.60, 0.25] }
 
 # Service risers on the east wall of the open space, cased in 0.10 walls and
 # projecting 0.32 into the room. The 2.58 wall runs its full length to the
@@ -153,11 +153,11 @@ shafts:
 # confirm on site before ordering doors.
 doors:
   - { id: entry, at: [1.00, 8.40], size: [0.40, 0.90], swing: [start, "+"], note: "wejście / entrance, opens into the flat; survey shows the opening at y 8.30-9.40" }
-  - { id: D4, at: [2.32, 6.48], size: [0.10, 0.90], swing: [start, "-"], note: "0.50 from the NE corner of room 4, opens into the bathroom" }
-  - { id: D8, at: [3.32, 6.41], size: [0.10, 0.90], swing: [start, "-"], note: "west wall of room 8, 0.80 from the NW corner, opens into the corridor" }
-  - { id: D5, at: [2.47, 4.86], size: [0.90, 0.10], swing: [start, "-"], note: "against the 5/6 partition, opens into the bedroom" }
-  - { id: D6, at: [3.47, 4.86], size: [0.90, 0.10], swing: [end, "-"], note: "against the 5/6 partition, opens into the bedroom" }
-  - { id: D7, at: [6.25, 4.88], size: [0.10, 0.90], swing: [start, "+"], note: "0.90 from the corner of room 6, opens into the bedroom" }
+  - { id: D4, at: [2.32, 6.005], size: [0.10, 0.90], has_leaf: false, swing: [start, "-"], note: "centred in the bathroom east wall; unfilled opening in as-is state" }
+  - { id: D8, at: [3.32, 6.515], size: [0.10, 0.90], has_leaf: false, swing: [start, "-"], note: "centred in the storage west wall; unfilled opening in as-is state" }
+  - { id: D5, at: [2.47, 4.86], size: [0.90, 0.10], has_leaf: false, swing: [start, "-"], note: "against the 5/6 partition; unfilled opening in as-is state" }
+  - { id: D6, at: [3.47, 4.86], size: [0.90, 0.10], has_leaf: false, swing: [end, "-"], note: "against the 5/6 partition; unfilled opening in as-is state" }
+  - { id: D7, at: [6.25, 4.98], size: [0.10, 0.90], has_leaf: false, swing: [start, "+"], note: "opening ends at the south face of W_258; unfilled opening in as-is state" }
 
 openings:
   doors:
@@ -183,15 +183,20 @@ openings:
 windows:
   - { id: OK5, at: [1.05, 0.00], size: [1.60, 0.40], sill: 0.90, head: 2.20,
       room: 5 }
-  - { id: OK6, at: [4.26, 0.00], size: [1.60, 0.40], sill: 0.90, head: 2.20,
-      room: 6 }
+  # Room 6 corner assembly: the full-height window remains on the south wall;
+  # its door is perpendicular in the short east return wall. The door ends
+  # 0.15 before the outer corner where the OK7 wall begins at y=0.94.
+  - { id: OK6, at: [4.26, 0.00], size: [1.60, 0.40], sill: 0.00, head: 2.20,
+      room: 6, note: "full-height south panel of the room 6 corner glazing" }
+  - { id: DK6, at: [5.69, 0.00], size: [0.40, 0.79], sill: 0.00, head: 2.20,
+      room: 6, ifc_class: IfcDoor, note: "door in east return wall, 0.15 before the OK7 corner" }
   - { id: OK7, at: [6.63, 0.94], size: [1.60, 0.40], sill: 0.90, head: 2.20,
       room: 7 }
   # North elevation: balcony door plus two glazed bays onto the balcony.
-  - { id: OB1, at: [2.84, 12.89], size: [0.90, 0.40], sill: 0.00, head: 2.20,
-      room: 123, note: "drzwi balkonowe / balcony door" }
-  - { id: OB2, at: [4.13, 12.89], size: [1.46, 0.40], sill: 0.90, head: 2.20,
-      room: 123 }
+  - { id: OB1, at: [2.84, 12.89], size: [0.90, 0.40], sill: 0.90, head: 2.20,
+      room: 123, note: "fixed balcony window" }
+  - { id: OB2, at: [4.13, 12.89], size: [1.46, 0.40], sill: 0.00, head: 2.20,
+      room: 123, ifc_class: IfcDoor, note: "drzwi balkonowe / balcony door" }
   - { id: OB3, at: [5.96, 12.89], size: [1.61, 0.40], sill: 0.90, head: 2.20,
       room: 123 }
 

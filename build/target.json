@@ -186,42 +186,42 @@
       "function": "storage",
       "clear": [
         1.74,
-        2.05
+        1.97
       ],
       "polygon": [
         [
           3.42,
-          6.06
+          5.98
         ],
         [
           5.16,
-          6.06
+          5.98
         ],
         [
           5.16,
-          8.11
+          7.95
         ],
         [
           3.42,
-          8.11
+          7.95
         ]
       ],
       "footprint": [
         [
           3.32,
-          5.96
+          5.88
         ],
         [
           5.26,
-          5.96
+          5.88
         ],
         [
           5.26,
-          8.21
+          8.05
         ],
         [
           3.32,
-          8.21
+          8.05
         ]
       ]
     },
@@ -403,29 +403,29 @@
       "id": "W_store_w",
       "at": [
         3.32,
-        5.96
+        5.88
       ],
       "size": [
         0.1,
-        2.25
+        2.17
       ]
     },
     {
       "id": "W_store_e",
       "at": [
         5.16,
-        5.96
+        5.88
       ],
       "size": [
         0.1,
-        2.25
+        2.17
       ]
     },
     {
       "id": "W_store_n",
       "at": [
         3.32,
-        8.11
+        7.95
       ],
       "size": [
         1.94,
@@ -436,7 +436,7 @@
       "id": "W_store_s",
       "at": [
         3.32,
-        5.96
+        5.88
       ],
       "size": [
         1.94,
@@ -446,14 +446,14 @@
     {
       "id": "W_258",
       "at": [
-        6.34,
+        6.25,
         5.88
       ],
       "size": [
-        2.62,
+        2.71,
         0.1
       ],
-      "note": "runs through to the east wall; only 2.30 of its north face is exposed"
+      "note": "overlaps the room 7 perpendicular wall to form a closed corner; 2.30 of its north face is exposed"
     },
     {
       "id": "W_bath_n",
@@ -488,12 +488,12 @@
         5.88
       ],
       "size": [
-        1.08,
+        0.99,
         0.1
       ],
       "material": "plasterboard",
       "renovation_status": "new",
-      "note": "bathroom closure between storage and existing 2.30 m wall"
+      "note": "bathroom closure from storage to the room 7 wall face"
     }
   ],
   "columns": [
@@ -501,7 +501,7 @@
       "id": "C_store",
       "at": [
         3.99,
-        5.96
+        5.88
       ],
       "size": [
         0.6,
@@ -556,33 +556,35 @@
       "id": "D4",
       "at": [
         2.32,
-        6.48
+        6.005
       ],
       "size": [
         0.1,
         0.9
       ],
+      "has_leaf": true,
       "swing": [
         "start",
         "-"
       ],
-      "note": "0.50 from the NE corner of room 4, opens into the bathroom"
+      "note": "centred in the bathroom east wall; unfilled opening in as-is state"
     },
     {
       "id": "D8",
       "at": [
         3.32,
-        6.41
+        6.515
       ],
       "size": [
         0.1,
         0.9
       ],
+      "has_leaf": true,
       "swing": [
         "start",
         "-"
       ],
-      "note": "west wall of room 8, 0.80 from the NW corner, opens into the corridor"
+      "note": "centred in the storage west wall; unfilled opening in as-is state"
     },
     {
       "id": "D5",
@@ -594,11 +596,12 @@
         0.9,
         0.1
       ],
+      "has_leaf": true,
       "swing": [
         "start",
         "-"
       ],
-      "note": "against the 5/6 partition, opens into the bedroom"
+      "note": "against the 5/6 partition; unfilled opening in as-is state"
     },
     {
       "id": "D6",
@@ -610,38 +613,41 @@
         0.9,
         0.1
       ],
+      "has_leaf": true,
       "swing": [
         "end",
         "-"
       ],
-      "note": "against the 5/6 partition, opens into the bedroom"
+      "note": "against the 5/6 partition; unfilled opening in as-is state"
     },
     {
       "id": "D7",
       "at": [
         6.25,
-        4.88
+        4.98
       ],
       "size": [
         0.1,
         0.9
       ],
+      "has_leaf": true,
       "swing": [
         "start",
         "+"
       ],
-      "note": "0.90 from the corner of room 6, opens into the bedroom"
+      "note": "opening ends at the south face of W_258; unfilled opening in as-is state"
     },
     {
       "id": "D9",
       "at": [
-        5.4,
+        5.36,
         5.88
       ],
       "size": [
         0.8,
         0.1
       ],
+      "has_leaf": true,
       "swing": [
         "start",
         "-"
@@ -732,9 +738,26 @@
         1.6,
         0.4
       ],
-      "sill": 0.9,
+      "sill": 0.0,
       "head": 2.2,
-      "room": 6
+      "room": 6,
+      "note": "full-height south panel of the room 6 corner glazing"
+    },
+    {
+      "id": "DK6",
+      "at": [
+        5.69,
+        0.0
+      ],
+      "size": [
+        0.4,
+        0.79
+      ],
+      "sill": 0.0,
+      "head": 2.2,
+      "room": 6,
+      "ifc_class": "IfcDoor",
+      "note": "door in east return wall, 0.15 before the OK7 corner"
     },
     {
       "id": "OK7",
@@ -760,10 +783,10 @@
         0.9,
         0.4
       ],
-      "sill": 0.0,
+      "sill": 0.9,
       "head": 2.2,
       "room": 123,
-      "note": "drzwi balkonowe / balcony door"
+      "note": "fixed balcony window"
     },
     {
       "id": "OB2",
@@ -775,9 +798,11 @@
         1.46,
         0.4
       ],
-      "sill": 0.9,
+      "sill": 0.0,
       "head": 2.2,
-      "room": 123
+      "room": 123,
+      "ifc_class": "IfcDoor",
+      "note": "drzwi balkonowe / balcony door"
     },
     {
       "id": "OB3",

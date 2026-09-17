@@ -43,7 +43,7 @@
   <line x1="200" y1="384" x2="200" y2="398" class="rule"/>
   <line x1="245" y1="384" x2="245" y2="398" class="rule"/>
   <text x="23" y="389" class="lbl">STADIUM</text>
-  <text x="23" y="395" class="val">Inwentaryzacja - stan istniejący</text>
+  <text x="23" y="395" class="val">{{Description}}</text>
   <text x="153" y="389" class="lbl">SKALA</text>
   <text x="153" y="395" class="val">1:50</text>
   <text x="203" y="389" class="lbl">NR RYSUNKU</text>
