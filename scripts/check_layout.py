@@ -158,6 +158,23 @@ def main(src, dst):
             px, py = tp(point)
             d.ellipse((px - 3, py - 3, px + 3, py + 3), fill=(15, 145, 130))
 
+    for terminal in data.get("service_terminals", []):
+        px, py = tp(terminal["at"])
+        services = {connection["service"]
+                    for connection in terminal.get("connections", [])}
+        has_water = any("water" in service for service in services)
+        has_drain = any("drain" in service for service in services)
+        colour = (35, 105, 210) if has_water else (195, 45, 45)
+        d.ellipse((px - 7, py - 7, px + 7, py + 7),
+                  fill=(255, 255, 255), outline=colour, width=3)
+        if has_water and has_drain:
+            d.line((px - 5, py + 5, px + 5, py - 5),
+                   fill=(195, 45, 45), width=3)
+        label_at = terminal.get("label_at", terminal["at"])
+        d.text(tp(label_at), terminal.get("plan_label", terminal["id"]),
+               fill=(30, 65, 130), font=font, anchor="mm",
+               stroke_width=2, stroke_fill=(255, 255, 255))
+
     for finish in data.get("wall_finishes", []):
         p1, p2 = finish["segment"]
         d.line([tp(p1), tp(p2)], fill=(155, 70, 30), width=6)

@@ -76,6 +76,27 @@ class ModelLoaderTest(unittest.TestCase):
                          finishes["BRICK_EAST"]["segment"])
         self.assertEqual(0.8, finishes["BRICK_NORTH_OB1"]["base_height"])
         self.assertEqual(base["wall_finishes"], target["wall_finishes"])
+        terminals = {item["id"]: item for item in base["service_terminals"]}
+        self.assertEqual([0.4, 5.46], terminals["B4_BATH_CONNECTION"]["at"])
+        self.assertEqual(
+            0.30,
+            terminals["B4_BATH_CONNECTION"]["connections"][0]["height"],
+        )
+        self.assertEqual([0.4, 6.455], terminals["B4_BASIN_CONNECTION"]["at"])
+        self.assertEqual(
+            0.35,
+            terminals["B4_BASIN_CONNECTION"]["connections"][1]["height"],
+        )
+        self.assertEqual([1.0, 7.95], terminals["B4_WC_DRAIN"]["at"])
+        self.assertEqual([3.29, 12.89],
+                         terminals["KITCHEN_SINK_CONNECTION"]["at"])
+        self.assertEqual(base["service_terminals"], target["service_terminals"])
+        floor = base["floor_assemblies"][0]
+        self.assertEqual(0.10, floor["total_thickness"])
+        self.assertEqual(
+            [0.05, 0.05],
+            [layer["thickness"] for layer in floor["layers_top_down"]],
+        )
 
     def test_rejects_duplicate_addition(self):
         with tempfile.TemporaryDirectory() as directory:

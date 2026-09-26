@@ -244,6 +244,72 @@ service_routes:
       - { from: 1, to: 5, installation: in_floor }
     note: "existing concealed route; verify exact bends, pipe sizes and condensate fall on site"
 
+# Surveyed fixture connection points. XY is the wall/floor projection; heights
+# are above finished floor. Existing concealed pipe routes and drain inverts
+# were not opened up during the survey and must be verified before demolition.
+service_terminals:
+  - id: B4_BATH_CONNECTION
+    name: Existing bath water and drainage
+    at: [0.40, 5.46]
+    room: 4
+    host: west_wall
+    offset_from: south_wall
+    offset: 0.50
+    connections:
+      - { service: hot_and_cold_water, height: 0.30, mounting: wall }
+      - { service: sanitary_drainage, installation: in_floor, invert: not_surveyed }
+    plan_label: "BATH W30 / S FLOOR"
+    label_at: [1.03, 5.20]
+
+  - id: B4_BASIN_CONNECTION
+    name: Existing basin water and drainage
+    at: [0.40, 6.455]
+    room: 4
+    host: west_wall
+    measured: middle of west wall
+    connections:
+      - { service: hot_and_cold_water, height: 0.85, mounting: wall }
+      - { service: sanitary_drainage, height: 0.35, mounting: wall }
+    plan_label: "BASIN W85 / S35"
+    label_at: [0.98, 6.78]
+
+  - id: B4_WC_DRAIN
+    name: Existing WC drainage
+    at: [1.00, 7.95]
+    room: 4
+    host: north_wall
+    offset_from: west_wall
+    offset: 0.60
+    connections:
+      - { service: sanitary_drainage, height: not_surveyed, mounting: wall }
+    plan_label: "WC S / h VERIFY"
+    label_at: [1.02, 7.62]
+
+  - id: KITCHEN_SINK_CONNECTION
+    name: Existing kitchen sink water and drainage
+    at: [3.29, 12.89]
+    room: 123
+    host: north_wall_below_OB1
+    measured: under centre of OB1
+    connections:
+      - { service: hot_and_cold_water, height: not_surveyed, mounting: wall }
+      - { service: sanitary_drainage, height: not_surveyed, mounting: wall }
+    plan_label: "KITCHEN W+S / h VERIFY"
+    label_at: [3.29, 12.45]
+
+# Reported floor buildup. The exact product was described as extruded
+# polyethylene; verify whether this is XPS or another insulation before pricing.
+floor_assemblies:
+  - id: FLOOR_EXISTING
+    status: existing_finished
+    scope: flat
+    layers_top_down:
+      - { material: semi_dry_screed, thickness: 0.05 }
+      - { material: extruded_polyethylene_reported, thickness: 0.05,
+          note: "verify exact insulation product/material on site" }
+    total_thickness: 0.10
+    note: "finished screed; concealed drainage alterations require coordinated local opening and reinstatement"
+
 # Door openings, all 0.90 clear. `at` is the lower-left corner of the opening.
 # `swing` is [hinge, side]: which end of the opening the leaf is hinged on,
 # and which face of the wall it swings out from (+ = increasing X or Y).

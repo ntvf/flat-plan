@@ -240,6 +240,20 @@ def annotate(data):
                      classes="thin")
     log("swing arcs:", len(leaf_doors))
 
+    for terminal in data.get("service_terminals", []):
+        x, y = terminal["at"]
+        r = 0.075
+        ann.polyline(
+            [(x, y + r), (x + r, y), (x, y - r), (x - r, y), (x, y + r)],
+            classes="thin service-terminal",
+        )
+        ann.text(
+            terminal.get("label_at", terminal["at"]),
+            [terminal.get("plan_label", terminal["id"])],
+            classes="regular service-terminal",
+        )
+    log("service terminals:", len(data.get("service_terminals", [])))
+
     outline = data["outline"]
     xs = [p[0] for p in outline]
     ys = [p[1] for p in outline]

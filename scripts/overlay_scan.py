@@ -144,6 +144,11 @@ def main():
         d.line([T(point[:2]) for point in route["points"]],
                fill=(0, 150, 130, 255), width=3)
 
+    for terminal in data.get("service_terminals") or []:
+        x, y = T(terminal["at"])
+        d.ellipse((x - 6, y - 6, x + 6, y + 6),
+                  fill=(255, 255, 255, 180), outline=(190, 30, 30, 255), width=3)
+
     for finish in data.get("wall_finishes") or []:
         d.line([T(point) for point in finish["segment"]],
                fill=(165, 70, 25, 255), width=5)

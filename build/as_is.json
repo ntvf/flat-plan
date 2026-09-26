@@ -618,6 +618,137 @@
       "note": "existing concealed route; verify exact bends, pipe sizes and condensate fall on site"
     }
   ],
+  "service_terminals": [
+    {
+      "id": "B4_BATH_CONNECTION",
+      "name": "Existing bath water and drainage",
+      "at": [
+        0.4,
+        5.46
+      ],
+      "room": 4,
+      "host": "west_wall",
+      "offset_from": "south_wall",
+      "offset": 0.5,
+      "connections": [
+        {
+          "service": "hot_and_cold_water",
+          "height": 0.3,
+          "mounting": "wall"
+        },
+        {
+          "service": "sanitary_drainage",
+          "installation": "in_floor",
+          "invert": "not_surveyed"
+        }
+      ],
+      "plan_label": "BATH W30 / S FLOOR",
+      "label_at": [
+        1.03,
+        5.2
+      ]
+    },
+    {
+      "id": "B4_BASIN_CONNECTION",
+      "name": "Existing basin water and drainage",
+      "at": [
+        0.4,
+        6.455
+      ],
+      "room": 4,
+      "host": "west_wall",
+      "measured": "middle of west wall",
+      "connections": [
+        {
+          "service": "hot_and_cold_water",
+          "height": 0.85,
+          "mounting": "wall"
+        },
+        {
+          "service": "sanitary_drainage",
+          "height": 0.35,
+          "mounting": "wall"
+        }
+      ],
+      "plan_label": "BASIN W85 / S35",
+      "label_at": [
+        0.98,
+        6.78
+      ]
+    },
+    {
+      "id": "B4_WC_DRAIN",
+      "name": "Existing WC drainage",
+      "at": [
+        1.0,
+        7.95
+      ],
+      "room": 4,
+      "host": "north_wall",
+      "offset_from": "west_wall",
+      "offset": 0.6,
+      "connections": [
+        {
+          "service": "sanitary_drainage",
+          "height": "not_surveyed",
+          "mounting": "wall"
+        }
+      ],
+      "plan_label": "WC S / h VERIFY",
+      "label_at": [
+        1.02,
+        7.62
+      ]
+    },
+    {
+      "id": "KITCHEN_SINK_CONNECTION",
+      "name": "Existing kitchen sink water and drainage",
+      "at": [
+        3.29,
+        12.89
+      ],
+      "room": 123,
+      "host": "north_wall_below_OB1",
+      "measured": "under centre of OB1",
+      "connections": [
+        {
+          "service": "hot_and_cold_water",
+          "height": "not_surveyed",
+          "mounting": "wall"
+        },
+        {
+          "service": "sanitary_drainage",
+          "height": "not_surveyed",
+          "mounting": "wall"
+        }
+      ],
+      "plan_label": "KITCHEN W+S / h VERIFY",
+      "label_at": [
+        3.29,
+        12.45
+      ]
+    }
+  ],
+  "floor_assemblies": [
+    {
+      "id": "FLOOR_EXISTING",
+      "status": "existing_finished",
+      "scope": "flat",
+      "layers_top_down": [
+        {
+          "material": "semi_dry_screed",
+          "thickness": 0.05
+        },
+        {
+          "material": "extruded_polyethylene_reported",
+          "thickness": 0.05,
+          "note": "verify exact insulation product/material on site"
+        }
+      ],
+      "total_thickness": 0.1,
+      "note": "finished screed; concealed drainage alterations require coordinated local opening and reinstatement"
+    }
+  ],
   "doors": [
     {
       "id": "entry",

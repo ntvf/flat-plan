@@ -391,6 +391,53 @@ class Builder:
                 route_segment_count += 1
         return equipment_count, route_segment_count
 
+    def build_service_terminals_and_floor_data(self):
+        run = ifcopenshell.api.run
+        terminal_count = 0
+        for terminal in self.data.get("service_terminals", []):
+            x, y = (float(value) for value in terminal["at"])
+            for index, connection in enumerate(terminal.get("connections", []), 1):
+                raw_height = connection.get("height")
+                height = float(raw_height) if isinstance(raw_height, (int, float)) else 0.02
+                marker = self.box(
+                    "IfcBuildingElementProxy",
+                    f"{terminal['id']} {connection['service']}",
+                    x - 0.03, y - 0.03, max(0.0, height - 0.03),
+                    0.06, 0.06, 0.06,
+                )
+                run("spatial.assign_container", self.model,
+                    relating_structure=self.storey, products=[marker])
+                self.add_properties(marker, "SurveyedServiceTerminal", {
+                    "TerminalId": terminal["id"],
+                    "ConnectionIndex": index,
+                    "Service": connection["service"],
+                    "HeightAboveFinishedFloor": (
+                        raw_height if isinstance(raw_height, (int, float))
+                        else str(raw_height or "not_surveyed")
+                    ),
+                    "Installation": connection.get("installation"),
+                    "Mounting": connection.get("mounting"),
+                    "Host": terminal.get("host"),
+                    "Room": str(terminal.get("room")),
+                    "SurveyNote": terminal.get("name"),
+                })
+                terminal_count += 1
+
+        for assembly in self.data.get("floor_assemblies", []):
+            layers = assembly.get("layers_top_down", [])
+            self.add_properties(self.project, f"SurveyedFloorAssembly_{assembly['id']}", {
+                "AssemblyId": assembly["id"],
+                "Status": assembly.get("status"),
+                "Scope": assembly.get("scope"),
+                "TotalThickness": assembly.get("total_thickness"),
+                "LayersTopDown": " | ".join(
+                    f"{layer['material']} {float(layer['thickness']):.3f} m"
+                    for layer in layers
+                ),
+                "SurveyNote": assembly.get("note"),
+            })
+        return terminal_count
+
     def build_wall_finishes(self):
         run = ifcopenshell.api.run
         count = 0
@@ -534,6 +581,7 @@ def main():
     b.build_spaces()
     b.build_columns_and_shafts()
     equipment, route_segments = b.build_equipment_and_routes()
+    terminals = b.build_service_terminals_and_floor_data()
     finishes = b.build_wall_finishes()
     openings, placed, orphaned = b.build_doors()
     aperture_counts, win_orphaned = b.build_windows()
@@ -543,7 +591,7 @@ def main():
     print(f"[build_ifc] walls={len(b.walls)} openings={openings} doors={total_doors} "
           f"windows={aperture_counts.get('IfcWindow', 0)} spaces={len(data['rooms'])} "
           f"equipment={equipment} route_segments={route_segments} "
-          f"wall_finishes={finishes}")
+          f"service_terminals={terminals} wall_finishes={finishes}")
     if orphaned:
         print(f"[build_ifc] WARNING no host wall for doors: {orphaned}")
     if win_orphaned:
