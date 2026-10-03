@@ -4,79 +4,63 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 
-OUT = Path("exports/concepts/bathroom_layouts")
-SCALE = 245
-ROOM_TOP = 300
-OLD_LEFT = 170
-NEW_LEFT = 1020
-
-COLORS = {
-    "background": "#f5f2eb",
-    "paper": "#fffdf8",
-    "wall": "#30343b",
-    "room": "#e8edf0",
-    "door": "#a57a45",
-    "stack": "#b75d47",
-    "water": "#3d7fc4",
-    "drain": "#b44848",
-    "service_box": "#ead8b6",
-    "clear_min": "#f4c66a",
-    "clear_comfort": "#a7d7a0",
-    "bath": "#8ec5dc",
-    "shower": "#78b8d1",
-    "basin": "#b7dce8",
-    "wc": "#d5e8ee",
-    "laundry": "#c4c8ce",
-    "text": "#222831",
-    "muted": "#5f6872",
-    "warning": "#b43d32",
-}
-
+OUT = Path("exports/concepts/bathroom_layouts/balanced.png")
+SCALE = 260
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 FONT_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+
+COLORS = {
+    "background": "#f4f1ea",
+    "paper": "#fffdf8",
+    "wall": "#2d333b",
+    "room": "#e8eef1",
+    "dimension": "#59636e",
+    "door": "#a5753d",
+    "bath": "#86bfd7",
+    "basin": "#acd5e4",
+    "wc": "#d0e5eb",
+    "laundry": "#bdc2c9",
+    "shower": "#72b2ce",
+    "shaft": "#b85b45",
+    "water": "#327dc1",
+    "waste": "#b84949",
+    "service_box": "#ead8b6",
+    "text": "#222831",
+    "muted": "#616b76",
+}
 
 
 def font(size, bold=False):
     return ImageFont.truetype(FONT_BOLD if bold else FONT, size)
 
 
-def box(draw, xy, fill, outline=COLORS["wall"], width=3, radius=8):
-    draw.rounded_rectangle(xy, radius=radius, fill=fill, outline=outline, width=width)
+def point(origin, x, y):
+    return origin[0] + x * SCALE, origin[1] - y * SCALE
 
 
-def local_box(left, bottom, x, y, w, d):
-    return (
-        left + x * SCALE,
-        bottom - (y + d) * SCALE,
-        left + (x + w) * SCALE,
-        bottom - y * SCALE,
+def polygon(draw, origin, coordinates, fill, outline=COLORS["wall"], width=10):
+    pixels = [point(origin, x, y) for x, y in coordinates]
+    draw.polygon(pixels, fill=fill)
+    draw.line(pixels + [pixels[0]], fill=outline, width=width, joint="curve")
+
+
+def rectangle(draw, origin, x, y, width, depth, fill, label):
+    left, bottom = point(origin, x, y)
+    right, top = point(origin, x + width, y + depth)
+    box = (left, top, right, bottom)
+    draw.rounded_rectangle(box, radius=7, fill=fill, outline=COLORS["wall"], width=2)
+    draw.text(
+        ((left + right) / 2, (top + bottom) / 2),
+        label,
+        font=font(17, True),
+        fill=COLORS["text"],
+        anchor="mm",
+        align="center",
     )
 
 
-def label_center(draw, xy, text, size=22, fill=COLORS["text"]):
-    f = font(size, True)
-    bounds = draw.textbbox((0, 0), text, font=f)
-    x = (xy[0] + xy[2] - (bounds[2] - bounds[0])) / 2
-    y = (xy[1] + xy[3] - (bounds[3] - bounds[1])) / 2
-    draw.text((x, y), text, font=f, fill=fill)
-
-
-def fixture(draw, left, bottom, item):
-    x, y, w, d = item["rect"]
-    xy = local_box(left, bottom, x, y, w, d)
-    box(draw, xy, COLORS[item["kind"]], width=2)
-    label_center(draw, xy, item["label"], 18)
-
-    clearance = item.get("clearance")
-    if clearance:
-        cx, cy, cw, cd, quality = clearance
-        cxy = local_box(left, bottom, cx, cy, cw, cd)
-        color = COLORS["clear_comfort"] if quality == "comfort" else COLORS["clear_min"]
-        draw.rectangle(cxy, outline=color, width=4)
-
-
-def dashed_line(draw, points, fill, width=3, dash=12, gap=8):
-    for start, end in zip(points, points[1:]):
+def dashed_line(draw, coordinates, fill, width=3, dash=11, gap=7):
+    for start, end in zip(coordinates, coordinates[1:]):
         x1, y1 = start
         x2, y2 = end
         length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** .5
@@ -100,384 +84,207 @@ def dashed_line(draw, points, fill, width=3, dash=12, gap=8):
             distance += dash + gap
 
 
-def draw_service_box(draw, left, bottom, room_width, room_depth, sides):
-    depth = .08
-    for side in sides:
-        if side == "west":
-            rect = local_box(left, bottom, 0, 0, depth, room_depth)
-        elif side == "east":
-            rect = local_box(left, bottom, room_width - depth, 0, depth, room_depth)
-        elif side == "south":
-            rect = local_box(left, bottom, 0, 0, room_width, depth)
-        else:
-            rect = local_box(left, bottom, 0, room_depth - depth, room_width, depth)
-        draw.rectangle(rect, fill=COLORS["service_box"], outline=COLORS["door"], width=1)
+def connection_point(draw, origin, x, y, label):
+    px, py = point(origin, x, y)
+    draw.ellipse((px - 9, py - 9, px + 9, py + 9), fill=COLORS["paper"], outline=COLORS["waste"], width=3)
+    draw.text((px, py), label, font=font(9, True), fill=COLORS["waste"], anchor="mm")
 
 
-def draw_new_service_routes(draw, left, bottom, fixtures, stack):
-    stack_px = (left + stack[0] * SCALE, bottom - stack[1] * SCALE)
-    trunk_y = bottom - 1.29 * SCALE
-    trunk_start = left + .10 * SCALE
-    draw.line((trunk_start, trunk_y, stack_px[0], trunk_y),
-              fill=COLORS["drain"], width=5)
-    draw.line((stack_px[0], trunk_y, stack_px[0], stack_px[1]),
-              fill=COLORS["drain"], width=5)
-    initials = {"shower": "P", "basin": "L", "wc": "WC", "laundry": "W/D", "bath": "B"}
-    markers = []
-    for entry in fixtures:
-        x, y, w, d = entry["rect"]
-        start = (left + (x + w / 2) * SCALE, bottom - (y + d / 2) * SCALE)
-        dashed_line(draw, [start, (start[0], trunk_y)], COLORS["drain"], width=3)
-        markers.append(((start[0], trunk_y), initials.get(entry["kind"], "?")))
-    return markers
-
-
-def connection_point(draw, point, label):
-    px, py = point
-    draw.ellipse((px - 11, py - 11, px + 11, py + 11),
-                 fill=COLORS["paper"], outline=COLORS["drain"], width=3)
-    draw.text((px, py), label, font=font(11, True), fill=COLORS["warning"], anchor="mm")
-
-
-def draw_box_detail(draw, x, y):
-    """Cross-section of the surface service box used instead of floor routing."""
-    draw.text((x, y), "SERVICE BOX - TYPICAL SECTION (no pipes in the floor)",
-              font=font(24, True), fill=COLORS["text"])
-    top = y + 45
-    wall_x = x + 20
-    draw.rectangle((wall_x, top, wall_x + 55, top + 300),
-                   fill="#d9d3c6", outline=COLORS["wall"], width=3)
-    for offset in range(0, 300, 22):
-        draw.line((wall_x, top + offset, wall_x + 55, top + offset + 18),
-                  fill=COLORS["muted"], width=1)
-    box_left = wall_x + 55
-    draw.rectangle((box_left, top + 40, box_left + 210, top + 300),
-                   fill=COLORS["service_box"], outline=COLORS["door"], width=3)
-    draw.ellipse((box_left + 30, top + 175, box_left + 180, top + 285),
-                 fill=COLORS["paper"], outline=COLORS["drain"], width=4)
-    draw.text((box_left + 105, top + 230), "DN110/50", font=font(15, True),
-              fill=COLORS["warning"], anchor="mm")
-    for index, (cx, temp) in enumerate(((box_left + 60, "ZW"), (box_left + 150, "CW"))):
-        draw.ellipse((cx - 22, top + 80, cx + 22, top + 124),
-                     fill=COLORS["paper"], outline=COLORS["water"], width=4)
-        draw.text((cx, top + 102), temp, font=font(14, True),
-                  fill=COLORS["water"], anchor="mm")
-    draw.line((box_left, top + 300, box_left + 210, top + 300),
-              fill=COLORS["wall"], width=5)
-    draw.text((box_left + 240, top + 40),
-              "Tiled plasterboard / brick casing on the wall face.",
-              font=font(19), fill=COLORS["muted"])
-    draw.text((box_left + 240, top + 70),
-              "Waste DN110 (WC) or DN50 (basin, shower, W/D) at the bottom,",
-              font=font(19), fill=COLORS["muted"])
-    draw.text((box_left + 240, top + 100),
-              "kept in continuous gravity fall towards SH_san.",
-              font=font(19), fill=COLORS["muted"])
-    draw.text((box_left + 240, top + 140),
-              "Cold (ZW) and hot (CW) water run above the waste,",
-              font=font(19), fill=COLORS["muted"])
-    draw.text((box_left + 240, top + 170),
-              "insulated, with an access/inspection panel at each branch.",
-              font=font(19), fill=COLORS["muted"])
-    draw.text((box_left + 240, top + 215),
-              "Indicative box envelope: approx. 250 mm deep x 350 mm high;",
-              font=font(19), fill=COLORS["warning"])
-    draw.text((box_left + 240, top + 245),
-              "confirm after pipe sizing, falls and product selection.",
-              font=font(19), fill=COLORS["warning"])
-
-
-def draw_old_service_connections(draw, left, bottom, fixtures):
-    terminals = {
-        "bath": ((.06, .50), "B"),
-        "basin": ((.06, 1.495), "L"),
-        "wc": ((.60, 2.93), "WC"),
-        "laundry": ((.06, 1.495), None),
-    }
-    for entry in fixtures:
-        if entry["kind"] not in terminals:
-            continue
-        (tx, ty), _label = terminals[entry["kind"]]
-        x, y, w, d = entry["rect"]
-        start = (left + (x + w / 2) * SCALE, bottom - (y + d / 2) * SCALE)
-        terminal = (left + tx * SCALE, bottom - ty * SCALE)
-        distances = {
-            "west": x + w / 2,
-            "east": 1.92 - (x + w / 2),
-            "south": y + d / 2,
-            "north": 2.99 - (y + d / 2),
-        }
-        side = min(distances, key=distances.get)
-        if side == "west":
-            edge = (left + .04 * SCALE, start[1])
-            path = [start, edge, (edge[0], terminal[1]), terminal]
-        elif side == "east":
-            edge = (left + 1.88 * SCALE, start[1])
-            corner = (edge[0], bottom - 2.95 * SCALE)
-            path = [start, edge, corner, (terminal[0], corner[1]), terminal]
-        elif side == "south":
-            edge = (start[0], bottom - .04 * SCALE)
-            corner = (left + .04 * SCALE, edge[1])
-            path = [start, edge, corner, (corner[0], terminal[1]), terminal]
-        else:
-            edge = (start[0], bottom - 2.95 * SCALE)
-            path = [start, edge, (terminal[0], edge[1]), terminal]
-        dashed_line(draw, path, COLORS["drain"], width=3)
-        if entry["kind"] != "wc":
-            draw.line(path, fill=COLORS["water"], width=2)
-    markers = []
-    for (tx, ty), label in terminals.values():
-        if not label:
-            continue
-        markers.append(((left + tx * SCALE, bottom - ty * SCALE), label))
-    return markers
-
-
-def draw_door(draw, room, left, bottom):
-    if room == "old":
-        y0 = bottom - 1.945 * SCALE
-        y1 = bottom - 1.045 * SCALE
-        draw.line((left + 1.92 * SCALE, y0, left + 1.92 * SCALE, y1),
-                  fill=COLORS["paper"], width=10)
-        draw.line((left + 1.92 * SCALE, y0, left + 1.02 * SCALE, y0),
-                  fill=COLORS["door"], width=5)
-        draw.arc((left + 1.02 * SCALE, y0, left + 1.92 * SCALE, y0 + .90 * SCALE),
-                 270, 360, fill=COLORS["door"], width=3)
-    else:
-        x0 = left + .10 * SCALE
-        x1 = left + .90 * SCALE
-        draw.line((x0, bottom, x1, bottom), fill=COLORS["paper"], width=10)
-        draw.line((x0, bottom, x0, bottom + .80 * SCALE), fill=COLORS["door"], width=5)
-        draw.arc((x0, bottom, x1, bottom + .80 * SCALE), 0, 90,
-                 fill=COLORS["door"], width=3)
-
-
-def draw_old_room(draw, fixtures):
-    left = OLD_LEFT
-    bottom = ROOM_TOP + 2.99 * SCALE
-    room = local_box(left, bottom, 0, 0, 1.92, 2.99)
-    draw.rectangle(room, fill=COLORS["room"], outline=COLORS["wall"], width=9)
-    draw_service_box(draw, left, bottom, 1.92, 2.99,
-                     ("west", "north", "east", "south"))
-    draw_door(draw, "old", left, bottom)
-    markers = draw_old_service_connections(draw, left, bottom, fixtures)
-    for item in fixtures:
-        fixture(draw, left, bottom, item)
-    for point, label in markers:
-        connection_point(draw, point, label)
-    draw.text((left, ROOM_TOP - 88), "OLD BATHROOM  1.92 x 2.99 m",
-              font=font(28, True), fill=COLORS["text"])
-    draw.text((left, ROOM_TOP - 50), "Surface routes in perimeter wall/plinth box to surveyed points",
-              font=font(19), fill=COLORS["muted"])
-    return bottom
-
-
-def draw_new_room(draw, fixtures):
-    left = NEW_LEFT
-    bottom = ROOM_TOP + 1.35 * SCALE
-    polygon = [
-        (left, bottom),
-        (left + 3.38 * SCALE, bottom),
-        (left + 3.38 * SCALE, bottom - .39 * SCALE),
-        (left + 3.70 * SCALE, bottom - .39 * SCALE),
-        (left + 3.70 * SCALE, bottom - 1.35 * SCALE),
-        (left, bottom - 1.35 * SCALE),
+def old_pipe_routes(draw, origin):
+    west_x = .055
+    north_y = 2.935
+    box = [
+        point(origin, 0, 0),
+        point(origin, .08, 0),
+        point(origin, .08, 2.91),
+        point(origin, 1.92, 2.91),
+        point(origin, 1.92, 2.99),
+        point(origin, 0, 2.99),
     ]
-    draw.polygon(polygon, fill=COLORS["room"], outline=COLORS["wall"])
-    draw.line(polygon + [polygon[0]], fill=COLORS["wall"], width=9, joint="curve")
-    draw_service_box(draw, left, bottom, 3.38, 1.35, ("north",))
-    stack = local_box(left, bottom, 3.38, 0, .32, .39)
-    draw.rectangle(stack, fill=COLORS["stack"], outline=COLORS["wall"], width=2)
-    label_center(draw, stack, "S", 18, "white")
-    draw_door(draw, "new", left, bottom)
-    markers = draw_new_service_routes(draw, left, bottom, fixtures, (3.54, .195))
-    for item in fixtures:
-        fixture(draw, left, bottom, item)
-    for point, label in markers:
-        connection_point(draw, point, label)
+    draw.polygon(box, fill=COLORS["service_box"])
 
-    water_y = bottom - 1.22 * SCALE
-    draw.line((left - 55, water_y, left + 3.38 * SCALE, water_y),
-              fill=COLORS["water"], width=5)
-    draw.polygon([(left - 55, water_y), (left - 35, water_y - 10),
-                  (left - 35, water_y + 10)], fill=COLORS["water"])
-    draw.text((left, ROOM_TOP - 88), "NEW BATHROOM  3.38 x 1.35 m",
-              font=font(28, True), fill=COLORS["text"])
-    draw.text((left, ROOM_TOP - 50), "All new pipes in north-wall service box; waste falls east to SH_san",
-              font=font(19), fill=COLORS["muted"])
-    return bottom
+    bath = point(origin, 0, .50)
+    basin = point(origin, 0, 1.495)
+    wc = point(origin, .60, 2.99)
+    washer = point(origin, 1.42, 2.69)
+    west_basin = point(origin, west_x, 1.495)
+    north_basin = point(origin, west_x, north_y)
+    north_washer = point(origin, 1.42, north_y)
+
+    draw.line((bath, point(origin, .16, .50)), fill=COLORS["water"], width=4)
+    dashed_line(draw, [bath, point(origin, .16, .50)], COLORS["waste"], width=3)
+    draw.line((basin, point(origin, .16, 1.495)), fill=COLORS["water"], width=4)
+    dashed_line(draw, [basin, point(origin, .16, 1.495)], COLORS["waste"], width=3)
+    dashed_line(draw, [wc, point(origin, .50, 2.82)], COLORS["waste"], width=4)
+    draw.line((west_basin, north_basin, north_washer, washer), fill=COLORS["water"], width=4)
+    dashed_line(draw, [west_basin, north_basin, north_washer, washer], COLORS["waste"], width=3)
+
+def horizontal_dimension(draw, origin, x1, x2, y, label):
+    start = point(origin, x1, y)
+    end = point(origin, x2, y)
+    draw.line((start, end), fill=COLORS["dimension"], width=2)
+    for x, _ in (start, end):
+        draw.line((x, start[1] - 8, x, start[1] + 8), fill=COLORS["dimension"], width=2)
+    draw.text(
+        ((start[0] + end[0]) / 2, start[1] - 9),
+        label,
+        font=font(15, True),
+        fill=COLORS["dimension"],
+        anchor="ms",
+    )
 
 
-def item(kind, label, rect, clearance=None):
-    return {"kind": kind, "label": label, "rect": rect, "clearance": clearance}
+def vertical_dimension(draw, origin, x, y1, y2, label):
+    start = point(origin, x, y1)
+    end = point(origin, x, y2)
+    draw.line((start, end), fill=COLORS["dimension"], width=2)
+    for _, y in (start, end):
+        draw.line((start[0] - 8, y, start[0] + 8, y), fill=COLORS["dimension"], width=2)
+    draw.text(
+        (start[0] - 10, (start[1] + end[1]) / 2),
+        label,
+        font=font(15, True),
+        fill=COLORS["dimension"],
+        anchor="ms",
+    )
 
 
-LAYOUTS = [
-    {
-        "title": "01 - BALANCED / RECOMMENDED",
-        "rating": "Best overall: comfortable old bathroom; compact but workable new bathroom.",
+def old_door(draw, origin):
+    lower = point(origin, 1.92, 1.045)
+    upper = point(origin, 1.92, 1.945)
+    draw.line((lower, upper), fill=COLORS["room"], width=14)
+    leaf_end = point(origin, 2.82, 1.045)
+    draw.line((lower, leaf_end), fill=COLORS["door"], width=4)
+    draw.arc(
+        (lower[0] - .90 * SCALE, lower[1] - .90 * SCALE, lower[0] + .90 * SCALE, lower[1] + .90 * SCALE),
+        270,
+        360,
+        fill=COLORS["door"],
+        width=3,
+    )
+    draw.text((lower[0] + 112, lower[1] - 10), "90 cm plan opening", font=font(14), fill=COLORS["muted"])
+
+
+def new_door(draw, origin):
+    left = point(origin, .10, 0)
+    right = point(origin, .90, 0)
+    draw.line((left, right), fill=COLORS["room"], width=14)
+    leaf_end = point(origin, .10, -.80)
+    draw.line((left, leaf_end), fill=COLORS["door"], width=4)
+    draw.arc(
+        (left[0], left[1], left[0] + .80 * SCALE, left[1] + .80 * SCALE),
+        0,
+        90,
+        fill=COLORS["door"],
+        width=3,
+    )
+    draw.text(((left[0] + right[0]) / 2, left[1] + 26), "80 cm door", font=font(14), fill=COLORS["muted"], anchor="ms")
+
+
+def draw_old_bathroom(draw):
+    origin = (150, 1010)
+    polygon(draw, origin, [(0, 0), (1.92, 0), (1.92, 2.99), (0, 2.99)], COLORS["room"])
+    old_door(draw, origin)
+    old_pipe_routes(draw, origin)
+
+    rectangle(draw, origin, 0, 0, 1.70, .75, COLORS["bath"], "BATH\n170 × 75")
+    rectangle(draw, origin, .30, 2.29, .40, .70, COLORS["wc"], "WC\n40 × 70")
+    rectangle(draw, origin, 1.12, 2.39, .60, .60, COLORS["laundry"], "WASHER\n60 × 60")
+    rectangle(draw, origin, 0, 1.22, .45, .55, COLORS["basin"], "BASIN\n45 × 55")
+    connection_point(draw, origin, 0, .50, "B")
+    connection_point(draw, origin, 0, 1.495, "L")
+    connection_point(draw, origin, .60, 2.99, "WC")
+
+    horizontal_dimension(draw, origin, 0, 1.92, -.16, "1.92 m CLEAR INTERNAL")
+    vertical_dimension(draw, origin, -.16, 0, 2.99, "2.99 m")
+    horizontal_dimension(draw, origin, 0, 1.70, .91, "170")
+    horizontal_dimension(draw, origin, 1.70, 1.92, .91, "22 cm")
+
+    draw.text((150, 105), "EXISTING BATHROOM", font=font(28, True), fill=COLORS["text"])
+    draw.text((150, 142), "Plan clear polygon: 1.92 × 2.99 m · 5.74 m²", font=font(18), fill=COLORS["muted"])
+    draw.line((150, 170, 210, 170), fill=COLORS["water"], width=4)
+    draw.text((220, 170), "water", font=font(14), fill=COLORS["muted"], anchor="lm")
+    dashed_line(draw, [(300, 170), (360, 170)], COLORS["waste"], width=3)
+    draw.text((370, 170), "waste", font=font(14), fill=COLORS["muted"], anchor="lm")
+    draw.rectangle((450, 159, 480, 181), fill=COLORS["service_box"], outline=COLORS["door"])
+    draw.text((490, 170), "boxed perimeter route", font=font(14), fill=COLORS["muted"], anchor="lm")
+
+
+def draw_new_bathroom(draw):
+    origin = (920, 650)
+    room = [(0, 0), (3.38, 0), (3.38, .39), (3.70, .39), (3.70, 1.35), (0, 1.35)]
+    polygon(draw, origin, room, COLORS["room"])
+    new_door(draw, origin)
+
+    rectangle(draw, origin, 1.02, 0, .55, .45, COLORS["basin"], "BASIN\n55 × 45")
+    rectangle(draw, origin, 1.78, 0, .40, .70, COLORS["wc"], "WC\n40 × 70")
+    rectangle(draw, origin, 2.80, .45, .90, .90, COLORS["shower"], "SHOWER\n90 × 90")
+    rectangle(draw, origin, 3.38, 0, .32, .39, COLORS["shaft"], "SH_san\n32 × 39")
+
+    horizontal_dimension(draw, origin, 0, 3.38, -.16, "3.38 m CLEAR TO SH_san")
+    horizontal_dimension(draw, origin, 0, 3.70, 1.53, "3.70 m CLEAR NORTH FACE")
+    vertical_dimension(draw, origin, -.16, 0, 1.35, "1.35 m")
+    vertical_dimension(draw, origin, 3.86, 0, .39, "39 cm")
+    vertical_dimension(draw, origin, 3.86, .39, 1.35, "96 cm")
+    horizontal_dimension(draw, origin, 3.38, 3.70, .30, "32 cm")
+
+    draw.text((920, 105), "NEW BATHROOM", font=font(28, True), fill=COLORS["text"])
+    draw.text(
+        (920, 142),
+        "Plan clear polygon: 4.87 m² with fixed SH_san notch",
+        font=font(18),
+        fill=COLORS["muted"],
+    )
+    draw.text(
+        (920, 182),
+        "South wall: basin → WC. Shower occupies the corner directly above SH_san.",
+        font=font(17),
+        fill=COLORS["muted"],
+    )
+
+
+def validate():
+    fixtures = {
         "old": [
-            item("bath", "BATH 170x75", (.10, .08, 1.70, .75), (.10, .83, 1.70, .65, "comfort")),
-            item("wc", "WC", (.40, 2.29, .40, .70), (.32, 1.69, .56, .60, "comfort")),
-            item("basin", "BASIN", (.00, 1.22, .45, .55), (.45, 1.17, .70, .65, "comfort")),
+            (0, 0, 1.70, .75),
+            (.30, 2.29, .40, .70),
+            (1.12, 2.39, .60, .60),
+            (0, 1.22, .45, .55),
         ],
         "new": [
-            item("laundry", "W/D", (.05, .75, .60, .60), (.05, .05, .60, .70, "comfort")),
-            item("basin", "BASIN", (.78, .90, .55, .45), (.78, .25, .55, .65, "comfort")),
-            item("wc", "WC", (1.50, .65, .40, .70), (1.42, .05, .56, .60, "comfort")),
-            item("shower", "SHOWER 90", (2.48, .45, .90, .90), (1.88, .45, .60, .90, "comfort")),
+            (1.02, 0, .55, .45),
+            (1.78, 0, .40, .70),
+            (2.80, .45, .90, .90),
         ],
-    },
-    {
-        "title": "02 - BASIN FIRST AT NEW ENTRY",
-        "rating": "Good daily access to the new basin; laundry remains away from the shower.",
-        "old": [
-            item("bath", "BATH 170x75", (.10, .08, 1.70, .75), (.10, .83, 1.70, .60, "comfort")),
-            item("wc", "WC", (.40, 2.29, .40, .70), (.32, 1.69, .56, .60, "comfort")),
-            item("basin", "BASIN", (.00, 1.22, .45, .55), (.45, 1.17, .70, .65, "comfort")),
-        ],
-        "new": [
-            item("basin", "BASIN", (.05, .90, .55, .45), (.05, .25, .55, .65, "comfort")),
-            item("laundry", "W/D", (.72, .75, .60, .60), (.72, .10, .60, .65, "comfort")),
-            item("wc", "WC", (1.50, .65, .40, .70), (1.42, .05, .56, .60, "comfort")),
-            item("shower", "SHOWER 90", (2.48, .45, .90, .90), (1.88, .45, .60, .90, "comfort")),
-        ],
-    },
-    {
-        "title": "03 - LAUNDRY IN OLD BATHROOM",
-        "rating": "New bathroom feels calmer; old bathroom circulation is only minimum.",
-        "old": [
-            item("bath", "BATH 170x75", (.05, .10, .75, 1.70), (.80, .10, .62, 1.70, "minimum")),
-            item("laundry", "W/D", (.05, 2.02, .60, .60), (.65, 2.02, .60, .60, "minimum")),
-            item("wc", "WC", (.82, 2.29, .70, .40), (.82, 1.69, .70, .60, "minimum")),
-            item("basin", "BASIN", (1.37, .10, .45, .55), (.77, .10, .60, .55, "minimum")),
-        ],
-        "new": [
-            item("basin", "BASIN", (.18, .90, .60, .45), (.18, .20, .60, .70, "comfort")),
-            item("wc", "WC", (1.30, .65, .40, .70), (1.22, .05, .56, .60, "comfort")),
-            item("shower", "SHOWER 90", (2.48, .45, .90, .90), (1.78, .45, .70, .90, "comfort")),
-        ],
-    },
-    {
-        "title": "04 - SHOWER OLD / BATH NEW",
-        "rating": "Separates quick shower from bathing; new-bath aisle is minimum beside the tub.",
-        "old": [
-            item("shower", "SHOWER 90", (.05, .05, .90, .90), (.95, .05, .65, .90, "comfort")),
-            item("laundry", "W/D", (.05, 1.28, .60, .60), (.65, 1.28, .65, .60, "comfort")),
-            item("wc", "WC", (.30, 2.29, .70, .40), (1.00, 2.12, .65, .65, "comfort")),
-            item("basin", "BASIN", (1.30, 2.49, .52, .45), (1.20, 1.84, .62, .65, "comfort")),
-        ],
-        "new": [
-            item("basin", "BASIN", (.05, .90, .55, .45), (.05, .25, .55, .65, "comfort")),
-            item("wc", "WC", (.72, .65, .40, .70), (.64, .05, .56, .60, "comfort")),
-            item("bath", "BATH 170x75", (1.50, .60, 1.70, .75), (1.50, .05, 1.70, .55, "minimum")),
-        ],
-    },
-    {
-        "title": "05 - SHOWER + LAUNDRY OLD",
-        "rating": "Most open new-bath entrance; old room works, but appliance access is tighter.",
-        "old": [
-            item("shower", "SHOWER 90", (.05, .05, .90, .90), (.95, .05, .60, .90, "comfort")),
-            item("laundry", "W/D", (.05, 1.22, .60, .60), (.65, 1.22, .60, .60, "minimum")),
-            item("wc", "WC", (.30, 2.29, .70, .40), (1.00, 2.10, .62, .65, "comfort")),
-            item("basin", "BASIN", (1.35, .10, .47, .55), (.75, .10, .60, .55, "minimum")),
-        ],
-        "new": [
-            item("basin", "BASIN", (.10, .90, .60, .45), (.10, .20, .60, .70, "comfort")),
-            item("wc", "WC", (.90, .65, .40, .70), (.82, .05, .56, .60, "comfort")),
-            item("bath", "BATH 170x75", (1.55, .60, 1.70, .75), (1.55, .05, 1.70, .55, "minimum")),
-        ],
-    },
-    {
-        "title": "06 - SHORTEST NEW DRAINAGE",
-        "rating": "Keeps shower and WC closest to the new riser; least tolerant of product-size changes.",
-        "old": [
-            item("bath", "BATH 170x75", (.10, .08, 1.70, .75), (.10, .83, 1.70, .65, "comfort")),
-            item("wc", "WC", (.40, 2.29, .40, .70), (.32, 1.69, .56, .60, "comfort")),
-            item("basin", "BASIN", (.00, 1.22, .45, .55), (.45, 1.17, .70, .65, "comfort")),
-        ],
-        "new": [
-            item("laundry", "W/D", (.05, .75, .60, .60), (.05, .05, .60, .70, "comfort")),
-            item("basin", "BASIN", (.76, .90, .50, .45), (.76, .25, .50, .65, "comfort")),
-            item("wc", "WC", (1.38, .65, .40, .70), (1.30, .05, .56, .60, "comfort")),
-            item("shower", "SHOWER 90", (2.48, .45, .90, .90), (1.88, .45, .60, .90, "comfort")),
-        ],
-    },
-]
-
-
-def draw_legend(draw):
-    y = 1300
-    draw.text((170, y), "CLEARANCE GUIDE", font=font(24, True), fill=COLORS["text"])
-    draw.rectangle((170, y + 42, 225, y + 77), outline=COLORS["clear_comfort"], width=4)
-    draw.text((240, y + 43), "comfortable target: generally 65-75 cm",
-              font=font(20), fill=COLORS["muted"])
-    draw.rectangle((650, y + 42, 705, y + 77), outline=COLORS["clear_min"], width=4)
-    draw.text((720, y + 43), "minimum / tight: generally 55-60 cm",
-              font=font(20), fill=COLORS["muted"])
-    draw.rectangle((1120, y + 42, 1175, y + 77), fill=COLORS["service_box"],
-                   outline=COLORS["door"])
-    draw.text((1190, y + 43), "wall / plinth service box", font=font(20), fill=COLORS["muted"])
-    draw.line((1510, y + 60, 1580, y + 60), fill=COLORS["water"], width=5)
-    draw.text((1595, y + 43), "water", font=font(20), fill=COLORS["muted"])
-    dashed_line(draw, [(1715, y + 60), (1785, y + 60)], COLORS["drain"], width=3)
-    draw.text((1800, y + 43), "waste", font=font(20), fill=COLORS["muted"])
-    draw.rectangle((1930, y + 42, 1985, y + 77), fill=COLORS["stack"])
-    draw.text((2000, y + 43), "SH_san", font=font(20), fill=COLORS["muted"])
-    connection_point(draw, (182, y + 120), "L")
-    draw.text((210, y + 108),
-              "connection point: fixture waste/water branch position on the box run",
-              font=font(19), fill=COLORS["muted"])
-    draw.text((170, y + 145),
-              "Surveyed old-bath terminals: B bath west +0.50 m (W h=.30 / S floor); "
-              "L basin mid-west (W h=.85 / S h=.35); WC north +0.60 m (S height verify).",
-              font=font(17), fill=COLORS["muted"])
-    draw.text((170, y + 172),
-              "No new pipes in the floor: use accessible low wall/plinth boxes for waste and a "
-              "service wall/upper box for water; keep gravity fall continuously to SH_san.",
-              font=font(17), fill=COLORS["muted"])
-    draw.text((170, y + 199),
-              "Concept only. Size the box after selecting DN110 WC / DN50 branchwork and checking falls, "
-              "existing connection inverts, door swings, products, and Polish requirements.",
-              font=font(17), fill=COLORS["warning"])
-
-
-def render_layout(index, layout):
-    image = Image.new("RGB", (2200, 1620), COLORS["background"])
-    draw = ImageDraw.Draw(image)
-    draw.rounded_rectangle((45, 35, 2155, 1580), radius=24, fill=COLORS["paper"])
-    draw.text((110, 70), layout["title"], font=font(40, True), fill=COLORS["text"])
-    draw.text((110, 125), layout["rating"], font=font(23), fill=COLORS["muted"])
-    draw_old_room(draw, layout["old"])
-    draw_new_room(draw, layout["new"])
-    draw_box_detail(draw, NEW_LEFT, 900)
-    draw_legend(draw)
-    path = OUT / f"{index:02d}_{layout['title'].split(' - ', 1)[1].lower().replace(' ', '_').replace('/', '_')}.png"
-    image.save(path, optimize=True)
-    return image, path
-
-
-def make_contact_sheet(images):
-    thumb_w, thumb_h = 1100, 810
-    sheet = Image.new("RGB", (2200, 2430), COLORS["background"])
-    for index, image in enumerate(images):
-        thumb = image.resize((thumb_w, thumb_h), Image.Resampling.LANCZOS)
-        sheet.paste(thumb, ((index % 2) * thumb_w, (index // 2) * thumb_h))
-    path = OUT / "bathroom_layouts_overview.png"
-    sheet.save(path, optimize=True)
-    return path
+    }
+    for x, y, width, depth in fixtures["old"]:
+        assert x >= 0 and y >= 0 and x + width <= 1.92 and y + depth <= 2.99
+    for x, y, width, depth in fixtures["new"]:
+        assert x >= 0 and y >= 0 and y + depth <= 1.35
+        assert x + width <= (3.70 if y >= .39 else 3.38)
+    for room in fixtures.values():
+        for index, (ax, ay, aw, ad) in enumerate(room):
+            for bx, by, bw, bd in room[index + 1:]:
+                assert not (ax < bx + bw and ax + aw > bx and ay < by + bd and ay + ad > by)
 
 
 def main():
-    OUT.mkdir(parents=True, exist_ok=True)
-    images = []
-    paths = []
-    for index, layout in enumerate(LAYOUTS, 1):
-        image, path = render_layout(index, layout)
-        images.append(image)
-        paths.append(path)
-    overview = make_contact_sheet(images)
-    print(f"Generated {len(paths)} layouts and overview: {overview}")
+    validate()
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    image = Image.new("RGB", (2000, 1180), COLORS["background"])
+    draw = ImageDraw.Draw(image)
+    draw.rounded_rectangle((35, 30, 1965, 1145), radius=24, fill=COLORS["paper"])
+    draw.text((90, 50), "BATHROOM FIXTURE STUDY — FIXED PLAN GEOMETRY", font=font(34, True), fill=COLORS["text"])
+    draw.text(
+        (90, 1090),
+        "Walls, internal faces, doors and shafts are unchanged. Dimensions are metres unless marked cm.",
+        font=font(18),
+        fill=COLORS["muted"],
+    )
+    draw_old_bathroom(draw)
+    draw_new_bathroom(draw)
+    image.save(OUT, optimize=True)
+    print(f"Generated plan-based bathroom layout: {OUT}")
 
 
 if __name__ == "__main__":

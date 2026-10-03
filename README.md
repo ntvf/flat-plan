@@ -38,8 +38,8 @@ authoritative model data.
   A3 portrait @ 1:50 with the Polish titleblock in `data/titleblocks/A3-PL.svg`.
 - `scripts/render_textured_views.py` — renders three fixed target-state interior
   views and saves the prepared Blender scene.
-- `scripts/sketch_bathroom_layouts.py` — generates six comparative fixture-layout
-  concepts for the existing and proposed bathrooms, with all proposed water
+- `scripts/sketch_bathroom_layouts.py` — generates the working balanced fixture
+  layout for the existing and proposed bathrooms, with all proposed water
   and waste routes kept out of the floor in accessible wall/plinth boxes.
 
 ## Rebuild after any YAML edit
@@ -95,8 +95,8 @@ python3 scripts/sketch_bathroom_layouts.py
   separate target-state A3 @ 1:50 plan.
 - `exports/renders/target/` — three fixed textured PNG views and the generated
   Blender scene.
-- `exports/concepts/bathroom_layouts/` — six fixture-layout studies and a
-  comparison overview, showing boxed surface pipe routes to the surveyed
+- `exports/concepts/bathroom_layouts/balanced.png` — the working fixture-layout
+  study, showing boxed surface pipe routes to the surveyed
   connection points and `SH_san`; these have not yet been adopted into
   `data/target.yaml`.
 
@@ -117,8 +117,8 @@ door assumption is an 0.80 m leaf opening outward into the corridor. The
 living-area AC moves to the new north partition with backing requirements and
 a modeled extension of the retained OB3 line set above the bathroom ceiling.
 
-Six bathroom fixture-layout concepts have been generated, but no option has
-been selected or promoted into the target model. Bathroom fixtures, hot/cold
+The balanced bathroom fixture-layout concept is being refined iteratively and
+has not been promoted into the target model. Bathroom fixtures, hot/cold
 water, sanitary drainage with verified falls and inverts, ventilation,
 penetrations, waterproofing, electrical changes, and finish zones are therefore
 not yet modeled.
