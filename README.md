@@ -14,11 +14,21 @@ retained geometry. Everything under `build/` and `exports/` is generated.
 Written dimensions from the survey are authoritative; the photo is used for
 topology and positions.
 
-Survey scan: `7106fea6-ce4f-4979-8eac-ebf5f4a6972b.jfif` (to scale, ~99 px/m).
+Survey scan: `data/survey-plan.jfif` (to scale, ~99 px/m).
 Concept studies under `exports/concepts/` are generated design aids, not
 authoritative model data.
 
-## Scripts
+## Project structure
+
+```text
+data/           Authoritative models, survey, and drawing templates
+scripts/        Model validation, IFC generation, drawings, and visualisations
+tests/          Model-loading regression tests
+build/          Generated intermediate data (ignored)
+exports/        Generated IFC, drawings, checks, and renders (ignored)
+```
+
+## Main scripts
 
 - `scripts/check_layout.py` — fast PIL verification render of the YAML.
 - `scripts/overlay_scan.py` — overlays the model on the survey photo, auto-fits
@@ -36,13 +46,16 @@ authoritative model data.
   renders.
 - `scripts/export_bonsai_drawings.py` — Bonsai-native drawings/sheets → SVG + PDF,
   A3 portrait @ 1:50 with the Polish titleblock in `data/titleblocks/A3-PL.svg`.
-- `scripts/render_textured_views.py` — renders three fixed target-state interior
+- `scripts/render_textured_views.py` — renders five fixed target-state interior
   views and saves the prepared Blender scene.
 - `scripts/sketch_bathroom_layouts.py` — generates the working balanced fixture
   layout for the existing and proposed bathrooms, with all proposed water
   and waste routes kept out of the floor in accessible wall/plinth boxes.
 
-## Rebuild after any YAML edit
+`detect_windows.py` is a survey-transcription utility rather than part of the
+normal build. The other scripts are wired into the Make targets below.
+
+## Build
 
 Install the host-Python dependencies once with:
 
@@ -50,41 +63,32 @@ Install the host-Python dependencies once with:
 python3 -m pip install -r requirements.txt
 ```
 
-Then rebuild the complete as-is deliverable with:
+List the supported workflows with `make help`. The primary builds are:
 
 ```sh
 make as-is
+make target
 ```
 
-The individual commands remain:
+Additional outputs are explicit:
 
 ```sh
-python3 scripts/check_layout.py data/as_is.yaml exports/check/as_is_transcription_check.png
-python3 scripts/yaml_to_json.py data/as_is.yaml build/as_is.json
-/snap/bin/blender -b --python scripts/build_ifc.py -- build/as_is.json exports/as_is.ifc
-python3 scripts/overlay_scan.py data/as_is.yaml 7106fea6-ce4f-4979-8eac-ebf5f4a6972b.jfif exports/check/overlay_on_scan.png
-/snap/bin/blender -b --python scripts/export_bonsai_drawings.py -- exports/as_is.ifc exports/drawings/as_is build/as_is.json
+make concepts
+make renders
 ```
 
 Blender must be `/snap/bin/blender` (5.2 LTS, has Bonsai 0.8.6); `/usr/bin/blender`
 has no Bonsai.
 
-`make STATE=<name> model` builds another state from `data/<name>.yaml`.
-`make target` builds the renovated model and its sheet under
-`exports/drawings/target/`, separately from the as-is deliverables.
-
-Generate the target visualisations and bathroom layout studies separately:
-
-```sh
-/snap/bin/blender -b --python scripts/render_textured_views.py -- exports/target.ifc exports/renders/target
-python3 scripts/sketch_bathroom_layouts.py
-```
+`make STATE=<name> model` builds a single state from `data/<name>.yaml`.
+Use `make clean` to remove all reproducible intermediates and exports.
 
 ## Outputs
 
-- `exports/as_is.ifc` — 20 walls, 3 doors, 5 unfilled interior openings,
-  5 windows, and 6 spaces, plus surveyed equipment, AC routing, service
-  terminals, floor buildup, shafts, and brick-tile wall finishes.
+- `exports/as_is.ifc` — 20 walls, 8 modeled door leaves, 5 windows, and 6
+  spaces, plus the approved existing-bathroom fixtures and accessible service
+  boxes, surveyed equipment, AC routing, floor buildup, shafts, and wall
+  finishes.
 - `exports/target.ifc` — 22 walls, 9 doors, 5 windows, and 7 spaces; relocates
   the living-area AC and extends its retained line set above the new bathroom.
 - `exports/check/` — verification renders and photo overlay/diff.
@@ -93,12 +97,12 @@ python3 scripts/sketch_bathroom_layouts.py
   layout alongside.
 - `exports/drawings/target/sheets/A01 - RZUT - STAN PROJEKTOWANY.pdf` — the
   separate target-state A3 @ 1:50 plan.
-- `exports/renders/target/` — three fixed textured PNG views and the generated
+- `exports/renders/target/` — five fixed textured PNG views and the generated
   Blender scene.
 - `exports/concepts/bathroom_layouts/balanced.png` — the working fixture-layout
   study, showing boxed surface pipe routes to the surveyed
-  connection points and `SH_san`; these have not yet been adopted into
-  `data/target.yaml`.
+  connection points and `SH_san`; its fixture arrangement is adopted in the
+  authoritative models.
 
 ## Status
 
@@ -117,17 +121,19 @@ door assumption is an 0.80 m leaf opening outward into the corridor. The
 living-area AC moves to the new north partition with backing requirements and
 a modeled extension of the retained OB3 line set above the bathroom ceiling.
 
-The balanced bathroom fixture-layout concept is being refined iteratively and
-has not been promoted into the target model. Bathroom fixtures, hot/cold
-water, sanitary drainage with verified falls and inverts, ventilation,
-penetrations, waterproofing, electrical changes, and finish zones are therefore
-not yet modeled.
+The balanced bathroom fixture layout is promoted into the models. The existing
+bathroom contains the bath, basin, WC and washer; bathroom 9 contains the basin,
+WC and 90 × 90 shower. Accessible hot/cold water boxes, sanitary routes with
+nominal 2% falls, service terminals, and the extract route to `SH_vent` are
+modeled. Drain inverts, penetrations, fire stopping, waterproofing, electrical
+changes, and finish zones still require design or site verification.
 
 Also not yet done: as-is/target delta and work-package generation, bill of
 quantities per trade with contractor price columns, stable matched before/after
 renders, and the combined tender PDF package.
 
-The as-is interior entries are unfilled 0.90 m wall openings. Actual as-is
-doors are the entrance, balcony door OB2, and the east panel of the room 6
-corner glazing. Target interior door swing directions are inferred rather than
-surveyed and should be confirmed on site.
+Interior door leaves are modeled throughout with practical assumed swings:
+bathroom doors open outward, the storage leaf avoids the bathroom-door corridor
+swing, and bedroom leaves rest toward adjacent partitions. These directions
+are design assumptions rather than surveyed facts and must be confirmed before
+ordering.

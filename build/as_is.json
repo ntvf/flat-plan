@@ -5,7 +5,7 @@
     "state": "as_is",
     "sheet_name": "RZUT - STAN ISTNIEJĄCY",
     "sheet_description": "Inwentaryzacja mieszkania - rzut kondygnacji",
-    "source_survey": "7106fea6-ce4f-4979-8eac-ebf5f4a6972b.jfif",
+    "source_survey": "survey-plan.jfif",
     "stated_total_area": 95.0,
     "ceiling_height": 2.7
   },
@@ -477,6 +477,82 @@
         }
       ],
       "note": "beside the 4.12 m entrance wall; surveyed diameter, approximate height"
+    },
+    {
+      "id": "B4_BATH",
+      "name": "Wanna 170 x 75",
+      "ifc_class": "IfcSanitaryTerminal",
+      "category": "bath",
+      "at": [
+        0.4,
+        4.96,
+        0.0
+      ],
+      "size": [
+        1.7,
+        0.75,
+        0.55
+      ],
+      "room": 4,
+      "mounting": "floor",
+      "renovation_status": "existing"
+    },
+    {
+      "id": "B4_BASIN",
+      "name": "Umywalka 45 x 55",
+      "ifc_class": "IfcSanitaryTerminal",
+      "category": "basin",
+      "at": [
+        0.4,
+        6.18,
+        0.78
+      ],
+      "size": [
+        0.45,
+        0.55,
+        0.14
+      ],
+      "room": 4,
+      "mounting": "wall",
+      "renovation_status": "existing"
+    },
+    {
+      "id": "B4_WC",
+      "name": "Miska WC 40 x 70",
+      "ifc_class": "IfcSanitaryTerminal",
+      "category": "wc",
+      "at": [
+        0.7,
+        7.25,
+        0.0
+      ],
+      "size": [
+        0.4,
+        0.7,
+        0.78
+      ],
+      "room": 4,
+      "mounting": "floor",
+      "renovation_status": "existing"
+    },
+    {
+      "id": "B4_WASHER",
+      "name": "Pralka 60 x 60",
+      "ifc_class": "IfcElectricAppliance",
+      "category": "washer",
+      "at": [
+        1.52,
+        7.35,
+        0.0
+      ],
+      "size": [
+        0.6,
+        0.6,
+        0.85
+      ],
+      "room": 4,
+      "mounting": "floor",
+      "renovation_status": "existing"
     }
   ],
   "wall_finishes": [
@@ -616,6 +692,97 @@
         }
       ],
       "note": "existing concealed route; verify exact bends, pipe sizes and condensate fall on site"
+    },
+    {
+      "id": "B4_WATER_BOX",
+      "name": "Existing bathroom water distribution",
+      "ifc_class": "IfcPipeSegment",
+      "system": "hot_and_cold_water",
+      "nominal_diameter": 0.04,
+      "installation": "accessible_wall_box",
+      "renovation_status": "existing_layout_assumption",
+      "points": [
+        [
+          0.46,
+          5.46,
+          0.3
+        ],
+        [
+          0.46,
+          7.89,
+          0.3
+        ],
+        [
+          1.82,
+          7.89,
+          0.3
+        ],
+        [
+          1.82,
+          7.65,
+          0.3
+        ]
+      ],
+      "note": "approved balanced layout; accessible west/north perimeter box, exact concealed feeds to be verified"
+    },
+    {
+      "id": "B4_DRAIN_BOX",
+      "name": "Existing bathroom sanitary drainage",
+      "ifc_class": "IfcPipeSegment",
+      "system": "sanitary_drainage",
+      "nominal_diameter": 0.075,
+      "installation": "accessible_wall_plinth_box",
+      "renovation_status": "existing_layout_assumption",
+      "points": [
+        [
+          0.46,
+          5.46,
+          0.15
+        ],
+        [
+          0.46,
+          7.89,
+          0.15
+        ],
+        [
+          1.0,
+          7.89,
+          0.15
+        ],
+        [
+          1.0,
+          7.95,
+          0.15
+        ]
+      ],
+      "note": "approved balanced layout; bath and basin connect along west wall, final falls and invert to be verified"
+    },
+    {
+      "id": "B4_WASHER_SERVICES",
+      "name": "Existing washer services",
+      "ifc_class": "IfcPipeSegment",
+      "system": "water_and_sanitary_drainage",
+      "nominal_diameter": 0.05,
+      "installation": "accessible_wall_plinth_box",
+      "renovation_status": "existing_layout_assumption",
+      "points": [
+        [
+          1.82,
+          7.65,
+          0.2
+        ],
+        [
+          1.82,
+          7.89,
+          0.2
+        ],
+        [
+          0.46,
+          7.89,
+          0.2
+        ]
+      ],
+      "note": "approved balanced layout; combined route envelope only, individual pipe sizes to be designed"
     }
   ],
   "service_terminals": [
@@ -776,12 +943,12 @@
         0.1,
         0.9
       ],
-      "has_leaf": false,
+      "has_leaf": true,
       "swing": [
         "start",
-        "-"
+        "+"
       ],
-      "note": "centred in the bathroom east wall; unfilled opening in as-is state"
+      "note": "bathroom door opens outward for safety and clears the approved fixtures"
     },
     {
       "id": "D8",
@@ -793,12 +960,12 @@
         0.1,
         0.9
       ],
-      "has_leaf": false,
+      "has_leaf": true,
       "swing": [
-        "start",
-        "-"
+        "end",
+        "+"
       ],
-      "note": "centred in the storage west wall; unfilled opening in as-is state"
+      "note": "opens into storage against its north side, avoiding the bathroom-door corridor swing"
     },
     {
       "id": "D5",
@@ -810,12 +977,12 @@
         0.9,
         0.1
       ],
-      "has_leaf": false,
+      "has_leaf": true,
       "swing": [
-        "start",
+        "end",
         "-"
       ],
-      "note": "against the 5/6 partition; unfilled opening in as-is state"
+      "note": "opens into bedroom 5 toward the east partition"
     },
     {
       "id": "D6",
@@ -827,12 +994,12 @@
         0.9,
         0.1
       ],
-      "has_leaf": false,
+      "has_leaf": true,
       "swing": [
-        "end",
+        "start",
         "-"
       ],
-      "note": "against the 5/6 partition; unfilled opening in as-is state"
+      "note": "opens into bedroom 6 toward the west partition"
     },
     {
       "id": "D7",
@@ -844,12 +1011,12 @@
         0.1,
         0.9
       ],
-      "has_leaf": false,
+      "has_leaf": true,
       "swing": [
-        "start",
+        "end",
         "+"
       ],
-      "note": "opening ends at the south face of W_258; unfilled opening in as-is state"
+      "note": "opens into bedroom 7 against its north wall"
     }
   ],
   "openings": {
@@ -922,6 +1089,7 @@
       ],
       "sill": 0.9,
       "head": 2.2,
+      "window_type": "default",
       "room": 5
     },
     {
@@ -936,6 +1104,7 @@
       ],
       "sill": 0.0,
       "head": 2.2,
+      "window_type": "default",
       "room": 6,
       "note": "full-height south panel of the room 6 corner glazing"
     },
@@ -951,6 +1120,7 @@
       ],
       "sill": 0.0,
       "head": 2.2,
+      "window_type": "default",
       "room": 6,
       "ifc_class": "IfcDoor",
       "note": "door in east return wall, 0.15 before the OK7 corner"
@@ -967,6 +1137,7 @@
       ],
       "sill": 0.9,
       "head": 2.2,
+      "window_type": "default",
       "room": 7
     },
     {
@@ -981,6 +1152,7 @@
       ],
       "sill": 0.9,
       "head": 2.2,
+      "window_type": "default",
       "room": 123,
       "note": "fixed balcony window"
     },
@@ -996,6 +1168,7 @@
       ],
       "sill": 0.0,
       "head": 2.2,
+      "window_type": "default",
       "room": 123,
       "ifc_class": "IfcDoor",
       "note": "drzwi balkonowe / balcony door"
@@ -1012,6 +1185,7 @@
       ],
       "sill": 0.9,
       "head": 2.2,
+      "window_type": "default",
       "room": 123
     }
   ],

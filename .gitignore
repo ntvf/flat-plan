@@ -1,3 +1,8 @@
-.idea/
+# Generated deliverables
+/build/
+/exports/
+
+# Local tooling
+/.idea/
 __pycache__/
 *.py[cod]

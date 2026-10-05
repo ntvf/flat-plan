@@ -32,11 +32,11 @@ changes:
         renovation_status: retained_and_reused
         note: "existing concealed line set retained from OB3 to the former AC connection"
     doors:
-      - { id: D4, has_leaf: true }
-      - { id: D5, has_leaf: true }
-      - { id: D6, has_leaf: true }
-      - { id: D7, has_leaf: true }
-      - { id: D8, has_leaf: true }
+      - { id: D4, has_leaf: true, swing: [start, "+"] }
+      - { id: D5, has_leaf: true, swing: [end, "-"] }
+      - { id: D6, has_leaf: true, swing: [start, "-"] }
+      - { id: D7, has_leaf: true, swing: [end, "+"] }
+      - { id: D8, has_leaf: true, swing: [end, "+"] }
 
   add:
     rooms:
@@ -101,6 +101,128 @@ changes:
           - { from: 1, to: 2, installation: above_bathroom_ceiling, room: 9 }
           - { from: 2, to: 3, installation: concealed_in_wall, host: W_bath2_n }
         note: "straight extension on the as-is x=7.49 projection; brazed joint accessible above bathroom ceiling; condensate routed separately to SH_san"
+
+      - id: B9_WATER_SOUTH_BOX
+        name: Bathroom 9 basin and WC water distribution
+        ifc_class: IfcPipeSegment
+        system: hot_and_cold_water
+        nominal_diameter: 0.04
+        installation: accessible_south_wall_box
+        renovation_status: new
+        points:
+          - [8.70, 6.20, 0.35]
+          - [8.55, 6.20, 0.35]
+          - [8.55, 6.08, 0.35]
+          - [6.55, 6.08, 0.35]
+        note: "boxed distribution from SH_san side to WC and basin; final pipe sizes and isolation valves to be designed"
+
+      - id: B9_SHOWER_WATER_BOX
+        name: Bathroom 9 shower water distribution
+        ifc_class: IfcPipeSegment
+        system: hot_and_cold_water
+        nominal_diameter: 0.04
+        installation: accessible_east_wall_box
+        renovation_status: new
+        points:
+          - [8.70, 6.20, 0.35]
+          - [8.55, 6.20, 0.35]
+          - [8.55, 6.88, 0.35]
+          - [8.55, 6.88, 1.10]
+        note: "boxed shower feed beside SH_san; mixer height to be coordinated with selected shower set"
+
+      - id: B9_BASIN_DRAIN
+        name: Bathroom 9 basin drainage
+        ifc_class: IfcPipeSegment
+        system: sanitary_drainage
+        nominal_diameter: 0.05
+        installation: accessible_south_wall_plinth
+        slope: 0.02
+        renovation_status: new
+        points:
+          - [6.55, 6.08, 0.25]
+          - [8.55, 6.08, 0.25]
+          - [8.55, 6.20, 0.25]
+          - [8.70, 6.20, 0.25]
+        note: "nominal 2% fall to SH_san; invert and connection level require site verification"
+
+      - id: B9_WC_DRAIN
+        name: Bathroom 9 WC drainage
+        ifc_class: IfcPipeSegment
+        system: sanitary_drainage
+        nominal_diameter: 0.11
+        installation: accessible_south_wall_plinth
+        slope: 0.02
+        renovation_status: new
+        points:
+          - [7.24, 6.33, 0.18]
+          - [8.55, 6.33, 0.18]
+          - [8.55, 6.20, 0.18]
+          - [8.70, 6.20, 0.18]
+        note: "short DN110 route to SH_san; nominal 2% fall, final invert requires opening the shaft"
+
+      - id: B9_SHOWER_DRAIN
+        name: Bathroom 9 shower drainage
+        ifc_class: IfcPipeSegment
+        system: sanitary_drainage
+        nominal_diameter: 0.05
+        installation: shower_plinth
+        slope: 0.02
+        renovation_status: new
+        points:
+          - [8.51, 6.88, 0.10]
+          - [8.80, 6.88, 0.10]
+          - [8.80, 6.20, 0.10]
+        note: "shower placed directly above the shaft side; nominal 2% fall, trap and invert to be coordinated"
+
+      - id: B9_EXTRACT
+        name: Bathroom 9 mechanical extract
+        ifc_class: IfcDuctSegment
+        system: extract_ventilation
+        nominal_diameter: 0.125
+        installation: above_ceiling
+        renovation_status: new
+        points:
+          - [8.51, 6.88, 2.45]
+          - [8.80, 6.88, 2.45]
+          - [8.80, 7.725, 2.45]
+        note: "route to SH_vent with backdraft damper; airflow and fire stopping to be designed"
+
+    equipment:
+      - { id: B9_BASIN, name: Umywalka 55 x 45, ifc_class: IfcSanitaryTerminal,
+          category: basin, at: [6.28, 5.98, 0.78], size: [0.55, 0.45, 0.14],
+          room: 9, mounting: wall, renovation_status: new }
+      - { id: B9_WC, name: Miska WC 40 x 70, ifc_class: IfcSanitaryTerminal,
+          category: wc, at: [7.04, 5.98, 0.00], size: [0.40, 0.70, 0.78],
+          room: 9, mounting: floor, renovation_status: new }
+      - { id: B9_SHOWER, name: Brodzik 90 x 90, ifc_class: IfcSanitaryTerminal,
+          category: shower, at: [8.06, 6.43, 0.00], size: [0.90, 0.90, 0.08],
+          room: 9, mounting: floor, renovation_status: new }
+
+    service_terminals:
+      - id: B9_BASIN_CONNECTION
+        name: New bathroom basin services
+        at: [6.55, 6.08]
+        room: 9
+        host: south_wall_box
+        connections:
+          - { service: hot_and_cold_water, height: 0.60, mounting: wall }
+          - { service: sanitary_drainage, height: 0.25, mounting: wall }
+      - id: B9_WC_CONNECTION
+        name: New bathroom WC services
+        at: [7.24, 6.33]
+        room: 9
+        host: south_wall_box
+        connections:
+          - { service: cold_water, height: 0.35, mounting: wall }
+          - { service: sanitary_drainage, height: 0.18, mounting: wall }
+      - id: B9_SHOWER_CONNECTION
+        name: New bathroom shower services
+        at: [8.51, 6.88]
+        room: 9
+        host: east_wall_box
+        connections:
+          - { service: hot_and_cold_water, height: 1.10, mounting: wall }
+          - { service: sanitary_drainage, height: 0.10, mounting: floor }
 
     doors:
       - id: D9

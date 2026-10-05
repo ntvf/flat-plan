@@ -21,9 +21,14 @@ class ModelLoaderTest(unittest.TestCase):
         self.assertEqual("target", target["meta"]["state"])
         base_doors = {door["id"]: door for door in base["doors"]}
         target_doors = {door["id"]: door for door in target["doors"]}
-        self.assertFalse(base_doors["D4"]["has_leaf"])
+        self.assertTrue(base_doors["D4"]["has_leaf"])
         self.assertTrue(target_doors["D4"]["has_leaf"])
         self.assertTrue(target_doors["D9"]["has_leaf"])
+        self.assertEqual(["start", "+"], base_doors["D4"]["swing"])
+        self.assertEqual(["end", "+"], base_doors["D8"]["swing"])
+        self.assertEqual(["end", "-"], base_doors["D5"]["swing"])
+        self.assertEqual(["start", "-"], base_doors["D6"]["swing"])
+        self.assertEqual(["end", "+"], base_doors["D7"]["swing"])
         self.assertEqual([2.32, 6.005], base_doors["D4"]["at"])
         self.assertEqual([3.32, 6.515], base_doors["D8"]["at"])
         self.assertEqual([1.0, 8.28], base_doors["entry"]["at"])
@@ -47,6 +52,10 @@ class ModelLoaderTest(unittest.TestCase):
                          ["offset_from_entry_door"])
         self.assertEqual("tank centre", equipment["HW_TANK_100L"]["measured"]
                          ["offset_to"])
+        self.assertEqual(
+            {"B4_BATH", "B4_BASIN", "B4_WC", "B4_WASHER"},
+            {item_id for item_id in equipment if item_id.startswith("B4_")},
+        )
         routes = {route["id"]: route for route in base["service_routes"]}
         self.assertEqual("OB3", routes["AC_living_lines"]["destination"])
         self.assertEqual([6.765, 12.89, 0.05],
@@ -64,6 +73,13 @@ class ModelLoaderTest(unittest.TestCase):
         extension = target_routes["AC_living_extension_bath_ceiling"]
         self.assertTrue(all(point[0] == 7.49 for point in extension["points"]))
         self.assertEqual([7.49, 7.3925, 2.48], extension["points"][-1])
+        self.assertEqual(0.02, target_routes["B9_WC_DRAIN"]["slope"])
+        self.assertEqual("IfcDuctSegment",
+                         target_routes["B9_EXTRACT"]["ifc_class"])
+        self.assertEqual(
+            {"B9_BASIN", "B9_WC", "B9_SHOWER"},
+            {item_id for item_id in target_equipment if item_id.startswith("B9_")},
+        )
         target_wall = next(wall for wall in target["walls"]
                            if wall["id"] == "W_bath2_n")
         self.assertEqual([3.38, 0.125], target_wall["size"])
@@ -90,7 +106,17 @@ class ModelLoaderTest(unittest.TestCase):
         self.assertEqual([1.0, 7.95], terminals["B4_WC_DRAIN"]["at"])
         self.assertEqual([3.29, 12.89],
                          terminals["KITCHEN_SINK_CONNECTION"]["at"])
-        self.assertEqual(base["service_terminals"], target["service_terminals"])
+        target_terminals = {
+            item["id"]: item for item in target["service_terminals"]
+        }
+        self.assertEqual(
+            terminals,
+            {item_id: target_terminals[item_id] for item_id in terminals},
+        )
+        self.assertEqual(
+            {"B9_BASIN_CONNECTION", "B9_WC_CONNECTION", "B9_SHOWER_CONNECTION"},
+            {item_id for item_id in target_terminals if item_id.startswith("B9_")},
+        )
         floor = base["floor_assemblies"][0]
         self.assertEqual(0.10, floor["total_thickness"])
         self.assertEqual(

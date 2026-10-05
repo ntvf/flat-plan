@@ -20,7 +20,7 @@ contractors can price the work from generated bills of quantities.
 - Coordinates are metres, origin at the outer south-west corner of the lower
   block; X grows east and Y grows north.
 - Generated files are under `build/` and `exports/`; do not edit them directly.
-- Survey scan: `7106fea6-ce4f-4979-8eac-ebf5f4a6972b.jfif`.
+- Survey scan: `data/survey-plan.jfif`.
 - Blender for this project must be `/snap/bin/blender`, because it has Bonsai;
   `/usr/bin/blender` exists but does not provide the required Bonsai workflow.
 
@@ -32,36 +32,35 @@ contractors can price the work from generated bills of quantities.
 - Current net modeled area is about 95.57 m², matching the surveyed total
   closely enough for the current transcription.
 - Current generated outputs include `exports/as_is.ifc`, verification overlays
-  under `exports/check/`, and an A3 1:50 as-is contractor plan PDF at
-  `exports/drawings/sheets/A01 - RZUT - STAN ISTNIEJĄCY.pdf`.
+  under `exports/check/`, and an A3 1:50 as-is contractor plan PDF under
+  `exports/drawings/as_is/sheets/`.
 - The target model adds a 4.87 m² second bathroom east of the storage, bounded
   north at the ventilation riser and entered through an 0.80 m outward-opening
   door beside the existing 2.30 m wall.
 - Target outputs include `exports/target.ifc` and the target-state sheet under
   `exports/drawings/target/`.
-- The as-is IFC has three exterior doors (entrance, OB2, and the east OK6
-  panel) and five unfilled interior wall openings; the target IFC adds leaves
-  to the interior openings and the new bathroom.
+- The as-is IFC models leaves in all interior openings using practical assumed
+  swings, plus the entrance, OB2, and the east DK6 panel; the target adds the
+  new bathroom door.
   Both contain real windows/openings, spaces with floor-area quantities, service
-  shafts, a structural column, walls, and plan annotations.
+  shafts, a structural column, walls, bathroom fixtures/utilities, and plan
+  annotations.
 
 ## Pipeline
 
 Rebuild after authoritative YAML changes:
 
 ```sh
-python3 scripts/check_layout.py data/as_is.yaml exports/check/as_is_transcription_check.png
-python3 scripts/yaml_to_json.py data/as_is.yaml build/as_is.json
-/snap/bin/blender -b --python scripts/build_ifc.py -- build/as_is.json exports/as_is.ifc
-python3 scripts/overlay_scan.py data/as_is.yaml 7106fea6-ce4f-4979-8eac-ebf5f4a6972b.jfif exports/check/overlay_on_scan.png
-/snap/bin/blender -b --python scripts/export_bonsai_drawings.py -- exports/as_is.ifc exports/drawings
+make as-is
+make target
 ```
 
 ## Next implementation steps
 
-1. Model the additional bathroom utility routing from the existing
-   drainage/ventilation shaft `SH_san` / `SH_vent`, including slopes, risers,
-   penetrations, waterproofing zones, fixtures, and constraints.
+1. Verify and refine the modeled bathroom utility routing to `SH_san` /
+   `SH_vent`: survey drain inverts, coordinate real falls and fittings, then
+   add penetrations, fire stopping, waterproofing zones, electrical changes,
+   and product-specific fixture clearances.
 2. Move the remaining implied bedroom walls from `scripts/build_ifc.py` into
    authoritative model data and emit renovation properties into IFC.
 3. Add delta/work-package generation by comparing as-is vs target: demolition,

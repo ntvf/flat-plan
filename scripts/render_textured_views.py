@@ -165,7 +165,12 @@ def main():
         "floor": principled_material("Light oak floor", (0.42, 0.25, 0.11), 0.62),
         "door": principled_material("Door timber", (0.20, 0.075, 0.025), 0.58),
         "metal": principled_material("Equipment white", (0.82, 0.84, 0.84), 0.32),
-        "pipe": principled_material("Copper pipe", (0.58, 0.19, 0.06), 0.32, 0.55),
+        "sanitary": principled_material("Sanitary ceramic", (0.92, 0.95, 0.96), 0.22),
+        "washer": principled_material("Appliance white", (0.76, 0.80, 0.82), 0.30),
+        "water": principled_material("Water services", (0.06, 0.28, 0.72), 0.34, 0.35),
+        "waste": principled_material("Sanitary drainage", (0.55, 0.08, 0.06), 0.42),
+        "duct": principled_material("Ventilation duct", (0.42, 0.46, 0.50), 0.30, 0.45),
+        "pipe": principled_material("Other pipework", (0.58, 0.19, 0.06), 0.32, 0.55),
         "shaft": principled_material("Service casing", (0.46, 0.48, 0.47), 0.8),
         "light": principled_material("Light fixture", (1.0, 0.88, 0.62), 0.18),
         "brick": brick_material(),
@@ -197,8 +202,19 @@ def main():
         elif name.startswith("IfcDoor/"):
             assign_material(obj, materials["door"])
         elif name.startswith("IfcPipeSegment/"):
-            assign_material(obj, materials["pipe"])
-            obj.hide_render = True
+            if "WATER" in name or "SERVICES" in name:
+                assign_material(obj, materials["water"])
+            elif "DRAIN" in name:
+                assign_material(obj, materials["waste"])
+            else:
+                assign_material(obj, materials["pipe"])
+            obj.hide_render = "AC_living" in name
+        elif name.startswith("IfcDuctSegment/"):
+            assign_material(obj, materials["duct"])
+        elif name.startswith("IfcSanitaryTerminal/"):
+            assign_material(obj, materials["sanitary"])
+        elif name.startswith("IfcElectricAppliance/"):
+            assign_material(obj, materials["washer"])
         elif name.startswith("IfcUnitaryEquipment/") or name.startswith("IfcTank/"):
             assign_material(obj, materials["metal"])
         elif name.startswith("IfcBuildingElementProxy/"):
@@ -213,6 +229,7 @@ def main():
     add_area_light("Window daylight", (5.4, 12.65, 2.1), (5.4, 9.0, 1.2), 260, 4.5)
     for index, location in enumerate((
         (2.7, 10.6), (5.4, 10.6), (7.7, 10.2), (5.8, 8.2),
+        (1.35, 6.55), (7.20, 6.65),
     ), 1):
         add_ceiling_light(f"Ceiling light {index}", location, materials["light"])
 
@@ -224,12 +241,15 @@ def main():
     camera.data.sensor_width = 36
 
     views = [
-        ("01_northwest_brick_and_windows", (6.40, 8.85, 1.55), (2.25, 12.05, 1.45)),
-        ("02_east_brick_wall", (4.75, 10.55, 1.55), (8.88, 9.82, 1.40)),
-        ("03_new_bathroom_ac_wall", (4.80, 9.65, 1.55), (7.49, 7.42, 1.72)),
+        ("01_northwest_brick_and_windows", (6.40, 8.85, 1.55), (2.25, 12.05, 1.45), 24),
+        ("02_east_brick_wall", (4.75, 10.55, 1.55), (8.88, 9.82, 1.40), 24),
+        ("03_new_bathroom_ac_wall", (4.80, 9.65, 1.55), (7.49, 7.42, 1.72), 24),
+        ("04_existing_bathroom", (2.12, 5.20, 1.62), (1.12, 6.78, 0.78), 18),
+        ("05_new_bathroom", (5.58, 6.12, 1.58), (7.75, 6.62, 0.72), 18),
     ]
-    for filename, location, target in views:
+    for filename, location, target, lens in views:
         camera.location = location
+        camera.data.lens = lens
         look_at(camera, target)
         bpy.context.scene.render.filepath = str(output_dir / f"{filename}.png")
         bpy.ops.render.render(write_still=True)

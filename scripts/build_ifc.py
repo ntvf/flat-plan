@@ -347,13 +347,16 @@ class Builder:
                               f"{item['id']} {item['name']}", x, y, z, w, d, h)
             run("spatial.assign_container", self.model, relating_structure=self.storey,
                 products=[el])
-            self.add_properties(el, "SurveyedEquipment", {
+            self.add_properties(el, "ModelEquipment", {
                 "AssetId": item["id"],
+                "Category": item.get("category"),
                 "Manufacturer": item.get("manufacturer"),
                 "CapacityLitres": item.get("capacity_l"),
                 "Shape": item.get("shape", "box"),
                 "Mounting": item.get("mounting"),
                 "Host": item.get("host"),
+                "Room": str(item.get("room")) if item.get("room") is not None else None,
+                "RenovationStatus": item.get("renovation_status"),
                 "SurveyNote": item.get("note"),
             })
             equipment_count += 1
@@ -380,12 +383,14 @@ class Builder:
                               f"{route['id']} {index}", x, y, z, w, d, h)
                 run("spatial.assign_container", self.model,
                     relating_structure=self.storey, products=[el])
-                self.add_properties(el, "SurveyedServiceRoute", {
+                self.add_properties(el, "ModelServiceRoute", {
                     "RouteId": route["id"],
                     "System": route.get("system"),
                     "Installation": route.get("installation"),
+                    "RenovationStatus": route.get("renovation_status"),
                     "Destination": route.get("destination"),
                     "NominalDiameter": diameter,
+                    "NominalSlope": route.get("slope"),
                     "SurveyNote": route.get("note"),
                 })
                 route_segment_count += 1
@@ -516,6 +521,14 @@ class Builder:
             run("spatial.assign_container", self.model, relating_structure=self.storey,
                 products=[leaf])
             run("feature.add_filling", self.model, opening=opening, element=leaf)
+            swing = door.get("swing") or ["start", "+"]
+            self.add_properties(leaf, "DoorLayout", {
+                "DoorId": door["id"],
+                "HingeEnd": swing[0],
+                "SwingSide": swing[1],
+                "RenovationStatus": door.get("renovation_status"),
+                "DesignNote": door.get("note"),
+            })
             leaves += 1
         return openings, leaves, orphaned
 
@@ -551,6 +564,13 @@ class Builder:
             run("spatial.assign_container", self.model,
                 relating_structure=self.storey, products=[leaf])
             run("feature.add_filling", self.model, opening=opening, element=leaf)
+            self.add_properties(leaf, "WindowLayout", {
+                "ApertureId": win["id"],
+                "WindowType": win.get("window_type", "default"),
+                "Room": str(win.get("room")) if win.get("room") is not None else None,
+                "SillHeight": sill,
+                "HeadHeight": head,
+            })
             placed[ifc_class] = placed.get(ifc_class, 0) + 1
         return placed, orphaned
 
