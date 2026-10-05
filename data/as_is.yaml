@@ -182,6 +182,22 @@ equipment:
       - { service: water, destination: west wall, geometry: not surveyed }
     note: "beside the 4.12 m entrance wall; surveyed diameter, approximate height"
 
+  - id: GAS_HEATER_ENTRY
+    name: Gazowy podgrzewacz wody
+    ifc_class: IfcBoiler
+    category: gas_water_heater
+    at: [0.60, 10.55, 1.45]
+    size: [0.35, 0.25, 0.75]
+    host: exterior_west_of_entry
+    room: exterior
+    mounting: wall
+    renovation_status: existing
+    connections:
+      - { service: gas, geometry: not_surveyed }
+      - { service: water, geometry: not_surveyed }
+      - { service: flue, geometry: not_surveyed }
+    note: "wall-mounted outside the flat, centred on the west wall segment north of the entrance door; representative envelope, verify casing, flue and gas connection on site"
+
   # Existing bathroom fixtures from the approved balanced layout.
   - { id: B4_BATH, name: Wanna 170 x 75, ifc_class: IfcSanitaryTerminal,
       category: bath, at: [0.40, 4.96, 0.00], size: [1.70, 0.75, 0.55],
@@ -264,13 +280,14 @@ service_routes:
     system: hot_and_cold_water
     nominal_diameter: 0.04
     installation: accessible_wall_box
+    geometry_visible: false
     renovation_status: existing_layout_assumption
     points:
       - [0.46, 5.46, 0.30]
       - [0.46, 7.89, 0.30]
       - [1.82, 7.89, 0.30]
       - [1.82, 7.65, 0.30]
-    note: "approved balanced layout; accessible west/north perimeter box, exact concealed feeds to be verified"
+    note: "existing route is concealed in walls; retain as a routing assumption but show only fixture connection points"
 
   - id: B4_DRAIN_BOX
     name: Existing bathroom sanitary drainage
@@ -278,13 +295,14 @@ service_routes:
     system: sanitary_drainage
     nominal_diameter: 0.075
     installation: accessible_wall_plinth_box
+    geometry_visible: false
     renovation_status: existing_layout_assumption
     points:
       - [0.46, 5.46, 0.15]
       - [0.46, 7.89, 0.15]
       - [1.00, 7.89, 0.15]
       - [1.00, 7.95, 0.15]
-    note: "approved balanced layout; bath and basin connect along west wall, final falls and invert to be verified"
+    note: "existing route is concealed in walls and floor; retain as a routing assumption but show only fixture connection points"
 
   - id: B4_WASHER_SERVICES
     name: Existing washer services
@@ -292,12 +310,13 @@ service_routes:
     system: water_and_sanitary_drainage
     nominal_diameter: 0.05
     installation: accessible_wall_plinth_box
+    geometry_visible: false
     renovation_status: existing_layout_assumption
     points:
       - [1.82, 7.65, 0.20]
       - [1.82, 7.89, 0.20]
       - [0.46, 7.89, 0.20]
-    note: "approved balanced layout; combined route envelope only, individual pipe sizes to be designed"
+    note: "existing route is concealed in walls and floor; retain as a routing assumption but show only fixture connection points"
 
 # Surveyed fixture connection points. XY is the wall/floor projection; heights
 # are above finished floor. Existing concealed pipe routes and drain inverts
@@ -340,6 +359,17 @@ service_terminals:
     plan_label: "WC S / h VERIFY"
     label_at: [1.02, 7.62]
 
+  - id: B4_WASHER_CONNECTION
+    name: Existing washer water and drainage
+    at: [1.82, 7.65]
+    room: 4
+    host: north_wall
+    connections:
+      - { service: cold_water, height: 0.60, mounting: wall }
+      - { service: sanitary_drainage, height: 0.60, mounting: wall }
+    plan_label: "WASHER W+S 60"
+    label_at: [1.68, 7.42]
+
   - id: KITCHEN_SINK_CONNECTION
     name: Existing kitchen sink water and drainage
     at: [3.29, 12.89]
@@ -371,12 +401,12 @@ floor_assemblies:
 # Interior leaves and swing directions are practical assumptions requested for
 # everyday use, not surveyed - confirm on site before ordering doors.
 doors:
-  - { id: entry, at: [1.00, 8.28], size: [0.40, 0.90], swing: [start, "+"], note: "wejście / entrance; south edge touches the outer-wall step line" }
-  - { id: D4, at: [2.32, 6.005], size: [0.10, 0.90], has_leaf: true, swing: [start, "+"], note: "bathroom door opens outward for safety and clears the approved fixtures" }
-  - { id: D8, at: [3.32, 6.515], size: [0.10, 0.90], has_leaf: true, swing: [end, "+"], note: "opens into storage against its north side, avoiding the bathroom-door corridor swing" }
-  - { id: D5, at: [2.47, 4.86], size: [0.90, 0.10], has_leaf: true, swing: [end, "-"], note: "opens into bedroom 5 toward the east partition" }
-  - { id: D6, at: [3.47, 4.86], size: [0.90, 0.10], has_leaf: true, swing: [start, "-"], note: "opens into bedroom 6 toward the west partition" }
-  - { id: D7, at: [6.25, 4.98], size: [0.10, 0.90], has_leaf: true, swing: [end, "+"], note: "opens into bedroom 7 against its north wall" }
+  - { id: entry, at: [1.00, 8.28], size: [0.40, 0.90], nominal_width: 0.90, height: 2.10, frame_material: wood, swing: [start, "+"], note: "90 cm entrance leaf; south edge touches the outer-wall step line" }
+  - { id: D4, at: [2.32, 6.005], size: [0.10, 0.90], nominal_width: 0.80, height: 2.10, frame_material: wood, has_leaf: true, swing: [start, "+"], note: "standard 80 cm bathroom leaf opens outward for safety and clears the approved fixtures" }
+  - { id: D8, at: [3.32, 6.515], size: [0.10, 0.90], nominal_width: 0.80, height: 2.10, frame_material: wood, has_leaf: true, swing: [end, "+"], note: "standard 80 cm leaf opens into storage against its north side, avoiding the bathroom-door corridor swing" }
+  - { id: D5, at: [2.47, 4.86], size: [0.90, 0.10], nominal_width: 0.90, height: 2.10, frame_material: wood, has_leaf: true, swing: [end, "-"], note: "standard 90 cm leaf opens into bedroom 5 toward the east partition" }
+  - { id: D6, at: [3.47, 4.86], size: [0.90, 0.10], nominal_width: 0.80, height: 2.10, frame_material: wood, has_leaf: true, swing: [start, "-"], note: "standard 80 cm leaf opens into bedroom 6 toward the west partition" }
+  - { id: D7, at: [6.25, 4.98], size: [0.10, 0.90], nominal_width: 0.90, height: 2.10, frame_material: wood, has_leaf: true, swing: [end, "+"], note: "standard 90 cm leaf opens into bedroom 7 against its north wall" }
 
 openings:
   doors:
@@ -400,23 +430,23 @@ openings:
 # where the drawing labels them.  Sill/head are the standard values for the
 # block; the survey does not dimension them.
 windows:
-  - { id: OK5, at: [1.05, 0.00], size: [1.60, 0.40], sill: 0.90, head: 2.20, window_type: default,
+  - { id: OK5, at: [1.05, 0.00], size: [1.60, 0.40], sill: 0.90, head: 2.20, window_type: default, frame_material: wood, render_panels: 3,
       room: 5 }
   # Room 6 corner assembly: the full-height window remains on the south wall;
   # its door is perpendicular in the short east return wall. The door ends
   # 0.15 before the outer corner where the OK7 wall begins at y=0.94.
-  - { id: OK6, at: [4.26, 0.00], size: [1.60, 0.40], sill: 0.00, head: 2.20, window_type: default,
+  - { id: OK6, at: [4.26, 0.00], size: [1.60, 0.40], sill: 0.00, head: 2.20, window_type: default, frame_material: wood, render_panels: 3,
       room: 6, note: "full-height south panel of the room 6 corner glazing" }
-  - { id: DK6, at: [5.69, 0.00], size: [0.40, 0.79], sill: 0.00, head: 2.20, window_type: default,
+  - { id: DK6, at: [5.69, 0.00], size: [0.40, 0.79], sill: 0.00, head: 2.20, window_type: default, frame_material: wood, render_panels: 1,
       room: 6, ifc_class: IfcDoor, note: "door in east return wall, 0.15 before the OK7 corner" }
-  - { id: OK7, at: [6.63, 0.94], size: [1.60, 0.40], sill: 0.90, head: 2.20, window_type: default,
+  - { id: OK7, at: [6.63, 0.94], size: [1.60, 0.40], sill: 0.90, head: 2.20, window_type: default, frame_material: wood, render_panels: 3,
       room: 7 }
   # North elevation: balcony door plus two glazed bays onto the balcony.
-  - { id: OB1, at: [2.84, 12.89], size: [0.90, 0.40], sill: 0.90, head: 2.20, window_type: default,
+  - { id: OB1, at: [2.84, 12.89], size: [0.90, 0.40], sill: 0.90, head: 2.20, window_type: default, frame_material: wood, render_panels: 2,
       room: 123, note: "fixed balcony window" }
-  - { id: OB2, at: [4.13, 12.89], size: [1.46, 0.40], sill: 0.00, head: 2.20, window_type: default,
+  - { id: OB2, at: [4.13, 12.89], size: [1.46, 0.40], sill: 0.00, head: 2.20, window_type: default, frame_material: wood, render_panels: 2,
       room: 123, ifc_class: IfcDoor, note: "drzwi balkonowe / balcony door" }
-  - { id: OB3, at: [5.96, 12.89], size: [1.61, 0.40], sill: 0.90, head: 2.20, window_type: default,
+  - { id: OB3, at: [5.96, 12.89], size: [1.61, 0.40], sill: 0.90, head: 2.20, window_type: default, frame_material: wood, render_panels: 3,
       room: 123 }
 
 balcony:

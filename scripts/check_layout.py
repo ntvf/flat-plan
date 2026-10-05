@@ -12,6 +12,7 @@ import sys
 
 from PIL import Image, ImageDraw, ImageFont
 from model_loader import load_model
+from plan_symbols import door_leaf, door_swing_arc
 
 PX_PER_M = 80
 MARGIN = 60
@@ -216,6 +217,22 @@ def main(src, dst):
         colour = (200, 0, 0) if has_leaf else (210, 120, 0)
         d.rectangle([tp((x, y + dh)), tp((x + dw, y))], fill=(255, 255, 255),
                     outline=colour)
+        if has_leaf:
+            nominal_width = door.get("nominal_width")
+            leaf = door_leaf(
+                dw, dh, door.get("height", 2.10), door.get("swing"),
+                nominal_width,
+            )[0]
+            lx, ly, _lz, lw, ld, _lh = leaf
+            d.rectangle(
+                [tp((x + lx, y + ly + ld)), tp((x + lx + lw, y + ly))],
+                fill=(125, 70, 35), outline=(85, 40, 20),
+            )
+            arc = door_swing_arc(
+                door["at"], door["size"], door.get("swing"),
+                leaf_width=nominal_width,
+            )
+            d.line([tp(point) for point in arc], fill=colour, width=2)
         d.text(tp((x + dw / 2, y + dh / 2)), door["id"], fill=colour, font=font,
                anchor="mm")
 

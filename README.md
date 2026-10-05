@@ -39,18 +39,18 @@ exports/        Generated IFC, drawings, checks, and renders (ignored)
 - `scripts/yaml_to_json.py` — bridge; Blender's Python has no PyYAML.
 - `scripts/build_ifc.py` — builds IFC4 geometry, openings, spaces, equipment,
   service routes, surveyed service terminals, and traceable finish properties.
-- `scripts/plan_symbols.py` — plan symbols for doors and windows, shared
-  between the IFC builder and the annotator so leaf and swing arc agree.
+- `scripts/plan_symbols.py` — standard-size door leaves and frames plus
+  multi-panel window glazing, wood frames, and handles; shared with the
+  annotator so each leaf and swing arc agree.
 - `scripts/annotate_drawing.py` — creates the `IfcAnnotation` room labels,
   dimension chains, door swing arcs, and service-terminal marks that Bonsai
   renders.
 - `scripts/export_bonsai_drawings.py` — Bonsai-native drawings/sheets → SVG + PDF,
   A3 portrait @ 1:50 with the Polish titleblock in `data/titleblocks/A3-PL.svg`.
-- `scripts/render_textured_views.py` — renders five fixed target-state interior
-  views and saves the prepared Blender scene.
+- `scripts/render_textured_views.py` — renders an ultra-wide overview plus five
+  wide-angle target-state interior views and saves the prepared Blender scene.
 - `scripts/sketch_bathroom_layouts.py` — generates the working balanced fixture
-  layout for the existing and proposed bathrooms, with all proposed water
-  and waste routes kept out of the floor in accessible wall/plinth boxes.
+  layout for the existing and proposed bathrooms.
 
 `detect_windows.py` is a survey-transcription utility rather than part of the
 normal build. The other scripts are wired into the Make targets below.
@@ -97,8 +97,8 @@ Use `make clean` to remove all reproducible intermediates and exports.
   layout alongside.
 - `exports/drawings/target/sheets/A01 - RZUT - STAN PROJEKTOWANY.pdf` — the
   separate target-state A3 @ 1:50 plan.
-- `exports/renders/target/` — five fixed textured PNG views and the generated
-  Blender scene.
+- `exports/renders/target/` — one ultra-wide overview, five wide-angle textured
+  PNG views, and the generated Blender scene.
 - `exports/concepts/bathroom_layouts/balanced.png` — the working fixture-layout
   study, showing boxed surface pipe routes to the surveyed
   connection points and `SH_san`; its fixture arrangement is adopted in the
@@ -120,13 +120,19 @@ south closure fills the 1.08 m gap beside the existing 2.30 m wall. The current
 door assumption is an 0.80 m leaf opening outward into the corridor. The
 living-area AC moves to the new north partition with backing requirements and
 a modeled extension of the retained OB3 line set above the bathroom ceiling.
+Both states show the existing wall-mounted gas water heater outside the flat,
+centred on the west wall segment north of the entrance door. In the target
+state, the retained 100 l tank also moves outside to the west side, directly
+below and beside the gas heater.
 
 The balanced bathroom fixture layout is promoted into the models. The existing
-bathroom contains the bath, basin, WC and washer; bathroom 9 contains the basin,
-WC and 90 × 90 shower. Accessible hot/cold water boxes, sanitary routes with
-nominal 2% falls, service terminals, and the extract route to `SH_vent` are
-modeled. Drain inverts, penetrations, fire stopping, waterproofing, electrical
-changes, and finish zones still require design or site verification.
+bathroom contains the bath, basin, WC and washer; its pipes remain recorded as
+concealed routing assumptions but only the connection points are shown.
+Bathroom 9 contains the basin, WC and 90 × 90 shower, with accessible hot/cold
+water boxes, sanitary routes with nominal 2% falls, service terminals, and the
+extract route to `SH_vent`. Drain inverts, penetrations, fire stopping,
+waterproofing, electrical changes, and finish zones still require design or
+site verification.
 
 Also not yet done: as-is/target delta and work-package generation, bill of
 quantities per trade with contractor price columns, stable matched before/after
@@ -136,4 +142,7 @@ Interior door leaves are modeled throughout with practical assumed swings:
 bathroom doors open outward, the storage leaf avoids the bathroom-door corridor
 swing, and bedroom leaves rest toward adjacent partitions. These directions
 are design assumptions rather than surveyed facts and must be confirmed before
-ordering.
+ordering. The render model uses standard 80/90 cm nominal leaves inside the
+surveyed rough openings, with 2.10 m wood-framed doors. Windows use wood frames,
+handles, and explicit two- or three-panel render layouts; these details are
+visual assumptions rather than surveyed joinery.

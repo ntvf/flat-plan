@@ -236,7 +236,10 @@ def annotate(data):
     leaf_doors = [door for door in data.get("doors", [])
                   if door.get("has_leaf", True)]
     for door in leaf_doors:
-        ann.polyline(door_swing_arc(door["at"], door["size"], door.get("swing")),
+        ann.polyline(door_swing_arc(
+            door["at"], door["size"], door.get("swing"),
+            leaf_width=door.get("nominal_width"),
+        ),
                      classes="thin")
     log("swing arcs:", len(leaf_doors))
 

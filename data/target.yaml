@@ -27,6 +27,18 @@ changes:
           refrigerant_and_control: reuse existing OB3 line plus bathroom-ceiling extension
           condensate: separate gravity route to SH_san; final fall to be designed
         note: "relocated on the as-is pipe projection x=7.49 to the open-living face of the new 0.125 m plasterboard wall"
+      - id: HW_TANK_100L
+        at: [0.40, 10.375, 0.00]
+        host: exterior_west_wall
+        room: exterior
+        mounting: floor
+        renovation_status: relocated
+        measured:
+          offset_from_entry_door: 1.17
+          offset_to: tank south edge
+          reference: north edge of entrance opening
+          adjacent_wall_length: 4.12
+        note: "relocated outside the flat on the west wall, directly below and beside the gas heater; keep the exterior appliance zone clear for servicing"
     service_routes:
       - id: AC_living_lines
         renovation_status: retained_and_reused
@@ -228,6 +240,9 @@ changes:
       - id: D9
         at: [5.36, 5.88]
         size: [0.80, 0.10]
+        nominal_width: 0.80
+        height: 2.10
+        frame_material: wood
         has_leaf: true
         swing: [start, "-"]
         renovation_status: new

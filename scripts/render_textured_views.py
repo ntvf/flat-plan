@@ -164,6 +164,7 @@ def main():
         "partition": principled_material("White plasterboard", (0.90, 0.89, 0.84), 0.78),
         "floor": principled_material("Light oak floor", (0.42, 0.25, 0.11), 0.62),
         "door": principled_material("Door timber", (0.20, 0.075, 0.025), 0.58),
+        "window_wood": principled_material("Window wood", (0.36, 0.16, 0.055), 0.52),
         "metal": principled_material("Equipment white", (0.82, 0.84, 0.84), 0.32),
         "sanitary": principled_material("Sanitary ceramic", (0.92, 0.95, 0.96), 0.22),
         "washer": principled_material("Appliance white", (0.76, 0.80, 0.82), 0.30),
@@ -193,6 +194,12 @@ def main():
             assign_wall_uv(obj)
         elif name.startswith("IfcWindow/") or "/Drzwi OB2" in name or "/Drzwi DK6" in name:
             assign_material(obj, materials["glass"])
+        elif name.startswith("IfcMember/Window frame"):
+            assign_material(obj, materials["window_wood"])
+        elif name.startswith("IfcMember/Door frame"):
+            assign_material(obj, materials["door"])
+        elif name.startswith("IfcDiscreteAccessory/Window handles"):
+            assign_material(obj, materials["metal"])
         elif name.startswith("IfcSpace/"):
             assign_material(obj, materials["floor"])
         elif name.startswith("IfcWall/W_bath2_"):
@@ -215,7 +222,9 @@ def main():
             assign_material(obj, materials["sanitary"])
         elif name.startswith("IfcElectricAppliance/"):
             assign_material(obj, materials["washer"])
-        elif name.startswith("IfcUnitaryEquipment/") or name.startswith("IfcTank/"):
+        elif (name.startswith("IfcUnitaryEquipment/")
+              or name.startswith("IfcTank/")
+              or name.startswith("IfcBoiler/")):
             assign_material(obj, materials["metal"])
         elif name.startswith("IfcBuildingElementProxy/"):
             assign_material(obj, materials["shaft"])
@@ -241,11 +250,12 @@ def main():
     camera.data.sensor_width = 36
 
     views = [
-        ("01_northwest_brick_and_windows", (6.40, 8.85, 1.55), (2.25, 12.05, 1.45), 24),
-        ("02_east_brick_wall", (4.75, 10.55, 1.55), (8.88, 9.82, 1.40), 24),
-        ("03_new_bathroom_ac_wall", (4.80, 9.65, 1.55), (7.49, 7.42, 1.72), 24),
-        ("04_existing_bathroom", (2.12, 5.20, 1.62), (1.12, 6.78, 0.78), 18),
-        ("05_new_bathroom", (5.58, 6.12, 1.58), (7.75, 6.62, 0.72), 18),
+        ("00_ultrawide_open_living", (4.85, 8.75, 1.62), (5.15, 11.55, 1.35), 11),
+        ("01_northwest_brick_and_windows", (6.40, 8.85, 1.55), (2.25, 12.05, 1.45), 16),
+        ("02_east_brick_wall", (4.75, 10.55, 1.55), (8.88, 9.82, 1.40), 16),
+        ("03_new_bathroom_ac_wall", (4.80, 9.65, 1.55), (7.49, 7.42, 1.72), 14),
+        ("04_existing_bathroom", (2.12, 5.20, 1.62), (1.12, 6.78, 0.78), 12),
+        ("05_new_bathroom", (5.58, 6.12, 1.58), (7.75, 6.62, 0.72), 12),
     ]
     for filename, location, target, lens in views:
         camera.location = location

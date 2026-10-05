@@ -479,6 +479,41 @@
       "note": "beside the 4.12 m entrance wall; surveyed diameter, approximate height"
     },
     {
+      "id": "GAS_HEATER_ENTRY",
+      "name": "Gazowy podgrzewacz wody",
+      "ifc_class": "IfcBoiler",
+      "category": "gas_water_heater",
+      "at": [
+        0.6,
+        10.55,
+        1.45
+      ],
+      "size": [
+        0.35,
+        0.25,
+        0.75
+      ],
+      "host": "exterior_west_of_entry",
+      "room": "exterior",
+      "mounting": "wall",
+      "renovation_status": "existing",
+      "connections": [
+        {
+          "service": "gas",
+          "geometry": "not_surveyed"
+        },
+        {
+          "service": "water",
+          "geometry": "not_surveyed"
+        },
+        {
+          "service": "flue",
+          "geometry": "not_surveyed"
+        }
+      ],
+      "note": "wall-mounted outside the flat, centred on the west wall segment north of the entrance door; representative envelope, verify casing, flue and gas connection on site"
+    },
+    {
       "id": "B4_BATH",
       "name": "Wanna 170 x 75",
       "ifc_class": "IfcSanitaryTerminal",
@@ -700,6 +735,7 @@
       "system": "hot_and_cold_water",
       "nominal_diameter": 0.04,
       "installation": "accessible_wall_box",
+      "geometry_visible": false,
       "renovation_status": "existing_layout_assumption",
       "points": [
         [
@@ -723,7 +759,7 @@
           0.3
         ]
       ],
-      "note": "approved balanced layout; accessible west/north perimeter box, exact concealed feeds to be verified"
+      "note": "existing route is concealed in walls; retain as a routing assumption but show only fixture connection points"
     },
     {
       "id": "B4_DRAIN_BOX",
@@ -732,6 +768,7 @@
       "system": "sanitary_drainage",
       "nominal_diameter": 0.075,
       "installation": "accessible_wall_plinth_box",
+      "geometry_visible": false,
       "renovation_status": "existing_layout_assumption",
       "points": [
         [
@@ -755,7 +792,7 @@
           0.15
         ]
       ],
-      "note": "approved balanced layout; bath and basin connect along west wall, final falls and invert to be verified"
+      "note": "existing route is concealed in walls and floor; retain as a routing assumption but show only fixture connection points"
     },
     {
       "id": "B4_WASHER_SERVICES",
@@ -764,6 +801,7 @@
       "system": "water_and_sanitary_drainage",
       "nominal_diameter": 0.05,
       "installation": "accessible_wall_plinth_box",
+      "geometry_visible": false,
       "renovation_status": "existing_layout_assumption",
       "points": [
         [
@@ -782,7 +820,7 @@
           0.2
         ]
       ],
-      "note": "approved balanced layout; combined route envelope only, individual pipe sizes to be designed"
+      "note": "existing route is concealed in walls and floor; retain as a routing assumption but show only fixture connection points"
     }
   ],
   "service_terminals": [
@@ -868,6 +906,33 @@
       ]
     },
     {
+      "id": "B4_WASHER_CONNECTION",
+      "name": "Existing washer water and drainage",
+      "at": [
+        1.82,
+        7.65
+      ],
+      "room": 4,
+      "host": "north_wall",
+      "connections": [
+        {
+          "service": "cold_water",
+          "height": 0.6,
+          "mounting": "wall"
+        },
+        {
+          "service": "sanitary_drainage",
+          "height": 0.6,
+          "mounting": "wall"
+        }
+      ],
+      "plan_label": "WASHER W+S 60",
+      "label_at": [
+        1.68,
+        7.42
+      ]
+    },
+    {
       "id": "KITCHEN_SINK_CONNECTION",
       "name": "Existing kitchen sink water and drainage",
       "at": [
@@ -927,11 +992,14 @@
         0.4,
         0.9
       ],
+      "nominal_width": 0.9,
+      "height": 2.1,
+      "frame_material": "wood",
       "swing": [
         "start",
         "+"
       ],
-      "note": "wejście / entrance; south edge touches the outer-wall step line"
+      "note": "90 cm entrance leaf; south edge touches the outer-wall step line"
     },
     {
       "id": "D4",
@@ -943,12 +1011,15 @@
         0.1,
         0.9
       ],
+      "nominal_width": 0.8,
+      "height": 2.1,
+      "frame_material": "wood",
       "has_leaf": true,
       "swing": [
         "start",
         "+"
       ],
-      "note": "bathroom door opens outward for safety and clears the approved fixtures"
+      "note": "standard 80 cm bathroom leaf opens outward for safety and clears the approved fixtures"
     },
     {
       "id": "D8",
@@ -960,12 +1031,15 @@
         0.1,
         0.9
       ],
+      "nominal_width": 0.8,
+      "height": 2.1,
+      "frame_material": "wood",
       "has_leaf": true,
       "swing": [
         "end",
         "+"
       ],
-      "note": "opens into storage against its north side, avoiding the bathroom-door corridor swing"
+      "note": "standard 80 cm leaf opens into storage against its north side, avoiding the bathroom-door corridor swing"
     },
     {
       "id": "D5",
@@ -977,12 +1051,15 @@
         0.9,
         0.1
       ],
+      "nominal_width": 0.9,
+      "height": 2.1,
+      "frame_material": "wood",
       "has_leaf": true,
       "swing": [
         "end",
         "-"
       ],
-      "note": "opens into bedroom 5 toward the east partition"
+      "note": "standard 90 cm leaf opens into bedroom 5 toward the east partition"
     },
     {
       "id": "D6",
@@ -994,12 +1071,15 @@
         0.9,
         0.1
       ],
+      "nominal_width": 0.8,
+      "height": 2.1,
+      "frame_material": "wood",
       "has_leaf": true,
       "swing": [
         "start",
         "-"
       ],
-      "note": "opens into bedroom 6 toward the west partition"
+      "note": "standard 80 cm leaf opens into bedroom 6 toward the west partition"
     },
     {
       "id": "D7",
@@ -1011,12 +1091,15 @@
         0.1,
         0.9
       ],
+      "nominal_width": 0.9,
+      "height": 2.1,
+      "frame_material": "wood",
       "has_leaf": true,
       "swing": [
         "end",
         "+"
       ],
-      "note": "opens into bedroom 7 against its north wall"
+      "note": "standard 90 cm leaf opens into bedroom 7 against its north wall"
     }
   ],
   "openings": {
@@ -1090,6 +1173,8 @@
       "sill": 0.9,
       "head": 2.2,
       "window_type": "default",
+      "frame_material": "wood",
+      "render_panels": 3,
       "room": 5
     },
     {
@@ -1105,6 +1190,8 @@
       "sill": 0.0,
       "head": 2.2,
       "window_type": "default",
+      "frame_material": "wood",
+      "render_panels": 3,
       "room": 6,
       "note": "full-height south panel of the room 6 corner glazing"
     },
@@ -1121,6 +1208,8 @@
       "sill": 0.0,
       "head": 2.2,
       "window_type": "default",
+      "frame_material": "wood",
+      "render_panels": 1,
       "room": 6,
       "ifc_class": "IfcDoor",
       "note": "door in east return wall, 0.15 before the OK7 corner"
@@ -1138,6 +1227,8 @@
       "sill": 0.9,
       "head": 2.2,
       "window_type": "default",
+      "frame_material": "wood",
+      "render_panels": 3,
       "room": 7
     },
     {
@@ -1153,6 +1244,8 @@
       "sill": 0.9,
       "head": 2.2,
       "window_type": "default",
+      "frame_material": "wood",
+      "render_panels": 2,
       "room": 123,
       "note": "fixed balcony window"
     },
@@ -1169,6 +1262,8 @@
       "sill": 0.0,
       "head": 2.2,
       "window_type": "default",
+      "frame_material": "wood",
+      "render_panels": 2,
       "room": 123,
       "ifc_class": "IfcDoor",
       "note": "drzwi balkonowe / balcony door"
@@ -1186,6 +1281,8 @@
       "sill": 0.9,
       "head": 2.2,
       "window_type": "default",
+      "frame_material": "wood",
+      "render_panels": 3,
       "room": 123
     }
   ],

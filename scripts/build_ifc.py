@@ -20,7 +20,8 @@ import ifcopenshell.api
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from plan_symbols import door_leaf, window_panes  # noqa: E402
+from plan_symbols import (door_frame, door_leaf, window_frame, window_handles,
+                          window_panes)  # noqa: E402
 
 DOOR_HEIGHT = 2.10
 
@@ -362,6 +363,8 @@ class Builder:
             equipment_count += 1
 
         for route in self.data.get("service_routes", []):
+            if not route.get("geometry_visible", True):
+                continue
             diameter = float(route["nominal_diameter"])
             points = route["points"]
             for index, (start, end) in enumerate(zip(points, points[1:]), 1):
@@ -516,14 +519,26 @@ class Builder:
             if not door.get("has_leaf", True):
                 continue
 
+            nominal_width = float(door.get("nominal_width", max(w, d)))
+            height = float(door.get("height", DOOR_HEIGHT))
             leaf = self.boxes("IfcDoor", f"Drzwi {door['id']}", (x, y, 0.0),
-                              door_leaf(w, d, DOOR_HEIGHT, door.get("swing")))
+                              door_leaf(w, d, height, door.get("swing"),
+                                        nominal_width))
             run("spatial.assign_container", self.model, relating_structure=self.storey,
                 products=[leaf])
             run("feature.add_filling", self.model, opening=opening, element=leaf)
+            frame = self.boxes(
+                "IfcMember", f"Door frame {door['id']}", (x, y, 0.0),
+                door_frame(w, d, height),
+            )
+            run("spatial.assign_container", self.model, relating_structure=self.storey,
+                products=[frame])
             swing = door.get("swing") or ["start", "+"]
             self.add_properties(leaf, "DoorLayout", {
                 "DoorId": door["id"],
+                "NominalLeafWidth": nominal_width,
+                "NominalLeafHeight": height,
+                "FrameMaterial": door.get("frame_material", "wood"),
                 "HingeEnd": swing[0],
                 "SwingSide": swing[1],
                 "RenovationStatus": door.get("renovation_status"),
@@ -559,14 +574,28 @@ class Builder:
 
             ifc_class = win.get("ifc_class", "IfcWindow")
             name = "Drzwi" if ifc_class == "IfcDoor" else "Okno"
+            panel_count = int(win.get("render_panels", 1 if ifc_class == "IfcDoor" else 2))
             leaf = self.boxes(ifc_class, f"{name} {win['id']}", (x, y, sill),
-                              window_panes(w, d, height))
+                              window_panes(w, d, height, panel_count))
             run("spatial.assign_container", self.model,
                 relating_structure=self.storey, products=[leaf])
             run("feature.add_filling", self.model, opening=opening, element=leaf)
+            frame = self.boxes(
+                "IfcMember", f"Window frame {win['id']}", (x, y, sill),
+                window_frame(w, d, height, panel_count),
+            )
+            handles = self.boxes(
+                "IfcDiscreteAccessory", f"Window handles {win['id']}",
+                (x, y, sill), window_handles(w, d, height, panel_count),
+            )
+            run("spatial.assign_container", self.model,
+                relating_structure=self.storey, products=[frame, handles])
             self.add_properties(leaf, "WindowLayout", {
                 "ApertureId": win["id"],
                 "WindowType": win.get("window_type", "default"),
+                "FrameMaterial": win.get("frame_material", "wood"),
+                "RenderPanelCount": panel_count,
+                "RenderHandles": True,
                 "Room": str(win.get("room")) if win.get("room") is not None else None,
                 "SillHeight": sill,
                 "HeadHeight": head,
