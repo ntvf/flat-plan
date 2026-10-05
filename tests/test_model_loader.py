@@ -68,9 +68,20 @@ class ModelLoaderTest(unittest.TestCase):
         self.assertEqual("exterior",
                          equipment["GAS_HEATER_ENTRY"]["room"])
         self.assertEqual(
-            {"B4_BATH", "B4_BASIN", "B4_WC", "B4_WASHER"},
+            {
+                "B4_BATH", "B4_BATH_FAUCET", "B4_BASIN",
+                "B4_BASIN_FAUCET", "B4_WC", "B4_WC_FLUSH", "B4_WASHER",
+            },
             {item_id for item_id in equipment if item_id.startswith("B4_")},
         )
+        self.assertEqual("north", equipment["B4_WC"]["back"])
+        self.assertEqual("wall", equipment["B4_WC"]["mounting"])
+        self.assertEqual("concealed", equipment["B4_WC"]["cistern"])
+        self.assertEqual([0.70, 7.25, 0.18], equipment["B4_WC"]["at"])
+        self.assertEqual([0.40, 0.70, 0.24], equipment["B4_WC"]["size"])
+        self.assertEqual("rectangular", equipment["B4_BASIN"]["shape"])
+        self.assertEqual("faucet", equipment["B4_BATH_FAUCET"]["category"])
+        self.assertEqual("flush_plate", equipment["B4_WC_FLUSH"]["category"])
         routes = {route["id"]: route for route in base["service_routes"]}
         self.assertFalse(routes["B4_WATER_BOX"]["geometry_visible"])
         self.assertFalse(routes["B4_DRAIN_BOX"]["geometry_visible"])
@@ -93,6 +104,13 @@ class ModelLoaderTest(unittest.TestCase):
             equipment["GAS_HEATER_ENTRY"],
             target_equipment["GAS_HEATER_ENTRY"],
         )
+        self.assertEqual([1.52, 7.35, 0.85],
+                         target_equipment["B4_WASHER"]["at"])
+        self.assertEqual("stacked_on_dryer",
+                         target_equipment["B4_WASHER"]["mounting"])
+        self.assertEqual([1.52, 7.35, 0.0],
+                         target_equipment["B4_DRYER"]["at"])
+        self.assertEqual("dryer", target_equipment["B4_DRYER"]["category"])
         target_routes = {route["id"]: route for route in target["service_routes"]}
         self.assertEqual("retained_and_reused",
                          target_routes["AC_living_lines"]["renovation_status"])
@@ -105,9 +123,13 @@ class ModelLoaderTest(unittest.TestCase):
         self.assertEqual("IfcDuctSegment",
                          target_routes["B9_EXTRACT"]["ifc_class"])
         self.assertEqual(
-            {"B9_BASIN", "B9_WC", "B9_SHOWER"},
+            {
+                "B9_BASIN", "B9_BASIN_FAUCET", "B9_WC", "B9_SHOWER",
+                "B9_SHOWER_FAUCET",
+            },
             {item_id for item_id in target_equipment if item_id.startswith("B9_")},
         )
+        self.assertEqual("south", target_equipment["B9_WC"]["back"])
         target_wall = next(wall for wall in target["walls"]
                            if wall["id"] == "W_bath2_n")
         self.assertEqual([3.38, 0.125], target_wall["size"])

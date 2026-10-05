@@ -114,6 +114,90 @@ class Builder:
     def box(self, ifc_class, name, x, y, z, w, d, h):
         return self.boxes(ifc_class, name, (x, y, z), [(0.0, 0.0, 0.0, w, d, h)])
 
+    @staticmethod
+    def box_mesh(x, y, z, w, d, h):
+        vertices = [(x, y, z), (x + w, y, z), (x + w, y + d, z),
+                    (x, y + d, z), (x, y, z + h), (x + w, y, z + h),
+                    (x + w, y + d, z + h), (x, y + d, z + h)]
+        faces = [[0, 1, 2, 3], [7, 6, 5, 4], [0, 4, 5, 1],
+                 [1, 5, 6, 2], [2, 6, 7, 3], [3, 7, 4, 0]]
+        return vertices, faces
+
+    @staticmethod
+    def cylinder_mesh(x, y, z, rx, ry, length, axis="z", segments=32):
+        """Create an elliptical cylinder along one local axis."""
+        vertices = []
+        for offset in (0.0, length):
+            for index in range(segments):
+                angle = 2.0 * math.pi * index / segments
+                a = rx * math.cos(angle)
+                b = ry * math.sin(angle)
+                if axis == "x":
+                    vertices.append((x + offset, y + a, z + b))
+                elif axis == "y":
+                    vertices.append((x + a, y + offset, z + b))
+                else:
+                    vertices.append((x + a, y + b, z + offset))
+        faces = [list(range(segments - 1, -1, -1)),
+                 list(range(segments, 2 * segments))]
+        for index in range(segments):
+            next_index = (index + 1) % segments
+            faces.append([index, next_index, next_index + segments,
+                          index + segments])
+        return vertices, faces
+
+    @staticmethod
+    def bowl_mesh(x, y, z, rx, ry, height, rim, segments=32):
+        """Create an open elliptical bowl with a sloped inner surface."""
+        inner_rx = max(rx - rim, rx * 0.55)
+        inner_ry = max(ry - rim, ry * 0.55)
+        rings = (
+            (rx * 0.82, ry * 0.82, z),
+            (rx, ry, z + height),
+            (inner_rx, inner_ry, z + height),
+            (inner_rx * 0.38, inner_ry * 0.38, z + height * 0.18),
+        )
+        vertices = []
+        for ring_rx, ring_ry, ring_z in rings:
+            for index in range(segments):
+                angle = 2.0 * math.pi * index / segments
+                vertices.append((
+                    x + ring_rx * math.cos(angle),
+                    y + ring_ry * math.sin(angle),
+                    ring_z,
+                ))
+        faces = []
+        for first_ring, second_ring in ((0, 1), (1, 2), (2, 3)):
+            first = first_ring * segments
+            second = second_ring * segments
+            for index in range(segments):
+                next_index = (index + 1) % segments
+                faces.append([first + index, first + next_index,
+                              second + next_index, second + index])
+        faces.append(list(range(segments - 1, -1, -1)))
+        faces.append(list(range(3 * segments, 4 * segments)))
+        return vertices, faces
+
+    def meshes(self, ifc_class, name, origin, meshes):
+        el = ifcopenshell.api.run("root.create_entity", self.model,
+                                  ifc_class=ifc_class, name=name)
+        vertices = []
+        faces = []
+        for mesh_vertices, mesh_faces in meshes:
+            offset = len(vertices)
+            vertices.extend(mesh_vertices)
+            faces.extend([[index + offset for index in face]
+                          for face in mesh_faces])
+        rep = ifcopenshell.api.run("geometry.add_mesh_representation", self.model,
+                                   context=self.body, vertices=[vertices],
+                                   faces=[faces])
+        ifcopenshell.api.run("geometry.assign_representation", self.model,
+                             product=el, representation=rep)
+        x, y, z = origin
+        self.place(el, np.array([[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z],
+                                 [0, 0, 0, 1]], dtype=float))
+        return el
+
     def boxes(self, ifc_class, name, origin, parts):
         """An element made of one or more boxes.
 
@@ -122,26 +206,194 @@ class Builder:
         not a solid block - a window is two panes with a gap between them,
         not a filled rectangle.
         """
-        el = ifcopenshell.api.run("root.create_entity", self.model,
-                                  ifc_class=ifc_class, name=name)
-        faces = [[0, 1, 2, 3], [7, 6, 5, 4], [0, 4, 5, 1],
-                 [1, 5, 6, 2], [2, 6, 7, 3], [3, 7, 4, 0]]
-        all_verts, all_faces = [], []
-        for px, py, pz, w, d, h in parts:
-            all_verts.append([(px, py, pz), (px + w, py, pz),
-                              (px + w, py + d, pz), (px, py + d, pz),
-                              (px, py, pz + h), (px + w, py, pz + h),
-                              (px + w, py + d, pz + h), (px, py + d, pz + h)])
-            all_faces.append([list(f) for f in faces])
-        rep = ifcopenshell.api.run("geometry.add_mesh_representation", self.model,
-                                   context=self.body, vertices=all_verts,
-                                   faces=all_faces)
-        ifcopenshell.api.run("geometry.assign_representation", self.model,
-                             product=el, representation=rep)
-        x, y, z = origin
-        self.place(el, np.array([[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z], [0, 0, 0, 1]],
-                                dtype=float))
-        return el
+        return self.meshes(
+            ifc_class, name, origin,
+            [self.box_mesh(px, py, pz, w, d, h)
+             for px, py, pz, w, d, h in parts],
+        )
+
+    def equipment_geometry(self, item):
+        """Return recognizable geometry within the item's exact size envelope."""
+        w, d, h = (float(value) for value in item["size"])
+        category = item.get("category")
+
+        if category == "bath":
+            rim = min(0.075, w * 0.08, d * 0.10)
+            return [
+                self.box_mesh(0, 0, 0, w, d, 0.08),
+                self.box_mesh(0, 0, 0.08, w, rim, h - 0.08),
+                self.box_mesh(0, d - rim, 0.08, w, rim, h - 0.08),
+                self.box_mesh(0, rim, 0.08, rim, d - 2 * rim, h - 0.08),
+                self.box_mesh(w - rim, rim, 0.08, rim, d - 2 * rim, h - 0.08),
+            ]
+
+        if category == "basin":
+            bowl_height = min(h, 0.14)
+            if item.get("shape") == "rectangular":
+                rim = min(0.055, w * 0.12, d * 0.10)
+                base = min(0.025, bowl_height * 0.25)
+                meshes = [
+                    self.box_mesh(rim, rim, 0, w - 2 * rim, d - 2 * rim, base),
+                    self.box_mesh(0, 0, base, w, rim, bowl_height - base),
+                    self.box_mesh(0, d - rim, base, w, rim,
+                                  bowl_height - base),
+                    self.box_mesh(0, rim, base, rim, d - 2 * rim,
+                                  bowl_height - base),
+                    self.box_mesh(w - rim, rim, base, rim, d - 2 * rim,
+                                  bowl_height - base),
+                ]
+            else:
+                meshes = [
+                    self.bowl_mesh(w / 2, d / 2, h - bowl_height,
+                                   w / 2, d / 2, bowl_height, 0.045),
+                    self.box_mesh(0, 0, h - 0.05, w, min(0.07, d), 0.05),
+                ]
+            if item.get("mounting") == "floor":
+                meshes.append(self.cylinder_mesh(
+                    w / 2, d * 0.42, 0, w * 0.16, d * 0.16,
+                    max(0.0, h - bowl_height),
+                ))
+            return meshes
+
+        if category == "wc":
+            back = item.get("back", "south")
+            if item.get("mounting") == "wall":
+                if back in ("south", "north"):
+                    bowl_y = d * 0.46 if back == "south" else d * 0.54
+                    mount_y = 0 if back == "south" else d - 0.10
+                    return [
+                        self.bowl_mesh(w / 2, bowl_y, 0,
+                                       w / 2, d * 0.46, h, 0.04),
+                        self.box_mesh(w * 0.15, mount_y, h * 0.18,
+                                      w * 0.70, 0.10, h * 0.55),
+                    ]
+                bowl_x = w * 0.46 if back == "west" else w * 0.54
+                mount_x = 0 if back == "west" else w - 0.10
+                return [
+                    self.bowl_mesh(bowl_x, d / 2, 0,
+                                   w * 0.46, d / 2, h, 0.04),
+                    self.box_mesh(mount_x, d * 0.15, h * 0.18,
+                                  0.10, d * 0.70, h * 0.55),
+                ]
+            tank_depth = min(0.22, d * 0.32)
+            tank_width = w * 0.88
+            bowl_height = min(0.42, h * 0.54)
+            pedestal_height = bowl_height * 0.72
+            meshes = []
+            if back in ("south", "north"):
+                tank_y = 0 if back == "south" else d - tank_depth
+                bowl_y = tank_depth + (d - tank_depth) / 2 if back == "south" \
+                    else (d - tank_depth) / 2
+                meshes.extend([
+                    self.box_mesh((w - tank_width) / 2, tank_y, 0,
+                                  tank_width, tank_depth, h),
+                    self.bowl_mesh(w / 2, bowl_y, pedestal_height,
+                                   w / 2, (d - tank_depth) / 2,
+                                   bowl_height - pedestal_height, 0.04),
+                    self.cylinder_mesh(w / 2, bowl_y, 0,
+                                       w * 0.28, (d - tank_depth) * 0.28,
+                                       pedestal_height),
+                ])
+            else:
+                tank_depth = min(0.22, w * 0.32)
+                tank_x = 0 if back == "west" else w - tank_depth
+                bowl_x = tank_depth + (w - tank_depth) / 2 if back == "west" \
+                    else (w - tank_depth) / 2
+                meshes.extend([
+                    self.box_mesh(tank_x, (d - tank_width) / 2, 0,
+                                  tank_depth, tank_width, h),
+                    self.bowl_mesh(bowl_x, d / 2, pedestal_height,
+                                   (w - tank_depth) / 2, d / 2,
+                                   bowl_height - pedestal_height, 0.04),
+                    self.cylinder_mesh(bowl_x, d / 2, 0,
+                                       (w - tank_depth) * 0.28, d * 0.28,
+                                       pedestal_height),
+                ])
+            return meshes
+
+        if category == "shower":
+            kerb = min(0.055, w * 0.08, d * 0.08)
+            return [
+                self.box_mesh(0, 0, 0, w, d, min(0.025, h)),
+                self.box_mesh(0, 0, 0.025, w, kerb, h - 0.025),
+                self.box_mesh(0, d - kerb, 0.025, w, kerb, h - 0.025),
+                self.box_mesh(0, kerb, 0.025, kerb, d - 2 * kerb, h - 0.025),
+                self.box_mesh(w - kerb, kerb, 0.025, kerb, d - 2 * kerb,
+                              h - 0.025),
+                self.cylinder_mesh(w / 2, d / 2, h - 0.008,
+                                   0.035, 0.035, 0.008),
+            ]
+
+        if category in ("washer", "dryer"):
+            body_depth = max(0.0, d - 0.025)
+            return [
+                self.box_mesh(0, 0.025, 0, w, body_depth, h),
+                self.box_mesh(0.04, 0.005, h * 0.78, w - 0.08, 0.025, h * 0.15),
+                self.cylinder_mesh(w / 2, 0, h * 0.44,
+                                   w * 0.29, h * 0.22, 0.035, axis="y"),
+                self.cylinder_mesh(w * 0.83, 0, h * 0.865,
+                                   0.025, 0.025, 0.04, axis="y"),
+            ]
+
+        if category == "faucet":
+            back = item.get("back", "south")
+            radius = min(w, d, h) * 0.10
+            meshes = []
+            if back in ("south", "north"):
+                stem_y = d * (0.25 if back == "south" else 0.75)
+                spout_y = d * (0.25 if back == "south" else 0.15)
+                meshes.extend([
+                    self.cylinder_mesh(w / 2, stem_y, 0, radius, radius,
+                                       h * 0.72),
+                    self.cylinder_mesh(w / 2, spout_y, h * 0.70,
+                                       radius * 0.72, radius * 0.72,
+                                       d * 0.60, axis="y"),
+                    self.cylinder_mesh(w * 0.72, stem_y, h * 0.67,
+                                       radius * 0.55, radius * 0.55,
+                                       h * 0.22),
+                ])
+            else:
+                stem_x = w * (0.25 if back == "west" else 0.75)
+                spout_x = w * (0.25 if back == "west" else 0.15)
+                meshes.extend([
+                    self.cylinder_mesh(stem_x, d / 2, 0, radius, radius,
+                                       h * 0.72),
+                    self.cylinder_mesh(spout_x, d / 2, h * 0.70,
+                                       radius * 0.72, radius * 0.72,
+                                       w * 0.60, axis="x"),
+                    self.cylinder_mesh(stem_x, d * 0.72, h * 0.67,
+                                       radius * 0.55, radius * 0.55,
+                                       h * 0.22),
+                ])
+            return meshes
+
+        if category == "shower_faucet":
+            radius = min(w, d) * 0.08
+            return [
+                self.cylinder_mesh(w * 0.72, d / 2, 0, radius, radius,
+                                   h * 0.88),
+                self.cylinder_mesh(w * 0.10, d / 2, h * 0.86,
+                                   radius, radius, w * 0.62, axis="x"),
+                self.cylinder_mesh(w * 0.10, d / 2, h * 0.80,
+                                   min(w, d) * 0.22, min(w, d) * 0.22,
+                                   h * 0.04),
+                self.cylinder_mesh(w * 0.58, d * 0.10, h * 0.10,
+                                   radius, radius, d * 0.80, axis="y"),
+                self.cylinder_mesh(w * 0.42, d * 0.32, h * 0.10,
+                                   radius * 0.75, radius * 0.75,
+                                   w * 0.32, axis="x"),
+            ]
+
+        if category == "flush_plate":
+            return [
+                self.box_mesh(0, 0, 0, w, d, h),
+                self.cylinder_mesh(w * 0.38, 0, h * 0.52,
+                                   w * 0.12, h * 0.20, d * 1.35, axis="y"),
+                self.cylinder_mesh(w * 0.68, 0, h * 0.52,
+                                   w * 0.08, h * 0.14, d * 1.35, axis="y"),
+            ]
+
+        return None
 
     def prism(self, ifc_class, name, polygon, z, height):
         """An element extruded vertically from an arbitrary plan polygon.
@@ -332,7 +584,14 @@ class Builder:
         for item in self.data.get("equipment", []):
             x, y, z = item["at"]
             w, d, h = item["size"]
-            if item.get("shape") == "cylinder":
+            detailed_geometry = self.equipment_geometry(item)
+            if detailed_geometry:
+                el = self.meshes(
+                    item.get("ifc_class", "IfcBuildingElementProxy"),
+                    f"{item['id']} {item['name']}", (x, y, z),
+                    detailed_geometry,
+                )
+            elif item.get("shape") == "cylinder":
                 if abs(w - d) > 1e-9:
                     raise ValueError(f"cylindrical equipment {item['id']} needs equal width and depth")
                 radius = w / 2.0
@@ -354,6 +613,8 @@ class Builder:
                 "Manufacturer": item.get("manufacturer"),
                 "CapacityLitres": item.get("capacity_l"),
                 "Shape": item.get("shape", "box"),
+                "DetailedGeometry": bool(detailed_geometry),
+                "BackOrientation": item.get("back"),
                 "Mounting": item.get("mounting"),
                 "Host": item.get("host"),
                 "Room": str(item.get("room")) if item.get("room") is not None else None,

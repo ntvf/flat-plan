@@ -38,7 +38,9 @@ exports/        Generated IFC, drawings, checks, and renders (ignored)
   and validates additions and updates.
 - `scripts/yaml_to_json.py` — bridge; Blender's Python has no PyYAML.
 - `scripts/build_ifc.py` — builds IFC4 geometry, openings, spaces, equipment,
-  service routes, surveyed service terminals, and traceable finish properties.
+  service routes, surveyed service terminals, and traceable finish properties;
+  sanitary fixtures and the washer use dimensioned, recognizable 3D geometry
+  rather than generic equipment blocks.
 - `scripts/plan_symbols.py` — standard-size door leaves and frames plus
   multi-panel window glazing, wood frames, and handles; shared with the
   annotator so each leaf and swing arc agree.
@@ -128,9 +130,16 @@ below and beside the gas heater.
 The balanced bathroom fixture layout is promoted into the models. The existing
 bathroom contains the bath, basin, WC and washer; its pipes remain recorded as
 concealed routing assumptions but only the connection points are shown.
+Its WC is modeled as a wall-hung bowl with a concealed cistern, and its basin
+has a rectangular recessed form. In the target state, a new dryer occupies the
+washer's former floor position and the retained washer is stacked above it.
+Modeled metal fittings include the existing bath and basin taps, the concealed
+WC flush plate, and the target basin tap and shower mixer/riser/head set.
 Bathroom 9 contains the basin, WC and 90 × 90 shower, with accessible hot/cold
 water boxes, sanitary routes with nominal 2% falls, service terminals, and the
-extract route to `SH_vent`. Drain inverts, penetrations, fire stopping,
+extract route to `SH_vent`. Baths, basins, WCs, shower trays, and the washer are
+generated as recognizable, dimension-preserving IFC objects instead of cuboid
+placeholders. Drain inverts, penetrations, fire stopping,
 waterproofing, electrical changes, and finish zones still require design or
 site verification.
 

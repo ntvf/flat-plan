@@ -660,10 +660,31 @@
       "renovation_status": "existing"
     },
     {
+      "id": "B4_BATH_FAUCET",
+      "name": "Bateria wannowa",
+      "ifc_class": "IfcDiscreteAccessory",
+      "category": "faucet",
+      "at": [
+        0.4,
+        5.38,
+        0.55
+      ],
+      "size": [
+        0.22,
+        0.16,
+        0.22
+      ],
+      "room": 4,
+      "mounting": "wall",
+      "back": "west",
+      "renovation_status": "existing"
+    },
+    {
       "id": "B4_BASIN",
       "name": "Umywalka 45 x 55",
       "ifc_class": "IfcSanitaryTerminal",
       "category": "basin",
+      "shape": "rectangular",
       "at": [
         0.4,
         6.18,
@@ -679,22 +700,64 @@
       "renovation_status": "existing"
     },
     {
+      "id": "B4_BASIN_FAUCET",
+      "name": "Bateria umywalkowa",
+      "ifc_class": "IfcDiscreteAccessory",
+      "category": "faucet",
+      "at": [
+        0.4,
+        6.395,
+        0.92
+      ],
+      "size": [
+        0.18,
+        0.12,
+        0.22
+      ],
+      "room": 4,
+      "mounting": "fixture",
+      "back": "west",
+      "renovation_status": "existing"
+    },
+    {
       "id": "B4_WC",
-      "name": "Miska WC 40 x 70",
+      "name": "Miska WC podwieszana 40 x 70",
       "ifc_class": "IfcSanitaryTerminal",
       "category": "wc",
       "at": [
         0.7,
         7.25,
-        0.0
+        0.18
       ],
       "size": [
         0.4,
         0.7,
-        0.78
+        0.24
       ],
       "room": 4,
-      "mounting": "floor",
+      "mounting": "wall",
+      "back": "north",
+      "cistern": "concealed",
+      "renovation_status": "existing"
+    },
+    {
+      "id": "B4_WC_FLUSH",
+      "name": "Przycisk spłukujący",
+      "ifc_class": "IfcDiscreteAccessory",
+      "category": "flush_plate",
+      "at": [
+        0.8,
+        7.91,
+        0.95
+      ],
+      "size": [
+        0.2,
+        0.03,
+        0.12
+      ],
+      "room": 4,
+      "mounting": "wall",
+      "back": "north",
       "renovation_status": "existing"
     },
     {
@@ -702,6 +765,26 @@
       "name": "Pralka 60 x 60",
       "ifc_class": "IfcElectricAppliance",
       "category": "washer",
+      "at": [
+        1.52,
+        7.35,
+        0.85
+      ],
+      "size": [
+        0.6,
+        0.6,
+        0.85
+      ],
+      "room": 4,
+      "mounting": "stacked_on_dryer",
+      "renovation_status": "relocated",
+      "note": "existing washer stacked directly above the new dryer"
+    },
+    {
+      "id": "B4_DRYER",
+      "name": "Suszarka bębnowa 60 x 60",
+      "ifc_class": "IfcElectricAppliance",
+      "category": "dryer",
       "at": [
         1.52,
         7.35,
@@ -714,7 +797,8 @@
       ],
       "room": 4,
       "mounting": "floor",
-      "renovation_status": "existing"
+      "renovation_status": "new",
+      "note": "dryer below the existing washer in a stacked appliance column"
     },
     {
       "id": "B9_BASIN",
@@ -736,6 +820,26 @@
       "renovation_status": "new"
     },
     {
+      "id": "B9_BASIN_FAUCET",
+      "name": "Bateria umywalkowa",
+      "ifc_class": "IfcDiscreteAccessory",
+      "category": "faucet",
+      "at": [
+        6.465,
+        5.98,
+        0.92
+      ],
+      "size": [
+        0.18,
+        0.16,
+        0.22
+      ],
+      "room": 9,
+      "mounting": "fixture",
+      "back": "south",
+      "renovation_status": "new"
+    },
+    {
       "id": "B9_WC",
       "name": "Miska WC 40 x 70",
       "ifc_class": "IfcSanitaryTerminal",
@@ -752,6 +856,7 @@
       ],
       "room": 9,
       "mounting": "floor",
+      "back": "south",
       "renovation_status": "new"
     },
     {
@@ -771,6 +876,26 @@
       ],
       "room": 9,
       "mounting": "floor",
+      "renovation_status": "new"
+    },
+    {
+      "id": "B9_SHOWER_FAUCET",
+      "name": "Bateria i zestaw prysznicowy",
+      "ifc_class": "IfcDiscreteAccessory",
+      "category": "shower_faucet",
+      "at": [
+        8.76,
+        6.73,
+        1.0
+      ],
+      "size": [
+        0.2,
+        0.3,
+        1.25
+      ],
+      "room": 9,
+      "mounting": "wall",
+      "back": "east",
       "renovation_status": "new"
     }
   ],

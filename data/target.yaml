@@ -39,6 +39,11 @@ changes:
           reference: north edge of entrance opening
           adjacent_wall_length: 4.12
         note: "relocated outside the flat on the west wall, directly below and beside the gas heater; keep the exterior appliance zone clear for servicing"
+      - id: B4_WASHER
+        at: [1.52, 7.35, 0.85]
+        mounting: stacked_on_dryer
+        renovation_status: relocated
+        note: "existing washer stacked directly above the new dryer"
     service_routes:
       - id: AC_living_lines
         renovation_status: retained_and_reused
@@ -200,15 +205,28 @@ changes:
         note: "route to SH_vent with backdraft damper; airflow and fire stopping to be designed"
 
     equipment:
+      - { id: B4_DRYER, name: Suszarka bębnowa 60 x 60,
+          ifc_class: IfcElectricAppliance, category: dryer,
+          at: [1.52, 7.35, 0.00], size: [0.60, 0.60, 0.85],
+          room: 4, mounting: floor, renovation_status: new,
+          note: "dryer below the existing washer in a stacked appliance column" }
       - { id: B9_BASIN, name: Umywalka 55 x 45, ifc_class: IfcSanitaryTerminal,
           category: basin, at: [6.28, 5.98, 0.78], size: [0.55, 0.45, 0.14],
           room: 9, mounting: wall, renovation_status: new }
+      - { id: B9_BASIN_FAUCET, name: Bateria umywalkowa,
+          ifc_class: IfcDiscreteAccessory, category: faucet,
+          at: [6.465, 5.98, 0.92], size: [0.18, 0.16, 0.22],
+          room: 9, mounting: fixture, back: south, renovation_status: new }
       - { id: B9_WC, name: Miska WC 40 x 70, ifc_class: IfcSanitaryTerminal,
           category: wc, at: [7.04, 5.98, 0.00], size: [0.40, 0.70, 0.78],
-          room: 9, mounting: floor, renovation_status: new }
+          room: 9, mounting: floor, back: south, renovation_status: new }
       - { id: B9_SHOWER, name: Brodzik 90 x 90, ifc_class: IfcSanitaryTerminal,
           category: shower, at: [8.06, 6.43, 0.00], size: [0.90, 0.90, 0.08],
           room: 9, mounting: floor, renovation_status: new }
+      - { id: B9_SHOWER_FAUCET, name: Bateria i zestaw prysznicowy,
+          ifc_class: IfcDiscreteAccessory, category: shower_faucet,
+          at: [8.76, 6.73, 1.00], size: [0.20, 0.30, 1.25],
+          room: 9, mounting: wall, back: east, renovation_status: new }
 
     service_terminals:
       - id: B9_BASIN_CONNECTION

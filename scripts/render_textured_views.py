@@ -198,7 +198,7 @@ def main():
             assign_material(obj, materials["window_wood"])
         elif name.startswith("IfcMember/Door frame"):
             assign_material(obj, materials["door"])
-        elif name.startswith("IfcDiscreteAccessory/Window handles"):
+        elif name.startswith("IfcDiscreteAccessory/"):
             assign_material(obj, materials["metal"])
         elif name.startswith("IfcSpace/"):
             assign_material(obj, materials["floor"])

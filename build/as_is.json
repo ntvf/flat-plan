@@ -533,10 +533,31 @@
       "renovation_status": "existing"
     },
     {
+      "id": "B4_BATH_FAUCET",
+      "name": "Bateria wannowa",
+      "ifc_class": "IfcDiscreteAccessory",
+      "category": "faucet",
+      "at": [
+        0.4,
+        5.38,
+        0.55
+      ],
+      "size": [
+        0.22,
+        0.16,
+        0.22
+      ],
+      "room": 4,
+      "mounting": "wall",
+      "back": "west",
+      "renovation_status": "existing"
+    },
+    {
       "id": "B4_BASIN",
       "name": "Umywalka 45 x 55",
       "ifc_class": "IfcSanitaryTerminal",
       "category": "basin",
+      "shape": "rectangular",
       "at": [
         0.4,
         6.18,
@@ -552,22 +573,64 @@
       "renovation_status": "existing"
     },
     {
+      "id": "B4_BASIN_FAUCET",
+      "name": "Bateria umywalkowa",
+      "ifc_class": "IfcDiscreteAccessory",
+      "category": "faucet",
+      "at": [
+        0.4,
+        6.395,
+        0.92
+      ],
+      "size": [
+        0.18,
+        0.12,
+        0.22
+      ],
+      "room": 4,
+      "mounting": "fixture",
+      "back": "west",
+      "renovation_status": "existing"
+    },
+    {
       "id": "B4_WC",
-      "name": "Miska WC 40 x 70",
+      "name": "Miska WC podwieszana 40 x 70",
       "ifc_class": "IfcSanitaryTerminal",
       "category": "wc",
       "at": [
         0.7,
         7.25,
-        0.0
+        0.18
       ],
       "size": [
         0.4,
         0.7,
-        0.78
+        0.24
       ],
       "room": 4,
-      "mounting": "floor",
+      "mounting": "wall",
+      "back": "north",
+      "cistern": "concealed",
+      "renovation_status": "existing"
+    },
+    {
+      "id": "B4_WC_FLUSH",
+      "name": "Przycisk spłukujący",
+      "ifc_class": "IfcDiscreteAccessory",
+      "category": "flush_plate",
+      "at": [
+        0.8,
+        7.91,
+        0.95
+      ],
+      "size": [
+        0.2,
+        0.03,
+        0.12
+      ],
+      "room": 4,
+      "mounting": "wall",
+      "back": "north",
       "renovation_status": "existing"
     },
     {
