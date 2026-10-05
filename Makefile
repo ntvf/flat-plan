@@ -1,5 +1,10 @@
-PYTHON ?= python3
-BLENDER ?= /snap/bin/blender
+# Host Python: the project venv from `make setup` when present.
+PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
+
+# Blender with the Bonsai extension. The Linux snap is preferred over
+# /usr/bin/blender, which has no Bonsai; then the macOS app bundle, then PATH.
+BLENDER_CANDIDATES := /snap/bin/blender /Applications/Blender.app/Contents/MacOS/Blender
+BLENDER ?= $(or $(firstword $(wildcard $(BLENDER_CANDIDATES))),$(shell command -v blender))
 
 STATE ?= as_is
 MODEL := data/$(STATE).yaml
@@ -11,18 +16,23 @@ OVERLAY := exports/check/$(STATE)_overlay.png
 DRAWINGS := exports/drawings/$(STATE)
 MODEL_SOURCES := $(wildcard data/*.yaml) scripts/model_loader.py
 
-.PHONY: all help check compile model drawings overlay concepts renders as-is target clean
+.PHONY: all help setup check compile model drawings overlay concepts renders as-is target clean
 
 all: model
 
 help:
 	@printf '%s\n' \
+		'make setup    Create .venv with the host-Python dependencies' \
 		'make as-is    Build and verify the surveyed model and drawings' \
 		'make target   Build and verify the renovation model and drawings' \
 		'make concepts Generate bathroom layout studies' \
 		'make renders  Render the target model views' \
 		'make check    Run syntax checks and unit tests' \
 		'make clean    Remove all generated files'
+
+setup:
+	python3 -m venv .venv
+	.venv/bin/python -m pip install -r requirements.txt
 
 check:
 	$(PYTHON) -m py_compile scripts/*.py

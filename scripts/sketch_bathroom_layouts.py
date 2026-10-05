@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
+
+from fonts import load_font
 
 
 OUT = Path("exports/concepts/bathroom_layouts/balanced.png")
 SCALE = 260
-FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-FONT_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
 COLORS = {
     "background": "#f4f1ea",
@@ -31,7 +31,7 @@ COLORS = {
 
 
 def font(size, bold=False):
-    return ImageFont.truetype(FONT_BOLD if bold else FONT, size)
+    return load_font(size, bold)
 
 
 def point(origin, x, y):

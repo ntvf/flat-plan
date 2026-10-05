@@ -21,8 +21,10 @@ contractors can price the work from generated bills of quantities.
   block; X grows east and Y grows north.
 - Generated files are under `build/` and `exports/`; do not edit them directly.
 - Survey scan: `data/survey-plan.jfif`.
-- Blender for this project must be `/snap/bin/blender`, because it has Bonsai;
-  `/usr/bin/blender` exists but does not provide the required Bonsai workflow.
+- Blender must have the Bonsai extension. The Makefile auto-detects it:
+  `/snap/bin/blender` on Linux (`/usr/bin/blender` there has no Bonsai), then
+  `/Applications/Blender.app` on macOS; override with `BLENDER=...`. Keep
+  scripts platform-neutral (no hard-coded system paths or add-on repo names).
 
 ## Current modeled state
 

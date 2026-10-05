@@ -10,17 +10,13 @@ Usage: python3 scripts/check_layout.py data/as_is.yaml /tmp/check.png
 
 import sys
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
+from fonts import load_font
 from model_loader import load_model
 from plan_symbols import door_leaf, door_swing_arc
 
 PX_PER_M = 80
 MARGIN = 60
-
-FONT_PATHS = [
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-]
 
 ROOM_FILL = {
     "bedroom": (214, 232, 214),
@@ -73,11 +69,8 @@ def main(src, dst):
         """Model metres -> image pixels, flipping Y so north is up."""
         return (MARGIN + pt[0] * PX_PER_M, h - MARGIN - pt[1] * PX_PER_M)
 
-    try:
-        font = ImageFont.truetype(FONT_PATHS[0], 15)
-        font_b = ImageFont.truetype(FONT_PATHS[1], 17)
-    except OSError:
-        font = font_b = ImageFont.load_default()
+    font = load_font(15)
+    font_b = load_font(17, bold=True)
 
     d.polygon([tp(p) for p in outline], fill=(170, 170, 170), outline=(0, 0, 0))
 

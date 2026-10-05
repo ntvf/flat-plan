@@ -59,11 +59,19 @@ normal build. The other scripts are wired into the Make targets below.
 
 ## Build
 
-Install the host-Python dependencies once with:
+The pipeline runs on Linux and macOS. Prerequisites:
 
-```sh
-python3 -m pip install -r requirements.txt
-```
+- Python 3; create the project venv with `make setup` (the Makefile uses
+  `.venv/bin/python` when it exists, otherwise `python3`).
+- Blender with the Bonsai extension. The Makefile picks `/snap/bin/blender`
+  on Linux, then `/Applications/Blender.app` on macOS, then `blender` on
+  `PATH`; override with `make BLENDER=/path/to/blender`. On macOS:
+  `brew install --cask blender`, then
+  `/Applications/Blender.app/Contents/MacOS/Blender --online-mode --command extension install --enable bonsai`.
+- `rsvg-convert` for drawing PDFs (`apt install librsvg2-bin` /
+  `brew install librsvg`); without it only the SVG sheets are produced.
+- DejaVu Sans for check images (`brew install --cask font-dejavu` on macOS);
+  Arial is used as a fallback.
 
 List the supported workflows with `make help`. The primary builds are:
 
@@ -79,7 +87,7 @@ make concepts
 make renders
 ```
 
-Blender must be `/snap/bin/blender` (5.2 LTS, has Bonsai 0.8.6); `/usr/bin/blender`
+On Linux, use `/snap/bin/blender` (5.2 LTS, has Bonsai 0.8.6); `/usr/bin/blender`
 has no Bonsai.
 
 `make STATE=<name> model` builds a single state from `data/<name>.yaml`.

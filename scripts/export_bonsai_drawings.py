@@ -45,7 +45,14 @@ SHEET_DESCRIPTION = META.get(
     "sheet_description", "Inwentaryzacja mieszkania - rzut kondygnacji"
 )
 
-ADDON = "bl_ext.user_default.bonsai"
+# Bonsai's module name depends on the extension repo it was installed from,
+# e.g. bl_ext.user_default.bonsai or bl_ext.blender_org.bonsai.
+ADDON = next(
+    (m.__name__ for m in addon_utils.modules() if m.__name__.endswith(".bonsai")),
+    None,
+)
+if ADDON is None:
+    sys.exit("[bonsai-export] Bonsai extension is not installed in this Blender")
 
 
 def log(*a):
