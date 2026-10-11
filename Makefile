@@ -52,11 +52,11 @@ $(CHECK): $(MODEL) $(MODEL_SOURCES) scripts/check_layout.py
 
 $(IFC): $(JSON) scripts/build_ifc.py scripts/plan_symbols.py
 	mkdir -p $(@D)
-	$(BLENDER) -b --python scripts/build_ifc.py -- $< $@
+	$(BLENDER) -b --python-exit-code 1 --python scripts/build_ifc.py -- $< $@
 
 drawings: $(IFC) $(JSON)
 	mkdir -p $(DRAWINGS)
-	$(BLENDER) -b --python scripts/export_bonsai_drawings.py -- $(IFC) $(DRAWINGS) $(JSON)
+	$(BLENDER) -b --python-exit-code 1 --python scripts/export_bonsai_drawings.py -- $(IFC) $(DRAWINGS) $(JSON)
 
 overlay: $(OVERLAY)
 
@@ -69,7 +69,7 @@ concepts:
 
 renders:
 	$(MAKE) STATE=target model
-	$(BLENDER) -b --python scripts/render_textured_views.py -- exports/target.ifc exports/renders/target
+	$(BLENDER) -b --python-exit-code 1 --python scripts/render_textured_views.py -- exports/target.ifc exports/renders/target
 
 as-is:
 	$(MAKE) STATE=as_is check model overlay drawings

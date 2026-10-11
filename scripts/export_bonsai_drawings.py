@@ -81,8 +81,33 @@ else:
     log("svg2pdf_command =", prefs.svg2pdf_command)
 
 # --- 2. Load the project ---------------------------------------------------
+# Some IfcOpenShell builds (e.g. 0.9.0 for macOS arm64) ship without CGAL, so
+# Bonsai's default hybrid CGAL/OpenCASCADE kernel cannot load any geometry.
+# Fall back to OpenCASCADE only where CGAL is missing.
+import ifcopenshell.geom  # noqa: E402
+
+if hasattr(tool.Project, "get_project_props"):
+    project_props = tool.Project.get_project_props()
+else:
+    project_props = bpy.context.scene.BIMProjectProperties
+if getattr(project_props, "geometry_library", "opencascade") != "opencascade":
+    try:
+        ifcopenshell.geom.iterator(
+            ifcopenshell.geom.settings(), ifcopenshell.open(WORK_IFC),
+            geometry_library="cgal-simple",
+        )
+    except Exception:
+        project_props.geometry_library = "opencascade"
+        log("CGAL unavailable, geometry_library = opencascade")
+
+# Bonsai 0.9 reloads the startup file before importing, which would discard the
+# geometry_library chosen above; this blank background session needs no reset.
+load_kwargs = {}
+if "should_start_fresh_session" in bpy.ops.bim.load_project.get_rna_type().properties:
+    load_kwargs["should_start_fresh_session"] = False
 bpy.ops.bim.load_project(
-    filepath=WORK_IFC, is_advanced=False, skip_autosave_recovery=True, skip_recent=True
+    filepath=WORK_IFC, is_advanced=False, skip_autosave_recovery=True, skip_recent=True,
+    **load_kwargs,
 )
 ifc = tool.Ifc.get()
 log("loaded", WORK_IFC, "schema", ifc.schema)
@@ -230,3 +255,10 @@ for root, _dirs, files in os.walk(OUT_DIR):
     for f in sorted(files):
         p = os.path.join(root, f)
         log(f"{os.path.relpath(p, OUT_DIR):55s} {os.path.getsize(p):>9,d} B")
+
+# Bonsai reports operator failures without raising, so check the deliverable.
+sheet_dir = os.path.join(OUT_DIR, "sheets")
+sheet_files = os.listdir(sheet_dir) if os.path.isdir(sheet_dir) else []
+for ext in (".svg", ".pdf") if rsvg else (".svg",):
+    if not any(f.endswith(ext) for f in sheet_files):
+        sys.exit(f"[bonsai-export] no sheet {ext} produced in {sheet_dir}")
