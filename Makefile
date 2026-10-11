@@ -25,7 +25,7 @@ help:
 		'make setup    Create .venv with the host-Python dependencies' \
 		'make as-is    Build and verify the surveyed model and drawings' \
 		'make target   Build and verify the renovation model and drawings' \
-		'make concepts Generate bathroom layout studies' \
+		'make concepts Generate bathroom and living layout studies' \
 		'make renders  Render the target model views' \
 		'make check    Run syntax checks and unit tests' \
 		'make clean    Remove all generated files'
@@ -66,6 +66,7 @@ $(OVERLAY): $(MODEL) $(MODEL_SOURCES) scripts/overlay_scan.py $(SURVEY)
 
 concepts:
 	$(PYTHON) scripts/sketch_bathroom_layouts.py
+	$(PYTHON) scripts/sketch_living_layout.py
 
 renders:
 	$(MAKE) STATE=target model
