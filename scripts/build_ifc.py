@@ -493,29 +493,37 @@ class Builder:
             # corners of the outer and inner offset polygons, so consecutive
             # walls meet flush instead of leaving a notched, stepped corner.
             quad = [outer[i], outer[j], tuple(inner[j]), tuple(inner[i])]
-            self.mitred_wall(quad, centre[i], centre[j], thick[i],
-                             f"Ściana zewnętrzna {i + 1}")
+            wall = self.mitred_wall(quad, centre[i], centre[j], thick[i],
+                                    f"Ściana zewnętrzna {i + 1}")
+            self.add_properties(wall, "ModelWall", {
+                "WallId": f"EXT_{i + 1}",
+                "Kind": "exterior",
+                "RenovationStatus": "existing",
+                "Length": round(float(np.linalg.norm(np.subtract(centre[j], centre[i]))), 3),
+                "Thickness": thick[i],
+            })
 
     def build_partitions(self):
         for w in self.data.get("walls", []):
             x, y = w["at"]
             ww, wh = w["size"]
+            name = w.get("name", w["id"])
             if ww >= wh:                       # horizontal run
-                self.wall((x, y + wh / 2), (x + ww, y + wh / 2), wh, w["id"])
+                wall = self.wall((x, y + wh / 2), (x + ww, y + wh / 2), wh, name)
+                length, thickness = ww, wh
             else:
-                self.wall((x + ww / 2, y), (x + ww / 2, y + wh), ww, w["id"])
-
-    def build_bedroom_walls(self):
-        """Walls implied by the bedroom polygons but not listed explicitly."""
-        t = float(self.data["thickness"]["partition"])
-        implied = [
-            ((0.40, 4.91), (3.37, 4.91), "Ściana sypialnia 1 / korytarz"),
-            ((3.47, 4.91), (6.25, 4.91), "Ściana sypialnia 2 / korytarz"),
-            ((3.42, 0.40), (3.42, 4.86), "Ściana sypialnia 1 / 2"),
-            ((6.30, 1.34), (6.30, 5.88), "Ściana sypialnia 3 / korytarz"),
-        ]
-        for p1, p2, name in implied:
-            self.wall(p1, p2, t, name)
+                wall = self.wall((x + ww / 2, y), (x + ww / 2, y + wh), ww, name)
+                length, thickness = wh, ww
+            # Walls inherited unchanged from the survey are existing by definition.
+            self.add_properties(wall, "ModelWall", {
+                "WallId": w["id"],
+                "Kind": "partition",
+                "Material": w.get("material"),
+                "RenovationStatus": w.get("renovation_status", "existing"),
+                "Length": length,
+                "Thickness": thickness,
+                "Note": w.get("note"),
+            })
 
     def build_spaces(self):
         run = ifcopenshell.api.run
@@ -549,6 +557,11 @@ class Builder:
                 properties={"NetFloorArea": round(area, 2),
                             "GrossFloorArea": round(area, 2),
                             "Height": self.height})
+            self.add_properties(space, "ModelSpace", {
+                "RoomId": str(room["id"]),
+                "Function": room.get("function"),
+                "RenovationStatus": room.get("renovation_status", "existing"),
+            })
 
     def build_columns_and_shafts(self):
         run = ifcopenshell.api.run
@@ -887,7 +900,6 @@ def main():
     b = Builder(data)
     b.build_exterior()
     b.build_partitions()
-    b.build_bedroom_walls()
     b.build_spaces()
     b.build_columns_and_shafts()
     equipment, route_segments = b.build_equipment_and_routes()

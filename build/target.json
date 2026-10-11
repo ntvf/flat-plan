@@ -468,6 +468,58 @@
       "note": "bathroom north wall"
     },
     {
+      "id": "W_bed5_n",
+      "name": "Ściana sypialnia 1 / korytarz",
+      "at": [
+        0.4,
+        4.86
+      ],
+      "size": [
+        2.97,
+        0.1
+      ],
+      "note": "bedroom 5 north wall to corridor, holds D5"
+    },
+    {
+      "id": "W_bed6_n",
+      "name": "Ściana sypialnia 2 / korytarz",
+      "at": [
+        3.47,
+        4.86
+      ],
+      "size": [
+        2.78,
+        0.1
+      ],
+      "note": "bedroom 6 north wall to corridor, holds D6"
+    },
+    {
+      "id": "W_bed5_6",
+      "name": "Ściana sypialnia 1 / 2",
+      "at": [
+        3.37,
+        0.4
+      ],
+      "size": [
+        0.1,
+        4.46
+      ],
+      "note": "between bedrooms 5 and 6"
+    },
+    {
+      "id": "W_bed7_w",
+      "name": "Ściana sypialnia 3 / korytarz",
+      "at": [
+        6.25,
+        1.34
+      ],
+      "size": [
+        0.1,
+        4.54
+      ],
+      "note": "bedroom 7 west wall to corridor, holds D7"
+    },
+    {
       "id": "W_bath2_n",
       "at": [
         5.26,

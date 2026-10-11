@@ -41,6 +41,9 @@ contractors can price the work from generated bills of quantities.
   door beside the existing 2.30 m wall.
 - Target outputs include `exports/target.ifc` and the target-state sheet under
   `exports/drawings/target/`.
+- All walls, including the bedroom partitions, are model data in `walls`; the
+  IFC carries a `ModelWall` pset (id, kind, material, renovation status,
+  length, thickness) on every wall and a `ModelSpace` pset on every space.
 - The as-is IFC models leaves in all interior openings using practical assumed
   swings, plus the entrance, OB2, and the east DK6 panel; the target adds the
   new bathroom door.
@@ -63,17 +66,15 @@ make target
    `SH_vent`: survey drain inverts, coordinate real falls and fittings, then
    add penetrations, fire stopping, waterproofing zones, electrical changes,
    and product-specific fixture clearances.
-2. Move the remaining implied bedroom walls from `scripts/build_ifc.py` into
-   authoritative model data and emit renovation properties into IFC.
-3. Add delta/work-package generation by comparing as-is vs target: demolition,
+2. Add delta/work-package generation by comparing as-is vs target: demolition,
    new partitions, plumbing, drainage, ventilation, electrical, waterproofing,
    tiling, flooring, painting, doors, fixtures, and finishing works.
-4. Add bill-of-quantities output with contractor pricing columns in CSV/JSON
+3. Add bill-of-quantities output with contractor pricing columns in CSV/JSON
    and printable PDF tables. Quantities should be computed from geometry and
    annotated model properties, not manually typed totals.
-5. Add Blender scene/opening support for visual inspection and before/after 3D
+4. Add Blender scene/opening support for visual inspection and before/after 3D
    renders, using IFC/Bonsai as the source and producing stable camera views.
-6. Build a combined tender PDF package containing the as-is plan, target plan,
+5. Build a combined tender PDF package containing the as-is plan, target plan,
    demolition/new-work plans, 3D visualisations, notes, and BoQ tables.
 
 Prefer surgical, reproducible pipeline changes. Keep source data authoritative,

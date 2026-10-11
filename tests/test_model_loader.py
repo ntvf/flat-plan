@@ -176,6 +176,15 @@ class ModelLoaderTest(unittest.TestCase):
             [layer["thickness"] for layer in floor["layers_top_down"]],
         )
 
+    def test_bedroom_partitions_are_model_data(self):
+        root = Path(__file__).resolve().parents[1]
+        walls = {wall["id"]: wall for wall in load_model(root / "data" / "as_is.yaml")["walls"]}
+        # Each bedroom wall fills the 0.10 gap between the clear room polygons.
+        self.assertEqual(([0.40, 4.86], [2.97, 0.10]), (walls["W_bed5_n"]["at"], walls["W_bed5_n"]["size"]))
+        self.assertEqual(([3.47, 4.86], [2.78, 0.10]), (walls["W_bed6_n"]["at"], walls["W_bed6_n"]["size"]))
+        self.assertEqual(([3.37, 0.40], [0.10, 4.46]), (walls["W_bed5_6"]["at"], walls["W_bed5_6"]["size"]))
+        self.assertEqual(([6.25, 1.34], [0.10, 4.54]), (walls["W_bed7_w"]["at"], walls["W_bed7_w"]["size"]))
+
     def test_rejects_duplicate_addition(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

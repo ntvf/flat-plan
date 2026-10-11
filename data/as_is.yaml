@@ -132,6 +132,12 @@ walls:
   # bathroom from the corridor (survey shows the thick poche stopping at the
   # upper block's west wall and a thin line continuing to the east wall).
   - { id: W_bath_n, at: [1.40, 7.95], size: [1.02, 0.10], note: "bathroom north wall" }
+  # Bedroom partitions: the survey draws them only as room boundaries, so
+  # each sits in the 0.10 gap between the clear polygons it separates.
+  - { id: W_bed5_n, name: "Ściana sypialnia 1 / korytarz", at: [0.40, 4.86], size: [2.97, 0.10], note: "bedroom 5 north wall to corridor, holds D5" }
+  - { id: W_bed6_n, name: "Ściana sypialnia 2 / korytarz", at: [3.47, 4.86], size: [2.78, 0.10], note: "bedroom 6 north wall to corridor, holds D6" }
+  - { id: W_bed5_6, name: "Ściana sypialnia 1 / 2", at: [3.37, 0.40], size: [0.10, 4.46], note: "between bedrooms 5 and 6" }
+  - { id: W_bed7_w, name: "Ściana sypialnia 3 / korytarz", at: [6.25, 1.34], size: [0.10, 4.54], note: "bedroom 7 west wall to corridor, holds D7" }
 
 # Structural column in the storage's south wall, flush with the corridor face
 # and projecting into the storage (0.60 along the wall x 0.25 deep; measured
