@@ -705,6 +705,7 @@
       "renovation_status": "existing"
     }
   ],
+  "furniture": [],
   "wall_finishes": [
     {
       "id": "BRICK_NORTH_OB1",
@@ -1112,9 +1113,9 @@
       "frame_material": "wood",
       "swing": [
         "start",
-        "+"
+        "-"
       ],
-      "note": "90 cm entrance leaf; south edge touches the outer-wall step line"
+      "note": "90 cm entrance leaf opening outward onto the landing (owner-verified); south edge touches the outer-wall step line"
     },
     {
       "id": "D4",
@@ -1381,7 +1382,8 @@
       "render_panels": 2,
       "room": 123,
       "ifc_class": "IfcDoor",
-      "note": "drzwi balkonowe / balcony door"
+      "opening_leaf_width": 0.7,
+      "note": "drzwi balkonowe / balcony door; opening leaf reported ~0.70 m by the owner, hinge side and swing not yet checked"
     },
     {
       "id": "OB3",

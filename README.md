@@ -53,9 +53,9 @@ exports/        Generated IFC, drawings, checks, and renders (ignored)
   wide-angle target-state interior views and saves the prepared Blender scene.
 - `scripts/sketch_bathroom_layouts.py` — generates the working balanced fixture
   layout for the existing and proposed bathrooms.
-- `scripts/sketch_living_layout.py` — furniture layout study for the entrance,
-  kitchen, dining and living space, checked against the target room geometry
-  and minimum working clearances.
+- `scripts/sketch_living_layout.py` — plan of the designed furniture in the
+  target model; fails if a piece leaves its room or collides, or if aisles,
+  the kitchen work triangle or the TV viewing distance fall out of range.
 
 `detect_windows.py` is a survey-transcription utility rather than part of the
 normal build. The other scripts are wired into the Make targets below.
@@ -116,8 +116,8 @@ Use `make clean` to remove all reproducible intermediates and exports.
   study, showing boxed surface pipe routes to the surveyed
   connection points and `SH_san`; its fixture arrangement is adopted in the
   authoritative models.
-- `exports/concepts/living_layout/recommended.png` — the recommended furniture
-  layout for the entrance hall, kitchen, dining and living zones.
+- `exports/concepts/living_layout/recommended.png` — checked plan of the
+  kitchen with island, dining, living, desk and entrance furniture.
 
 ## Status
 

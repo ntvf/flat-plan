@@ -81,7 +81,8 @@
           0.4,
           4.86
         ]
-      ]
+      ],
+      "occupant": "parents"
     },
     {
       "id": 6,
@@ -117,7 +118,8 @@
           3.47,
           4.86
         ]
-      ]
+      ],
+      "occupant": "boy"
     },
     {
       "id": 7,
@@ -145,7 +147,8 @@
           6.35,
           5.88
         ]
-      ]
+      ],
+      "occupant": "grandmother"
     },
     {
       "id": 4,
@@ -951,6 +954,1222 @@
       "renovation_status": "new"
     }
   ],
+  "furniture": [
+    {
+      "id": "K_OVEN_TOWER",
+      "name": "Słupek piekarnik + mikrofala",
+      "category": "tall_unit",
+      "appliance": "oven_microwave",
+      "ifc_class": "IfcFurniture",
+      "zone": "kitchen",
+      "scope": "joinery",
+      "facing": "E",
+      "at": [
+        1.4,
+        9.35,
+        0.0
+      ],
+      "size": [
+        0.6,
+        0.6,
+        2.65
+      ],
+      "note": "oven at 0.95-1.55 m (elbow height), microwave above, top box to the ceiling; drop-down oven door clear of the entry path"
+    },
+    {
+      "id": "K_FRIDGE",
+      "name": "Lodówka do zabudowy",
+      "category": "tall_unit",
+      "appliance": "fridge",
+      "ifc_class": "IfcFurniture",
+      "zone": "kitchen",
+      "scope": "joinery",
+      "facing": "E",
+      "at": [
+        1.4,
+        9.95,
+        0.0
+      ],
+      "size": [
+        0.6,
+        0.6,
+        2.65
+      ],
+      "note": "integrated fridge-freezer with top box; hinge on the south side so the open door faces the landing worktop"
+    },
+    {
+      "id": "K_BASE_W1",
+      "name": "Szafka dolna szuflady 65",
+      "category": "base_cabinet",
+      "ifc_class": "IfcFurniture",
+      "zone": "kitchen",
+      "scope": "joinery",
+      "facing": "E",
+      "at": [
+        1.4,
+        10.55,
+        0.0
+      ],
+      "size": [
+        0.6,
+        0.65,
+        0.9
+      ],
+      "note": "fridge landing and main drawers"
+    },
+    {
+      "id": "K_UPPER_W1",
+      "name": "Szafka wisząca 65",
+      "category": "wall_cabinet",
+      "ifc_class": "IfcFurniture",
+      "zone": "kitchen",
+      "scope": "joinery",
+      "facing": "E",
+      "at": [
+        1.4,
+        10.55,
+        1.45
+      ],
+      "size": [
+        0.35,
+        0.65,
+        1.2
+      ],
+      "note": "0.55 m above the worktop, up to the ceiling line of the tall units"
+    },
+    {
+      "id": "K_HOB_CABINET",
+      "name": "Szafka pod płytę 60",
+      "category": "base_cabinet",
+      "ifc_class": "IfcFurniture",
+      "zone": "kitchen",
+      "scope": "joinery",
+      "facing": "E",
+      "at": [
+        1.4,
+        11.2,
+        0.0
+      ],
+      "size": [
+        0.6,
+        0.6,
+        0.9
+      ],
+      "note": "pan drawers below the hob"
+    },
+    {
+      "id": "K_HOB",
+      "name": "Płyta indukcyjna 60",
+      "category": "hob",
+      "ifc_class": "IfcElectricAppliance",
+      "zone": "kitchen",
+      "scope": "appliance",
+      "facing": "E",
+      "at": [
+        1.44,
+        11.205,
+        0.9
+      ],
+      "size": [
+        0.52,
+        0.59,
+        0.006
+      ],
+      "note": "induction assumed; confirm cooking fuel. Glass splashback over the brick behind it"
+    },
+    {
+      "id": "K_HOOD",
+      "name": "Okap kominowy 60",
+      "category": "hood",
+      "ifc_class": "IfcElectricAppliance",
+      "zone": "kitchen",
+      "scope": "appliance",
+      "facing": "E",
+      "at": [
+        1.4,
+        11.2,
+        1.55
+      ],
+      "size": [
+        0.5,
+        0.6,
+        1.15
+      ],
+      "note": "wall chimney hood 0.65 m above the hob; ducting route to SH_vent or recirculation to be decided"
+    },
+    {
+      "id": "K_CORNER",
+      "name": "Narożnik roboczy na skosie",
+      "category": "base_cabinet",
+      "ifc_class": "IfcFurniture",
+      "zone": "kitchen",
+      "scope": "joinery",
+      "at": [
+        1.4,
+        11.8,
+        0.0
+      ],
+      "size": [
+        1.252,
+        1.09,
+        0.9
+      ],
+      "polygon": [
+        [
+          1.4,
+          11.8
+        ],
+        [
+          1.4,
+          12.17
+        ],
+        [
+          2.47,
+          12.89
+        ],
+        [
+          2.652,
+          12.89
+        ],
+        [
+          2.652,
+          12.29
+        ],
+        [
+          2.0,
+          11.851
+        ],
+        [
+          2.0,
+          11.8
+        ]
+      ],
+      "note": "0.60 m deep counter following the chamfer; main prep area between hob and sink"
+    },
+    {
+      "id": "K_UPPER_CORNER",
+      "name": "Szafki wiszące na skosie",
+      "category": "wall_cabinet",
+      "ifc_class": "IfcFurniture",
+      "zone": "kitchen",
+      "scope": "joinery",
+      "at": [
+        1.4,
+        11.8,
+        1.45
+      ],
+      "size": [
+        1.44,
+        1.09,
+        1.2
+      ],
+      "polygon": [
+        [
+          1.4,
+          11.8
+        ],
+        [
+          1.4,
+          12.17
+        ],
+        [
+          2.47,
+          12.89
+        ],
+        [
+          2.84,
+          12.89
+        ],
+        [
+          2.84,
+          12.54
+        ],
+        [
+          2.577,
+          12.54
+        ],
+        [
+          1.75,
+          11.984
+        ],
+        [
+          1.75,
+          11.8
+        ]
+      ],
+      "note": "0.35 m deep uppers along the chamfer, stopping at the OB1 reveal; covers the brick above the worktop"
+    },
+    {
+      "id": "K_BASE_N1",
+      "name": "Szafka cargo 34",
+      "category": "base_cabinet",
+      "ifc_class": "IfcFurniture",
+      "zone": "kitchen",
+      "scope": "joinery",
+      "facing": "S",
+      "at": [
+        2.652,
+        12.29,
+        0.0
+      ],
+      "size": [
+        0.338,
+        0.6,
+        0.9
+      ]
+    },
+    {
+      "id": "K_SINK_CABINET",
+      "name": "Szafka zlewozmywakowa 60",
+      "category": "base_cabinet",
+      "ifc_class": "IfcFurniture",
+      "zone": "kitchen",
+      "scope": "joinery",
+      "facing": "S",
+      "at": [
+        2.99,
+        12.29,
+        0.0
+      ],
+      "size": [
+        0.6,
+        0.6,
+        0.9
+      ],
+      "note": "centred on the existing KITCHEN_SINK_CONNECTION; waste sorting bins inside"
+    },
+    {
+      "id": "K_SINK",
+      "name": "Zlewozmywak 50 + bateria niska",
+      "category": "sink",
+      "ifc_class": "IfcSanitaryTerminal",
+      "zone": "kitchen",
+      "scope": "appliance",
+      "facing": "S",
+      "at": [
+        3.04,
+        12.34,
+        0.9
+      ],
+      "size": [
+        0.5,
+        0.5,
+        0.2
+      ],
+      "note": "OB1 sill is at worktop height: use a low or folding tap so the sash still opens"
+    },
+    {
+      "id": "K_DISHWASHER",
+      "name": "Zmywarka 45 do zabudowy",
+      "category": "base_cabinet",
+      "appliance": "dishwasher",
+      "ifc_class": "IfcElectricAppliance",
+      "zone": "kitchen",
+      "scope": "appliance",
+      "facing": "S",
+      "at": [
+        3.59,
+        12.29,
+        0.0
+      ],
+      "size": [
+        0.45,
+        0.6,
+        0.9
+      ],
+      "note": "next to the sink; stops 0.09 m short of the OB2 frame"
+    },
+    {
+      "id": "K_ISLAND",
+      "name": "Wyspa 120 x 60",
+      "category": "island",
+      "ifc_class": "IfcFurniture",
+      "zone": "kitchen",
+      "scope": "joinery",
+      "facing": "W",
+      "at": [
+        3.05,
+        10.05,
+        0.0
+      ],
+      "size": [
+        0.6,
+        1.2,
+        0.9
+      ],
+      "note": "deep drawers on the cooking side; 1.05 m aisles to both runs; the dining table butts its east side"
+    },
+    {
+      "id": "K_PANTRY",
+      "name": "Spiżarka 120 x 60",
+      "category": "tall_unit",
+      "ifc_class": "IfcFurniture",
+      "zone": "kitchen",
+      "scope": "joinery",
+      "facing": "N",
+      "at": [
+        5.3,
+        7.455,
+        0.0
+      ],
+      "size": [
+        1.2,
+        0.6,
+        2.65
+      ],
+      "note": "full-height larder filling the 0.60 m recess flush with the storage wall; pull-out shelves, small appliances"
+    },
+    {
+      "id": "D_TABLE",
+      "name": "Stół 180 x 90",
+      "category": "table",
+      "ifc_class": "IfcFurniture",
+      "zone": "dining",
+      "scope": "loose",
+      "at": [
+        3.65,
+        10.2,
+        0.0
+      ],
+      "size": [
+        1.8,
+        0.9,
+        0.75
+      ]
+    },
+    {
+      "id": "D_BENCH",
+      "name": "Ławka 160 z szufladami",
+      "category": "bench",
+      "ifc_class": "IfcFurniture",
+      "zone": "dining",
+      "scope": "joinery",
+      "facing": "S",
+      "at": [
+        3.75,
+        11.1,
+        0.0
+      ],
+      "size": [
+        1.6,
+        0.4,
+        0.46
+      ],
+      "note": "three seats; drawers underneath for table linen and serving ware"
+    },
+    {
+      "id": "D_CHAIR_1",
+      "name": "Krzesło",
+      "category": "chair",
+      "ifc_class": "IfcFurniture",
+      "zone": "dining",
+      "scope": "loose",
+      "facing": "N",
+      "at": [
+        3.85,
+        9.7,
+        0.0
+      ],
+      "size": [
+        0.45,
+        0.5,
+        0.85
+      ]
+    },
+    {
+      "id": "D_CHAIR_2",
+      "name": "Krzesło",
+      "category": "chair",
+      "ifc_class": "IfcFurniture",
+      "zone": "dining",
+      "scope": "loose",
+      "facing": "N",
+      "at": [
+        4.42,
+        9.7,
+        0.0
+      ],
+      "size": [
+        0.45,
+        0.5,
+        0.85
+      ]
+    },
+    {
+      "id": "D_CHAIR_3",
+      "name": "Krzesło",
+      "category": "chair",
+      "ifc_class": "IfcFurniture",
+      "zone": "dining",
+      "scope": "loose",
+      "facing": "N",
+      "at": [
+        4.99,
+        9.7,
+        0.0
+      ],
+      "size": [
+        0.45,
+        0.5,
+        0.85
+      ]
+    },
+    {
+      "id": "D_PENDANT",
+      "name": "Lampa wisząca liniowa",
+      "category": "pendant",
+      "ifc_class": "IfcLightFixture",
+      "zone": "dining",
+      "scope": "loose",
+      "at": [
+        4.05,
+        10.525,
+        1.45
+      ],
+      "size": [
+        1.0,
+        0.25,
+        1.25
+      ],
+      "note": "linear pendant centred on the table; ceiling point at 4.55 / 10.65"
+    },
+    {
+      "id": "D_SIDEBOARD",
+      "name": "Komoda niska pod klimatyzatorem",
+      "category": "chest",
+      "ifc_class": "IfcFurniture",
+      "zone": "dining",
+      "scope": "joinery",
+      "facing": "N",
+      "at": [
+        6.55,
+        7.455,
+        0.0
+      ],
+      "size": [
+        2.0,
+        0.45,
+        0.8
+      ],
+      "note": "crockery and glass storage in the recess; stays 1.5 m below the AC outlet"
+    },
+    {
+      "id": "L_SOFA",
+      "name": "Sofa narożna 280 x 165",
+      "category": "corner_sofa",
+      "ifc_class": "IfcFurniture",
+      "zone": "living",
+      "scope": "loose",
+      "facing": "E",
+      "at": [
+        6.35,
+        8.6,
+        0.0
+      ],
+      "size": [
+        1.65,
+        2.8,
+        0.82
+      ],
+      "main_depth": 0.95,
+      "chaise": {
+        "side": "start",
+        "width": 0.95
+      },
+      "note": "main seat 0.95 deep facing east; chaise 1.65 long on the south end"
+    },
+    {
+      "id": "L_COFFEE_TABLE",
+      "name": "Stolik kawowy 100 x 45",
+      "category": "coffee_table",
+      "ifc_class": "IfcFurniture",
+      "zone": "living",
+      "scope": "loose",
+      "at": [
+        7.7,
+        9.97,
+        0.0
+      ],
+      "size": [
+        0.45,
+        1.0,
+        0.4
+      ]
+    },
+    {
+      "id": "L_RUG",
+      "name": "Dywan 150 x 240",
+      "category": "rug",
+      "ifc_class": "IfcFurniture",
+      "zone": "living",
+      "scope": "loose",
+      "at": [
+        7.05,
+        9.0,
+        0.0
+      ],
+      "size": [
+        1.5,
+        2.4,
+        0.01
+      ]
+    },
+    {
+      "id": "L_TV_CONSOLE",
+      "name": "Szafka RTV 180 wisząca",
+      "category": "console",
+      "ifc_class": "IfcFurniture",
+      "zone": "living",
+      "scope": "loose",
+      "at": [
+        8.645,
+        8.97,
+        0.2
+      ],
+      "size": [
+        0.3,
+        1.8,
+        0.4
+      ],
+      "note": "30 cm deep wall-hung unit; sockets and data behind it at 0.45 m"
+    },
+    {
+      "id": "L_TV",
+      "name": "Telewizor 70 cali",
+      "category": "tv",
+      "ifc_class": "IfcAudioVisualAppliance",
+      "zone": "living",
+      "scope": "loose",
+      "facing": "W",
+      "at": [
+        8.885,
+        9.09,
+        0.62
+      ],
+      "size": [
+        0.06,
+        1.56,
+        0.9
+      ],
+      "note": "centred on the brick strip; screen centre 1.07 m = seated eye height; ~2.2 m viewing distance"
+    },
+    {
+      "id": "L_FLOOR_LAMP",
+      "name": "Lampa podłogowa",
+      "category": "floor_lamp",
+      "ifc_class": "IfcLightFixture",
+      "zone": "living",
+      "scope": "loose",
+      "at": [
+        6.4,
+        11.45,
+        0.0
+      ],
+      "size": [
+        0.3,
+        0.3,
+        1.6
+      ],
+      "note": "behind the north arm, reading light over the end seat"
+    },
+    {
+      "id": "W_DESK",
+      "name": "Biurko 120 x 60",
+      "category": "desk",
+      "ifc_class": "IfcFurniture",
+      "zone": "work",
+      "scope": "loose",
+      "facing": "S",
+      "at": [
+        7.66,
+        12.29,
+        0.0
+      ],
+      "size": [
+        1.2,
+        0.6,
+        0.75
+      ],
+      "note": "sockets and data on the pier at 0.90 m; window on the left for a right-handed user"
+    },
+    {
+      "id": "W_SHELF",
+      "name": "Półka nad biurkiem",
+      "category": "shelf",
+      "ifc_class": "IfcFurniture",
+      "zone": "work",
+      "scope": "loose",
+      "at": [
+        7.66,
+        12.64,
+        1.3
+      ],
+      "size": [
+        1.2,
+        0.25,
+        0.03
+      ]
+    },
+    {
+      "id": "W_CHAIR",
+      "name": "Krzesło biurowe",
+      "category": "office_chair",
+      "ifc_class": "IfcFurniture",
+      "zone": "work",
+      "scope": "loose",
+      "facing": "N",
+      "at": [
+        7.985,
+        11.7,
+        0.0
+      ],
+      "size": [
+        0.55,
+        0.55,
+        1.05
+      ]
+    },
+    {
+      "id": "H_SHOE_CABINET",
+      "name": "Szafka na buty 85 x 22",
+      "category": "chest",
+      "ifc_class": "IfcFurniture",
+      "zone": "hall",
+      "scope": "joinery",
+      "facing": "N",
+      "at": [
+        1.45,
+        8.05,
+        0.0
+      ],
+      "size": [
+        0.85,
+        0.22,
+        1.0
+      ],
+      "note": "tilt-out shoe cabinet beside the entrance; stops at the door reveal"
+    },
+    {
+      "id": "H_SHOE_BENCH",
+      "name": "Ławka z szafką na buty",
+      "category": "bench",
+      "ifc_class": "IfcFurniture",
+      "zone": "hall",
+      "scope": "joinery",
+      "facing": "N",
+      "at": [
+        3.5,
+        8.05,
+        0.0
+      ],
+      "size": [
+        1.2,
+        0.35,
+        0.48
+      ]
+    },
+    {
+      "id": "H_COAT_RAIL",
+      "name": "Wieszak ścienny",
+      "category": "rail",
+      "ifc_class": "IfcFurniture",
+      "zone": "hall",
+      "scope": "joinery",
+      "at": [
+        3.5,
+        8.05,
+        1.65
+      ],
+      "size": [
+        1.2,
+        0.06,
+        0.08
+      ]
+    },
+    {
+      "id": "H_MIRROR",
+      "name": "Lustro 42 x 155",
+      "category": "mirror",
+      "ifc_class": "IfcFurniture",
+      "zone": "hall",
+      "scope": "joinery",
+      "at": [
+        4.78,
+        8.05,
+        0.35
+      ],
+      "size": [
+        0.42,
+        0.02,
+        1.55
+      ]
+    },
+    {
+      "id": "S_CLOSET_HANGING",
+      "name": "Garderoba - drążki",
+      "category": "wardrobe",
+      "ifc_class": "IfcFurniture",
+      "zone": "hall",
+      "scope": "joinery",
+      "facing": "W",
+      "room": 8,
+      "at": [
+        4.56,
+        6.15,
+        0.0
+      ],
+      "size": [
+        0.6,
+        1.8,
+        2.4
+      ],
+      "note": "two-level hanging for coats and jackets, top shelf for seasonal boxes; starts north of the column"
+    },
+    {
+      "id": "S_CLOSET_SHELVES",
+      "name": "Garderoba - półki",
+      "category": "bookcase",
+      "ifc_class": "IfcFurniture",
+      "zone": "hall",
+      "scope": "joinery",
+      "facing": "S",
+      "room": 8,
+      "at": [
+        3.42,
+        7.45,
+        0.0
+      ],
+      "size": [
+        1.1,
+        0.5,
+        2.4
+      ],
+      "note": "open shelves; the D8 leaf opens to 8 cm in front of them"
+    },
+    {
+      "id": "S_CLOSET_SHOES",
+      "name": "Garderoba - regał na buty",
+      "category": "bookcase",
+      "ifc_class": "IfcFurniture",
+      "zone": "hall",
+      "scope": "joinery",
+      "facing": "N",
+      "room": 8,
+      "at": [
+        3.42,
+        5.98,
+        0.0
+      ],
+      "size": [
+        0.55,
+        0.4,
+        1.2
+      ]
+    },
+    {
+      "id": "B5_BED",
+      "name": "Łóżko 180 x 200",
+      "category": "bed",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_parents",
+      "scope": "loose",
+      "room": 5,
+      "facing": "E",
+      "at": [
+        0.4,
+        1.7,
+        0.0
+      ],
+      "size": [
+        2.1,
+        1.85,
+        1.0
+      ]
+    },
+    {
+      "id": "B5_DESK",
+      "name": "Biurko 120 x 60",
+      "category": "desk",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_parents",
+      "scope": "loose",
+      "room": 5,
+      "facing": "E",
+      "at": [
+        0.4,
+        0.4,
+        0.0
+      ],
+      "size": [
+        0.6,
+        1.2,
+        0.75
+      ],
+      "note": "daylight from OK5 on the left; sockets and data on the west wall"
+    },
+    {
+      "id": "B5_CHAIR",
+      "name": "Krzesło biurowe",
+      "category": "office_chair",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_parents",
+      "scope": "loose",
+      "room": 5,
+      "facing": "W",
+      "at": [
+        1.05,
+        0.725,
+        0.0
+      ],
+      "size": [
+        0.55,
+        0.55,
+        1.05
+      ]
+    },
+    {
+      "id": "B5_NIGHTSTAND_N",
+      "name": "Szafka nocna",
+      "category": "nightstand",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_parents",
+      "scope": "loose",
+      "room": 5,
+      "at": [
+        0.4,
+        3.58,
+        0.0
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.55
+      ]
+    },
+    {
+      "id": "B5_WARDROBE",
+      "name": "Szafa 200 x 60",
+      "category": "wardrobe",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_parents",
+      "scope": "joinery",
+      "room": 5,
+      "facing": "S",
+      "at": [
+        0.4,
+        4.26,
+        0.0
+      ],
+      "size": [
+        2.0,
+        0.6,
+        2.4
+      ],
+      "note": "full-height built-in on the corridor wall; sliding doors because the aisle to the bed is 0.71 m"
+    },
+    {
+      "id": "B5_DRESSER",
+      "name": "Komoda 72 x 45",
+      "category": "chest",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_parents",
+      "scope": "loose",
+      "room": 5,
+      "facing": "N",
+      "at": [
+        2.65,
+        0.4,
+        0.0
+      ],
+      "size": [
+        0.72,
+        0.45,
+        0.85
+      ]
+    },
+    {
+      "id": "B6_BED",
+      "name": "Łóżko 90 x 200",
+      "category": "bed",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_boy",
+      "scope": "loose",
+      "room": 6,
+      "facing": "S",
+      "at": [
+        3.47,
+        1.6,
+        0.0
+      ],
+      "size": [
+        0.95,
+        2.05,
+        0.9
+      ]
+    },
+    {
+      "id": "B6_NIGHTSTAND",
+      "name": "Szafka nocna",
+      "category": "nightstand",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_boy",
+      "scope": "loose",
+      "room": 6,
+      "at": [
+        3.47,
+        3.67,
+        0.0
+      ],
+      "size": [
+        0.45,
+        0.38,
+        0.5
+      ],
+      "note": "kept out of the D6 swing"
+    },
+    {
+      "id": "B6_LOW_SHELF",
+      "name": "Regał niski na zabawki",
+      "category": "bookcase",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_boy",
+      "scope": "loose",
+      "room": 6,
+      "facing": "N",
+      "at": [
+        3.5,
+        0.4,
+        0.0
+      ],
+      "size": [
+        0.7,
+        0.35,
+        0.8
+      ]
+    },
+    {
+      "id": "B6_DESK",
+      "name": "Biurko 120 x 60",
+      "category": "desk",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_boy",
+      "scope": "loose",
+      "room": 6,
+      "facing": "W",
+      "at": [
+        5.65,
+        1.55,
+        0.0
+      ],
+      "size": [
+        0.6,
+        1.2,
+        0.75
+      ],
+      "note": "starts 0.21 m north of the DK6 approach; height-adjustable desk and chair recommended for a growing child"
+    },
+    {
+      "id": "B6_CHAIR",
+      "name": "Krzesło biurowe",
+      "category": "office_chair",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_boy",
+      "scope": "loose",
+      "room": 6,
+      "facing": "E",
+      "at": [
+        5.05,
+        1.875,
+        0.0
+      ],
+      "size": [
+        0.55,
+        0.55,
+        1.05
+      ]
+    },
+    {
+      "id": "B6_BOOKCASE",
+      "name": "Regał 80",
+      "category": "bookcase",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_boy",
+      "scope": "loose",
+      "room": 6,
+      "facing": "W",
+      "at": [
+        5.95,
+        2.8,
+        0.0
+      ],
+      "size": [
+        0.3,
+        0.8,
+        1.8
+      ]
+    },
+    {
+      "id": "B6_WARDROBE",
+      "name": "Szafa 120 x 60",
+      "category": "wardrobe",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_boy",
+      "scope": "joinery",
+      "room": 6,
+      "facing": "W",
+      "at": [
+        5.65,
+        3.66,
+        0.0
+      ],
+      "size": [
+        0.6,
+        1.2,
+        2.2
+      ]
+    },
+    {
+      "id": "B6_RUG",
+      "name": "Dywan do zabawy",
+      "category": "rug",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_boy",
+      "scope": "loose",
+      "room": 6,
+      "at": [
+        4.5,
+        2.75,
+        0.0
+      ],
+      "size": [
+        1.1,
+        1.2,
+        0.01
+      ]
+    },
+    {
+      "id": "B7_BED",
+      "name": "Łóżko 120 x 200 podwyższone",
+      "category": "bed",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_granny",
+      "scope": "loose",
+      "room": 7,
+      "facing": "S",
+      "at": [
+        7.71,
+        3.83,
+        0.0
+      ],
+      "size": [
+        1.25,
+        2.05,
+        0.95
+      ],
+      "note": "mattress top 0.50-0.55 m so sitting down and standing up are easy"
+    },
+    {
+      "id": "B7_NIGHTSTAND",
+      "name": "Szafka nocna z lampką",
+      "category": "nightstand",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_granny",
+      "scope": "loose",
+      "room": 7,
+      "at": [
+        7.26,
+        5.43,
+        0.0
+      ],
+      "size": [
+        0.42,
+        0.45,
+        0.6
+      ],
+      "note": "on the access side; add a motion-sensor night light along the route to the door"
+    },
+    {
+      "id": "B7_WARDROBE",
+      "name": "Szafa 160 x 60",
+      "category": "wardrobe",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_granny",
+      "scope": "joinery",
+      "room": 7,
+      "facing": "W",
+      "at": [
+        8.36,
+        1.4,
+        0.0
+      ],
+      "size": [
+        0.6,
+        1.6,
+        2.2
+      ],
+      "note": "rails at 1.50-1.60 m, everyday items between 0.60 and 1.60 m"
+    },
+    {
+      "id": "B7_DRESSER",
+      "name": "Komoda 100 x 45",
+      "category": "chest",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_granny",
+      "scope": "loose",
+      "room": 7,
+      "facing": "E",
+      "at": [
+        6.35,
+        2.7,
+        0.0
+      ],
+      "size": [
+        0.45,
+        1.0,
+        0.85
+      ]
+    },
+    {
+      "id": "B7_ARMCHAIR",
+      "name": "Fotel z podłokietnikami",
+      "category": "armchair",
+      "ifc_class": "IfcFurniture",
+      "zone": "bedroom_granny",
+      "scope": "loose",
+      "room": 7,
+      "facing": "N",
+      "at": [
+        6.5,
+        1.5,
+        0.0
+      ],
+      "size": [
+        0.8,
+        0.8,
+        0.95
+      ],
+      "note": "firm seat at ~0.47 m with arms; daylight from OK7 over the shoulder"
+    },
+    {
+      "id": "B7_FLOOR_LAMP",
+      "name": "Lampa do czytania",
+      "category": "floor_lamp",
+      "ifc_class": "IfcLightFixture",
+      "zone": "bedroom_granny",
+      "scope": "loose",
+      "room": 7,
+      "at": [
+        7.35,
+        1.4,
+        0.0
+      ],
+      "size": [
+        0.3,
+        0.3,
+        1.5
+      ]
+    }
+  ],
   "wall_finishes": [
     {
       "id": "BRICK_NORTH_OB1",
@@ -1664,9 +2883,9 @@
       "frame_material": "wood",
       "swing": [
         "start",
-        "+"
+        "-"
       ],
-      "note": "90 cm entrance leaf; south edge touches the outer-wall step line"
+      "note": "90 cm entrance leaf opening outward onto the landing (owner-verified); south edge touches the outer-wall step line"
     },
     {
       "id": "D4",
@@ -1954,7 +3173,8 @@
       "render_panels": 2,
       "room": 123,
       "ifc_class": "IfcDoor",
-      "note": "drzwi balkonowe / balcony door"
+      "opening_leaf_width": 0.7,
+      "note": "drzwi balkonowe / balcony door; opening leaf reported ~0.70 m by the owner, hinge side and swing not yet checked"
     },
     {
       "id": "OB3",

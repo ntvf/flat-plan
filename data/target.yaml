@@ -13,6 +13,9 @@ changes:
     rooms:
       - id: 123
         subtract: [8, 9]
+      - { id: 5, occupant: parents }
+      - { id: 6, occupant: boy }
+      - { id: 7, occupant: grandmother }
     equipment:
       - id: AC_living
         at: [7.09, 7.455, 2.33]
@@ -265,3 +268,251 @@ changes:
         swing: [start, "-"]
         renovation_status: new
         note: 0.80 m bathroom door opening outward into the corridor
+
+    # Designed furniture for the open space, entrance and bedrooms.
+    # `at` is the lower-left-bottom corner, `size` is [x, y, height]; `facing`
+    # is the side a user stands or sits at (or the direction a seat looks).
+    # scope: joinery = made-to-measure and fitted by the kitchen contractor,
+    # appliance = supplied and connected, loose = owner-supplied furniture.
+    furniture:
+      # Kitchen: west-wall run, from the entrance end. Tall units sit on the
+      # plain wall freed by moving the hot-water tank outside and run to the
+      # ceiling, with top boxes for rarely used items.
+      - { id: K_OVEN_TOWER, name: Słupek piekarnik + mikrofala, category: tall_unit, appliance: oven_microwave,
+          ifc_class: IfcFurniture, zone: kitchen, scope: joinery, facing: E,
+          at: [1.40, 9.35, 0.00], size: [0.60, 0.60, 2.65],
+          note: "oven at 0.95-1.55 m (elbow height), microwave above, top box to the ceiling; drop-down oven door clear of the entry path" }
+      - { id: K_FRIDGE, name: Lodówka do zabudowy, category: tall_unit, appliance: fridge,
+          ifc_class: IfcFurniture, zone: kitchen, scope: joinery, facing: E,
+          at: [1.40, 9.95, 0.00], size: [0.60, 0.60, 2.65],
+          note: "integrated fridge-freezer with top box; hinge on the south side so the open door faces the landing worktop" }
+      - { id: K_BASE_W1, name: Szafka dolna szuflady 65, category: base_cabinet,
+          ifc_class: IfcFurniture, zone: kitchen, scope: joinery, facing: E,
+          at: [1.40, 10.55, 0.00], size: [0.60, 0.65, 0.90],
+          note: "fridge landing and main drawers" }
+      - { id: K_UPPER_W1, name: Szafka wisząca 65, category: wall_cabinet,
+          ifc_class: IfcFurniture, zone: kitchen, scope: joinery, facing: E,
+          at: [1.40, 10.55, 1.45], size: [0.35, 0.65, 1.20],
+          note: "0.55 m above the worktop, up to the ceiling line of the tall units" }
+      - { id: K_HOB_CABINET, name: Szafka pod płytę 60, category: base_cabinet,
+          ifc_class: IfcFurniture, zone: kitchen, scope: joinery, facing: E,
+          at: [1.40, 11.20, 0.00], size: [0.60, 0.60, 0.90],
+          note: "pan drawers below the hob" }
+      - { id: K_HOB, name: Płyta indukcyjna 60, category: hob,
+          ifc_class: IfcElectricAppliance, zone: kitchen, scope: appliance, facing: E,
+          at: [1.44, 11.205, 0.90], size: [0.52, 0.59, 0.006],
+          note: "induction assumed; confirm cooking fuel. Glass splashback over the brick behind it" }
+      - { id: K_HOOD, name: Okap kominowy 60, category: hood,
+          ifc_class: IfcElectricAppliance, zone: kitchen, scope: appliance, facing: E,
+          at: [1.40, 11.20, 1.55], size: [0.50, 0.60, 1.15],
+          note: "wall chimney hood 0.65 m above the hob; ducting route to SH_vent or recirculation to be decided" }
+      - { id: K_CORNER, name: Narożnik roboczy na skosie, category: base_cabinet,
+          ifc_class: IfcFurniture, zone: kitchen, scope: joinery,
+          at: [1.40, 11.80, 0.00], size: [1.252, 1.09, 0.90],
+          polygon: [[1.40, 11.80], [1.40, 12.17], [2.47, 12.89], [2.652, 12.89],
+                    [2.652, 12.29], [2.00, 11.851], [2.00, 11.80]],
+          note: "0.60 m deep counter following the chamfer; main prep area between hob and sink" }
+      - { id: K_UPPER_CORNER, name: Szafki wiszące na skosie, category: wall_cabinet,
+          ifc_class: IfcFurniture, zone: kitchen, scope: joinery,
+          at: [1.40, 11.80, 1.45], size: [1.44, 1.09, 1.20],
+          polygon: [[1.40, 11.80], [1.40, 12.17], [2.47, 12.89], [2.84, 12.89],
+                    [2.84, 12.54], [2.577, 12.54], [1.75, 11.984], [1.75, 11.80]],
+          note: "0.35 m deep uppers along the chamfer, stopping at the OB1 reveal; covers the brick above the worktop" }
+      - { id: K_BASE_N1, name: Szafka cargo 34, category: base_cabinet,
+          ifc_class: IfcFurniture, zone: kitchen, scope: joinery, facing: S,
+          at: [2.652, 12.29, 0.00], size: [0.338, 0.60, 0.90] }
+      - { id: K_SINK_CABINET, name: Szafka zlewozmywakowa 60, category: base_cabinet,
+          ifc_class: IfcFurniture, zone: kitchen, scope: joinery, facing: S,
+          at: [2.99, 12.29, 0.00], size: [0.60, 0.60, 0.90],
+          note: "centred on the existing KITCHEN_SINK_CONNECTION; waste sorting bins inside" }
+      - { id: K_SINK, name: Zlewozmywak 50 + bateria niska, category: sink,
+          ifc_class: IfcSanitaryTerminal, zone: kitchen, scope: appliance, facing: S,
+          at: [3.04, 12.34, 0.90], size: [0.50, 0.50, 0.20],
+          note: "OB1 sill is at worktop height: use a low or folding tap so the sash still opens" }
+      - { id: K_DISHWASHER, name: Zmywarka 45 do zabudowy, category: base_cabinet, appliance: dishwasher,
+          ifc_class: IfcElectricAppliance, zone: kitchen, scope: appliance, facing: S,
+          at: [3.59, 12.29, 0.00], size: [0.45, 0.60, 0.90],
+          note: "next to the sink; stops 0.09 m short of the OB2 frame" }
+      - { id: K_ISLAND, name: Wyspa 120 x 60, category: island,
+          ifc_class: IfcFurniture, zone: kitchen, scope: joinery, facing: W,
+          at: [3.05, 10.05, 0.00], size: [0.60, 1.20, 0.90],
+          note: "deep drawers on the cooking side; 1.05 m aisles to both runs; the dining table butts its east side" }
+      - { id: K_PANTRY, name: Spiżarka 120 x 60, category: tall_unit,
+          ifc_class: IfcFurniture, zone: kitchen, scope: joinery, facing: N,
+          at: [5.30, 7.455, 0.00], size: [1.20, 0.60, 2.65],
+          note: "full-height larder filling the 0.60 m recess flush with the storage wall; pull-out shelves, small appliances" }
+
+      # Dining: a 180 table for six butted against the island. The backless
+      # bench on the north side slides fully under the table, keeping the
+      # balcony route clear and staying out of the dishwasher door; the three
+      # chairs on the south side have 1.25 m to pull out towards the hall.
+      - { id: D_TABLE, name: Stół 180 x 90, category: table,
+          ifc_class: IfcFurniture, zone: dining, scope: loose,
+          at: [3.65, 10.20, 0.00], size: [1.80, 0.90, 0.75] }
+      - { id: D_BENCH, name: Ławka 160 z szufladami, category: bench,
+          ifc_class: IfcFurniture, zone: dining, scope: joinery, facing: S,
+          at: [3.75, 11.10, 0.00], size: [1.60, 0.40, 0.46],
+          note: "three seats; drawers underneath for table linen and serving ware" }
+      - { id: D_CHAIR_1, name: Krzesło, category: chair, ifc_class: IfcFurniture, zone: dining, scope: loose,
+          facing: N, at: [3.85, 9.70, 0.00], size: [0.45, 0.50, 0.85] }
+      - { id: D_CHAIR_2, name: Krzesło, category: chair, ifc_class: IfcFurniture, zone: dining, scope: loose,
+          facing: N, at: [4.42, 9.70, 0.00], size: [0.45, 0.50, 0.85] }
+      - { id: D_CHAIR_3, name: Krzesło, category: chair, ifc_class: IfcFurniture, zone: dining, scope: loose,
+          facing: N, at: [4.99, 9.70, 0.00], size: [0.45, 0.50, 0.85] }
+      - { id: D_PENDANT, name: Lampa wisząca liniowa, category: pendant,
+          ifc_class: IfcLightFixture, zone: dining, scope: loose,
+          at: [4.05, 10.525, 1.45], size: [1.00, 0.25, 1.25],
+          note: "linear pendant centred on the table; ceiling point at 4.55 / 10.65" }
+      - { id: D_SIDEBOARD, name: Komoda niska pod klimatyzatorem, category: chest,
+          ifc_class: IfcFurniture, zone: dining, scope: joinery, facing: N,
+          at: [6.55, 7.455, 0.00], size: [2.00, 0.45, 0.80],
+          note: "crockery and glass storage in the recess; stays 1.5 m below the AC outlet" }
+
+      # Living: corner sofa as the divider, facing the 70-inch TV on the brick
+      # strip; the chaise runs along the south side so the north corner is
+      # free for the desk. No armchair.
+      - { id: L_SOFA, name: Sofa narożna 280 x 165, category: corner_sofa,
+          ifc_class: IfcFurniture, zone: living, scope: loose, facing: E,
+          at: [6.35, 8.60, 0.00], size: [1.65, 2.80, 0.82],
+          main_depth: 0.95, chaise: { side: start, width: 0.95 },
+          note: "main seat 0.95 deep facing east; chaise 1.65 long on the south end" }
+      - { id: L_COFFEE_TABLE, name: Stolik kawowy 100 x 45, category: coffee_table,
+          ifc_class: IfcFurniture, zone: living, scope: loose,
+          at: [7.70, 9.97, 0.00], size: [0.45, 1.00, 0.40] }
+      - { id: L_RUG, name: Dywan 150 x 240, category: rug, ifc_class: IfcFurniture, zone: living, scope: loose,
+          at: [7.05, 9.00, 0.00], size: [1.50, 2.40, 0.01] }
+      - { id: L_TV_CONSOLE, name: Szafka RTV 180 wisząca, category: console,
+          ifc_class: IfcFurniture, zone: living, scope: loose,
+          at: [8.645, 8.97, 0.20], size: [0.30, 1.80, 0.40],
+          note: "30 cm deep wall-hung unit; sockets and data behind it at 0.45 m" }
+      - { id: L_TV, name: Telewizor 70 cali, category: tv,
+          ifc_class: IfcAudioVisualAppliance, zone: living, scope: loose, facing: W,
+          at: [8.885, 9.09, 0.62], size: [0.06, 1.56, 0.90],
+          note: "centred on the brick strip; screen centre 1.07 m = seated eye height; ~2.2 m viewing distance" }
+      - { id: L_FLOOR_LAMP, name: Lampa podłogowa, category: floor_lamp,
+          ifc_class: IfcLightFixture, zone: living, scope: loose,
+          at: [6.40, 11.45, 0.00], size: [0.30, 0.30, 1.60],
+          note: "behind the north arm, reading light over the end seat" }
+
+      # Work: desk on the solid pier east of OB3, facing the wall, so daylight
+      # falls from the left and never across or behind the screen.
+      - { id: W_DESK, name: Biurko 120 x 60, category: desk, ifc_class: IfcFurniture, zone: work, scope: loose,
+          facing: S, at: [7.66, 12.29, 0.00], size: [1.20, 0.60, 0.75],
+          note: "sockets and data on the pier at 0.90 m; window on the left for a right-handed user" }
+      - { id: W_SHELF, name: Półka nad biurkiem, category: shelf, ifc_class: IfcFurniture, zone: work, scope: loose,
+          at: [7.66, 12.64, 1.30], size: [1.20, 0.25, 0.03] }
+      - { id: W_CHAIR, name: Krzesło biurowe, category: office_chair,
+          ifc_class: IfcFurniture, zone: work, scope: loose, facing: N,
+          at: [7.985, 11.70, 0.00], size: [0.55, 0.55, 1.05] }
+
+      # Entrance: the door opens outward, so the corner inside it takes a slim
+      # shoe cabinet on the bathroom wall. Sit-down bench, coat rail and
+      # full-length mirror on the storage wall; the storage is a walk-in closet.
+      - { id: H_SHOE_CABINET, name: Szafka na buty 85 x 22, category: chest,
+          ifc_class: IfcFurniture, zone: hall, scope: joinery, facing: N,
+          at: [1.45, 8.05, 0.00], size: [0.85, 0.22, 1.00],
+          note: "tilt-out shoe cabinet beside the entrance; stops at the door reveal" }
+      - { id: H_SHOE_BENCH, name: Ławka z szafką na buty, category: bench,
+          ifc_class: IfcFurniture, zone: hall, scope: joinery, facing: N,
+          at: [3.50, 8.05, 0.00], size: [1.20, 0.35, 0.48] }
+      - { id: H_COAT_RAIL, name: Wieszak ścienny, category: rail,
+          ifc_class: IfcFurniture, zone: hall, scope: joinery,
+          at: [3.50, 8.05, 1.65], size: [1.20, 0.06, 0.08] }
+      - { id: H_MIRROR, name: Lustro 42 x 155, category: mirror,
+          ifc_class: IfcFurniture, zone: hall, scope: joinery,
+          at: [4.78, 8.05, 0.35], size: [0.42, 0.02, 1.55] }
+
+      # Walk-in closet inside the surveyed storage walls: hanging along the
+      # east wall, shelves on the north wall behind the open D8 leaf, low shoe
+      # shelf beside the column; 1.1 x 1.1 m standing space in the middle.
+      - { id: S_CLOSET_HANGING, name: Garderoba - drążki, category: wardrobe,
+          ifc_class: IfcFurniture, zone: hall, scope: joinery, facing: W, room: 8,
+          at: [4.56, 6.15, 0.00], size: [0.60, 1.80, 2.40],
+          note: "two-level hanging for coats and jackets, top shelf for seasonal boxes; starts north of the column" }
+      - { id: S_CLOSET_SHELVES, name: Garderoba - półki, category: bookcase,
+          ifc_class: IfcFurniture, zone: hall, scope: joinery, facing: S, room: 8,
+          at: [3.42, 7.45, 0.00], size: [1.10, 0.50, 2.40],
+          note: "open shelves; the D8 leaf opens to 8 cm in front of them" }
+      - { id: S_CLOSET_SHOES, name: Garderoba - regał na buty, category: bookcase,
+          ifc_class: IfcFurniture, zone: hall, scope: joinery, facing: N, room: 8,
+          at: [3.42, 5.98, 0.00], size: [0.55, 0.40, 1.20] }
+
+      # Bedroom 5 (west) - parents. 180 bed with its head on the west wall and
+      # 0.87 m past the foot; the D5 leaf folds back against the east wall.
+      # Work desk in the south-west corner facing the west wall with OK5 on
+      # the left; it doubles as the south bedside surface.
+      - { id: B5_BED, name: Łóżko 180 x 200, category: bed, ifc_class: IfcFurniture,
+          zone: bedroom_parents, scope: loose, room: 5, facing: E,
+          at: [0.40, 1.70, 0.00], size: [2.10, 1.85, 1.00] }
+      - { id: B5_DESK, name: Biurko 120 x 60, category: desk, ifc_class: IfcFurniture,
+          zone: bedroom_parents, scope: loose, room: 5, facing: E,
+          at: [0.40, 0.40, 0.00], size: [0.60, 1.20, 0.75],
+          note: "daylight from OK5 on the left; sockets and data on the west wall" }
+      - { id: B5_CHAIR, name: Krzesło biurowe, category: office_chair, ifc_class: IfcFurniture,
+          zone: bedroom_parents, scope: loose, room: 5, facing: W,
+          at: [1.05, 0.725, 0.00], size: [0.55, 0.55, 1.05] }
+      - { id: B5_NIGHTSTAND_N, name: Szafka nocna, category: nightstand, ifc_class: IfcFurniture,
+          zone: bedroom_parents, scope: loose, room: 5,
+          at: [0.40, 3.58, 0.00], size: [0.45, 0.45, 0.55] }
+      - { id: B5_WARDROBE, name: Szafa 200 x 60, category: wardrobe, ifc_class: IfcFurniture,
+          zone: bedroom_parents, scope: joinery, room: 5, facing: S,
+          at: [0.40, 4.26, 0.00], size: [2.00, 0.60, 2.40],
+          note: "full-height built-in on the corridor wall; sliding doors because the aisle to the bed is 0.71 m" }
+      - { id: B5_DRESSER, name: Komoda 72 x 45, category: chest, ifc_class: IfcFurniture,
+          zone: bedroom_parents, scope: loose, room: 5, facing: N,
+          at: [2.65, 0.40, 0.00], size: [0.72, 0.45, 0.85] }
+
+      # Bedroom 6 (middle) - boy. Bed along the shared west wall, desk at right
+      # angles to the OK6 glazing for glare-free daylight, open floor to play.
+      - { id: B6_BED, name: Łóżko 90 x 200, category: bed, ifc_class: IfcFurniture,
+          zone: bedroom_boy, scope: loose, room: 6, facing: S,
+          at: [3.47, 1.60, 0.00], size: [0.95, 2.05, 0.90] }
+      - { id: B6_NIGHTSTAND, name: Szafka nocna, category: nightstand, ifc_class: IfcFurniture,
+          zone: bedroom_boy, scope: loose, room: 6,
+          at: [3.47, 3.67, 0.00], size: [0.45, 0.38, 0.50],
+          note: "kept out of the D6 swing" }
+      - { id: B6_LOW_SHELF, name: Regał niski na zabawki, category: bookcase, ifc_class: IfcFurniture,
+          zone: bedroom_boy, scope: loose, room: 6, facing: N,
+          at: [3.50, 0.40, 0.00], size: [0.70, 0.35, 0.80] }
+      - { id: B6_DESK, name: Biurko 120 x 60, category: desk, ifc_class: IfcFurniture,
+          zone: bedroom_boy, scope: loose, room: 6, facing: W,
+          at: [5.65, 1.55, 0.00], size: [0.60, 1.20, 0.75],
+          note: "starts 0.21 m north of the DK6 approach; height-adjustable desk and chair recommended for a growing child" }
+      - { id: B6_CHAIR, name: Krzesło biurowe, category: office_chair, ifc_class: IfcFurniture,
+          zone: bedroom_boy, scope: loose, room: 6, facing: E,
+          at: [5.05, 1.875, 0.00], size: [0.55, 0.55, 1.05] }
+      - { id: B6_BOOKCASE, name: Regał 80, category: bookcase, ifc_class: IfcFurniture,
+          zone: bedroom_boy, scope: loose, room: 6, facing: W,
+          at: [5.95, 2.80, 0.00], size: [0.30, 0.80, 1.80] }
+      - { id: B6_WARDROBE, name: Szafa 120 x 60, category: wardrobe, ifc_class: IfcFurniture,
+          zone: bedroom_boy, scope: joinery, room: 6, facing: W,
+          at: [5.65, 3.66, 0.00], size: [0.60, 1.20, 2.20] }
+      - { id: B6_RUG, name: Dywan do zabawy, category: rug, ifc_class: IfcFurniture,
+          zone: bedroom_boy, scope: loose, room: 6,
+          at: [4.50, 2.75, 0.00], size: [1.10, 1.20, 0.01] }
+
+      # Bedroom 7 (east) - granny. Bed reached straight from the door, one long
+      # side against the east wall for support, bedside table on the getting-in
+      # side outside the D7 swing; armchair with lamp by OK7; no loose rugs.
+      - { id: B7_BED, name: Łóżko 120 x 200 podwyższone, category: bed, ifc_class: IfcFurniture,
+          zone: bedroom_granny, scope: loose, room: 7, facing: S,
+          at: [7.71, 3.83, 0.00], size: [1.25, 2.05, 0.95],
+          note: "mattress top 0.50-0.55 m so sitting down and standing up are easy" }
+      - { id: B7_NIGHTSTAND, name: Szafka nocna z lampką, category: nightstand, ifc_class: IfcFurniture,
+          zone: bedroom_granny, scope: loose, room: 7,
+          at: [7.26, 5.43, 0.00], size: [0.42, 0.45, 0.60],
+          note: "on the access side; add a motion-sensor night light along the route to the door" }
+      - { id: B7_WARDROBE, name: Szafa 160 x 60, category: wardrobe, ifc_class: IfcFurniture,
+          zone: bedroom_granny, scope: joinery, room: 7, facing: W,
+          at: [8.36, 1.40, 0.00], size: [0.60, 1.60, 2.20],
+          note: "rails at 1.50-1.60 m, everyday items between 0.60 and 1.60 m" }
+      - { id: B7_DRESSER, name: Komoda 100 x 45, category: chest, ifc_class: IfcFurniture,
+          zone: bedroom_granny, scope: loose, room: 7, facing: E,
+          at: [6.35, 2.70, 0.00], size: [0.45, 1.00, 0.85] }
+      - { id: B7_ARMCHAIR, name: Fotel z podłokietnikami, category: armchair, ifc_class: IfcFurniture,
+          zone: bedroom_granny, scope: loose, room: 7, facing: N,
+          at: [6.50, 1.50, 0.00], size: [0.80, 0.80, 0.95],
+          note: "firm seat at ~0.47 m with arms; daylight from OK7 over the shoulder" }
+      - { id: B7_FLOOR_LAMP, name: Lampa do czytania, category: floor_lamp, ifc_class: IfcLightFixture,
+          zone: bedroom_granny, scope: loose, room: 7,
+          at: [7.35, 1.40, 0.00], size: [0.30, 0.30, 1.50] }

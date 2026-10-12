@@ -232,6 +232,10 @@ equipment:
       category: washer, at: [1.52, 7.35, 0.00], size: [0.60, 0.60, 0.85],
       room: 4, mounting: floor, renovation_status: existing }
 
+# Furniture and fitted joinery. The existing furniture was not surveyed and is
+# cleared for the renovation; the target model adds the designed layout.
+furniture: []
+
 # Existing decorative brick-tile wall coverings. Segments follow the internal
 # wall faces and are kept separate so their areas remain quantity-traceable.
 wall_finishes:
@@ -421,7 +425,7 @@ floor_assemblies:
 # Interior leaves and swing directions are practical assumptions requested for
 # everyday use, not surveyed - confirm on site before ordering doors.
 doors:
-  - { id: entry, at: [1.00, 8.28], size: [0.40, 0.90], nominal_width: 0.90, height: 2.10, frame_material: wood, swing: [start, "+"], note: "90 cm entrance leaf; south edge touches the outer-wall step line" }
+  - { id: entry, at: [1.00, 8.28], size: [0.40, 0.90], nominal_width: 0.90, height: 2.10, frame_material: wood, swing: [start, "-"], note: "90 cm entrance leaf opening outward onto the landing (owner-verified); south edge touches the outer-wall step line" }
   - { id: D4, at: [2.32, 6.005], size: [0.10, 0.90], nominal_width: 0.80, height: 2.10, frame_material: wood, has_leaf: true, swing: [start, "+"], note: "standard 80 cm bathroom leaf opens outward for safety and clears the approved fixtures" }
   - { id: D8, at: [3.32, 6.515], size: [0.10, 0.90], nominal_width: 0.80, height: 2.10, frame_material: wood, has_leaf: true, swing: [end, "+"], note: "standard 80 cm leaf opens into storage against its north side, avoiding the bathroom-door corridor swing" }
   - { id: D5, at: [2.47, 4.86], size: [0.90, 0.10], nominal_width: 0.90, height: 2.10, frame_material: wood, has_leaf: true, swing: [end, "-"], note: "standard 90 cm leaf opens into bedroom 5 toward the east partition" }
@@ -465,7 +469,8 @@ windows:
   - { id: OB1, at: [2.84, 12.89], size: [0.90, 0.40], sill: 0.90, head: 2.20, window_type: default, frame_material: wood, render_panels: 2,
       room: 123, note: "fixed balcony window" }
   - { id: OB2, at: [4.13, 12.89], size: [1.46, 0.40], sill: 0.00, head: 2.20, window_type: default, frame_material: wood, render_panels: 2,
-      room: 123, ifc_class: IfcDoor, note: "drzwi balkonowe / balcony door" }
+      room: 123, ifc_class: IfcDoor, opening_leaf_width: 0.70, opening_leaf_side: east,
+      note: "drzwi balkonowe / balcony door; the right-hand (east) ~0.70 m leaf opens inward (owner-verified), the west part is fixed" }
   - { id: OB3, at: [5.96, 12.89], size: [1.61, 0.40], sill: 0.90, head: 2.20, window_type: default, frame_material: wood, render_panels: 3,
       room: 123 }
 

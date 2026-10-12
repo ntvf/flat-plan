@@ -561,6 +561,7 @@ class Builder:
                 "RoomId": str(room["id"]),
                 "Function": room.get("function"),
                 "RenovationStatus": room.get("renovation_status", "existing"),
+                "Occupant": room.get("occupant"),
             })
 
     def build_columns_and_shafts(self):
@@ -672,6 +673,251 @@ class Builder:
                 })
                 route_segment_count += 1
         return equipment_count, route_segment_count
+
+    # -- furniture --------------------------------------------------------
+    FURNITURE_COLOURS = {
+        "front": (0.93, 0.92, 0.89),      # matt white joinery fronts
+        "worktop": (0.78, 0.76, 0.72),    # light stone worktop
+        "plinth": (0.35, 0.35, 0.36),
+        "oak": (0.70, 0.53, 0.34),
+        "black": (0.07, 0.07, 0.08),
+        "steel": (0.68, 0.69, 0.70),
+        "fabric": (0.44, 0.51, 0.57),
+        "fabric_dark": (0.30, 0.34, 0.38),
+        "rug": (0.84, 0.80, 0.73),
+        "mirror": (0.78, 0.86, 0.90),
+        "shade": (0.95, 0.90, 0.78),
+        "linen": (0.92, 0.91, 0.87),
+    }
+
+    def furniture_style(self, key):
+        if not hasattr(self, "_furniture_styles"):
+            self._furniture_styles = {}
+        if key not in self._furniture_styles:
+            run = ifcopenshell.api.run
+            style = run("style.add_style", self.model, name=f"Furniture {key}")
+            r, g, b = self.FURNITURE_COLOURS[key]
+            run("style.add_surface_style", self.model, style=style,
+                ifc_class="IfcSurfaceStyleShading",
+                attributes={"SurfaceColour": {"Name": None, "Red": r, "Green": g, "Blue": b},
+                            "Transparency": 0.0})
+            self._furniture_styles[key] = style
+        return self._furniture_styles[key]
+
+    @staticmethod
+    def facing_box(item, u, v, z, lu, lv, h):
+        """Box in a front-relative frame mapped into the item's size envelope.
+
+        u runs along the front edge, v runs from the front (v=0) to the back.
+        """
+        w, d, _ = (float(value) for value in item["size"])
+        facing = item.get("facing", "S")
+        if facing == "S":
+            x0, y0, x1, y1 = u, v, u + lu, v + lv
+        elif facing == "N":
+            x0, y0, x1, y1 = u, d - v - lv, u + lu, d - v
+        elif facing == "E":
+            x0, y0, x1, y1 = w - v - lv, u, w - v, u + lu
+        elif facing == "W":
+            x0, y0, x1, y1 = v, u, v + lv, u + lu
+        else:
+            raise ValueError(f"furniture {item['id']} has unknown facing {facing!r}")
+        return Builder.box_mesh(x0, y0, z, x1 - x0, y1 - y0, h)
+
+    @staticmethod
+    def prism_mesh(points, z, h):
+        n = len(points)
+        vertices = [(x, y, z) for x, y in points] + [(x, y, z + h) for x, y in points]
+        faces = [list(range(n - 1, -1, -1)), list(range(n, 2 * n))]
+        for i in range(n):
+            j = (i + 1) % n
+            faces.append([i, j, j + n, i + n])
+        return vertices, faces
+
+    def furniture_geometry(self, item):
+        """Return (mesh, colour) parts inside the item's exact size envelope."""
+        w, d, h = (float(value) for value in item["size"])
+        facing = item.get("facing", "S")
+        along, depth = (d, w) if facing in ("E", "W") else (w, d)
+        category = item["category"]
+        box = lambda *a: self.facing_box(item, *a)
+        legs = lambda top, colour, inset=0.04, size=0.045: [
+            (self.box_mesh(x, y, 0, size, size, top), colour)
+            for x in (inset, w - inset - size) for y in (inset, d - inset - size)]
+
+        if category in ("base_cabinet", "island", "tall_unit", "bench", "wardrobe"):
+            body_top = h - 0.04 if category in ("base_cabinet", "island") else h
+            if "polygon" in item:
+                x0, y0, _ = item["at"]
+                local = [(x - x0, y - y0) for x, y in item["polygon"]]
+                return [(self.prism_mesh(local, 0.0, 0.10), "plinth"),
+                        (self.prism_mesh(local, 0.10, body_top - 0.10), "front"),
+                        (self.prism_mesh(local, body_top, h - body_top), "worktop")]
+            parts = [(box(0, 0.06, 0, along, depth - 0.06, 0.10), "plinth"),
+                     (box(0, 0, 0.10, along, depth, body_top - 0.10),
+                      "oak" if category == "bench" else "front")]
+            if body_top < h:
+                parts.append((box(0, 0, body_top, along, depth, h - body_top), "worktop"))
+            if item.get("appliance") == "oven_microwave":
+                parts += [(box(0.03, -0.002, 0.95, along - 0.06, 0.004, 0.60), "black"),
+                          (box(0.03, -0.002, 1.62, along - 0.06, 0.004, 0.38), "black")]
+            if item.get("appliance") == "fridge":
+                parts.append((box(along - 0.07, -0.004, 1.00, 0.02, 0.006, 0.80), "steel"))
+            if category == "bench":
+                parts.append((box(0, 0, h - 0.06, along, depth, 0.06), "fabric_dark"))
+            return parts
+
+        if category == "corner_sofa":
+            # Main seat along the back, chaise at one end running to the front.
+            main = float(item["main_depth"])
+            chaise = item["chaise"]
+            cw = float(chaise["width"])
+            cu = 0.0 if chaise["side"] == "start" else along - cw
+            arm, back, seat_z = 0.15, 0.22, 0.42
+            arm_u = along - arm if chaise["side"] == "start" else 0.0
+            main_u0 = 0.0 if chaise["side"] == "start" else arm
+            front = depth - main
+            return [(box(0, front, 0, along, main, 0.10), "black"),
+                    (box(cu, 0, 0, cw, front, 0.10), "black"),
+                    (box(main_u0, front, 0.10, along - arm, main - back, seat_z - 0.10), "fabric"),
+                    (box(cu, 0, 0.10, cw, front, seat_z - 0.10), "fabric"),
+                    (box(0, depth - back, 0.10, along, back, h - 0.10), "fabric_dark"),
+                    (box(arm_u, front, 0.10, arm, main - back, 0.52), "fabric_dark")]
+
+        if category == "wall_cabinet":
+            if "polygon" in item:
+                x0, y0, _ = item["at"]
+                local = [(x - x0, y - y0) for x, y in item["polygon"]]
+                return [(self.prism_mesh(local, 0.0, h), "front")]
+            return [(self.box_mesh(0, 0, 0, w, d, h), "front")]
+
+        if category == "bed":
+            frame_top, mattress = 0.30, 0.22
+            sleep = depth - 0.08                      # headboard at the back
+            return [(box(0, 0, 0, along, sleep, frame_top), "oak"),
+                    (box(0.03, 0.03, frame_top, along - 0.06, sleep - 0.06, mattress), "linen"),
+                    (box(0.02, 0.02, frame_top + mattress, along - 0.04, sleep * 0.62, 0.04), "fabric"),
+                    (box(0.10, sleep - 0.45, frame_top + mattress, along - 0.20, 0.35, 0.10), "linen"),
+                    (box(0, sleep, 0, along, 0.08, h), "fabric_dark")]
+
+        if category in ("nightstand", "chest"):
+            top = 0.03
+            return [(self.box_mesh(0, 0, 0.06, w, d, h - 0.06 - top), "front"),
+                    (self.box_mesh(0, 0, h - top, w, d, top), "oak")] + legs(0.06, "black", inset=0.02, size=0.03)
+
+        if category == "bookcase":
+            shelf = 0.02
+            levels = max(2, round(h / 0.36))
+            parts = [(box(0, depth - 0.01, 0, along, 0.01, h), "oak"),
+                     (box(0, 0, 0, shelf, depth, h), "oak"),
+                     (box(along - shelf, 0, 0, shelf, depth, h), "oak")]
+            for i in range(levels + 1):
+                z = min(i * (h - shelf) / levels, h - shelf)
+                parts.append((box(shelf, 0, z, along - 2 * shelf, depth - 0.01, shelf), "oak"))
+            return parts
+
+        if category == "hob":
+            return [(self.box_mesh(0, 0, 0, w, d, h), "black")]
+
+        if category == "hood":
+            canopy = 0.08
+            chimney = [(box(along / 2 - 0.15, depth - 0.25, canopy, 0.30, 0.25, h - canopy), "steel")]
+            return [(box(0, 0, 0, along, depth, canopy), "steel")] + chimney
+
+        if category == "sink":
+            return [(box(0, 0.02, 0, along, depth - 0.10, 0.004), "steel"),
+                    (box(along / 2 - 0.02, depth - 0.07, 0, 0.04, 0.04, h), "steel"),
+                    (box(along / 2 - 0.015, depth - 0.18, h - 0.03, 0.03, 0.14, 0.03), "steel")]
+
+        if category in ("table", "desk", "coffee_table"):
+            top = 0.03 if category != "coffee_table" else 0.04
+            return [(self.box_mesh(0, 0, h - top, w, d, top), "oak")] + legs(h - top, "black")
+
+        if category == "chair":
+            seat_z = 0.45
+            return ([(box(0, 0, seat_z - 0.04, along, depth - 0.05, 0.04), "oak"),
+                     (box(0.02, depth - 0.05, seat_z - 0.04, along - 0.04, 0.03, h - seat_z + 0.04), "oak")]
+                    + legs(seat_z - 0.04, "black", inset=0.03, size=0.03))
+
+        if category in ("sofa", "armchair"):
+            arm, back = 0.15, 0.22
+            return [(box(0, 0, 0, along, depth, 0.10), "black"),
+                    (box(arm, 0, 0.10, along - 2 * arm, depth - back, 0.32), "fabric"),
+                    (box(0, 0, 0.10, arm, depth, 0.52), "fabric_dark"),
+                    (box(along - arm, 0, 0.10, arm, depth, 0.52), "fabric_dark"),
+                    (box(arm, depth - back, 0.10, along - 2 * arm, back, h - 0.10), "fabric_dark")]
+
+        if category == "office_chair":
+            return [(self.box_mesh(0.03, 0.03, 0, w - 0.06, d - 0.06, 0.05), "black"),
+                    (self.box_mesh(w / 2 - 0.03, d / 2 - 0.03, 0.05, 0.06, 0.06, 0.40), "steel"),
+                    (box(0.03, 0.03, 0.45, along - 0.06, depth - 0.10, 0.06), "fabric_dark"),
+                    (box(0.06, depth - 0.07, 0.55, along - 0.12, 0.05, h - 0.55), "fabric_dark")]
+
+        if category == "floor_lamp":
+            return [(self.cylinder_mesh(w / 2, d / 2, 0, w * 0.4, d * 0.4, 0.03), "black"),
+                    (self.box_mesh(w / 2 - 0.012, d / 2 - 0.012, 0.03, 0.024, 0.024, h - 0.33), "black"),
+                    (self.cylinder_mesh(w / 2, d / 2, h - 0.30, w / 2, d / 2, 0.30), "shade")]
+
+        if category == "pendant":
+            return [(self.box_mesh(w / 2 - 0.005, d / 2 - 0.005, 0.25, 0.01, 0.01, h - 0.25), "black"),
+                    (self.cylinder_mesh(w / 2, d / 2, 0, w / 2, d / 2, 0.25), "shade")]
+
+        colour = {"tv": "black", "console": "oak", "rug": "rug", "mirror": "mirror",
+                  "rail": "black", "shelf": "oak"}.get(category)
+        if colour is None:
+            raise ValueError(f"furniture {item['id']} has unknown category {category!r}")
+        return [(self.box_mesh(0, 0, 0, w, d, h), colour)]
+
+    def build_furniture(self):
+        run = ifcopenshell.api.run
+        count = 0
+        for item in self.data.get("furniture", []):
+            parts = self.furniture_geometry(item)
+            el = run("root.create_entity", self.model,
+                     ifc_class=item.get("ifc_class", "IfcFurniture"),
+                     name=f"{item['id']} {item['name']}")
+            # One mesh item per colour. Items are created one at a time and
+            # collected into a single representation, because some
+            # IfcOpenShell versions require equal vertex counts across items.
+            groups = {}
+            for (vertices, faces), colour in parts:
+                group_vertices, group_faces = groups.setdefault(colour, ([], []))
+                offset = len(group_vertices)
+                group_vertices.extend(vertices)
+                group_faces.extend([[i + offset for i in face] for face in faces])
+            rep = None
+            for colour, (vertices, faces) in groups.items():
+                part = run("geometry.add_mesh_representation", self.model, context=self.body,
+                           vertices=[vertices], faces=[faces])
+                run("style.assign_representation_styles", self.model, shape_representation=part,
+                    styles=[self.furniture_style(colour)])
+                if rep is None:
+                    rep = part
+                else:
+                    rep.Items = tuple(rep.Items) + tuple(part.Items)
+                    self.model.remove(part)
+            run("geometry.assign_representation", self.model, product=el,
+                representation=rep)
+            x, y, z = item["at"]
+            self.place(el, np.array([[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z],
+                                     [0, 0, 0, 1]], dtype=float))
+            run("spatial.assign_container", self.model, relating_structure=self.storey,
+                products=[el])
+            w, d, h = item["size"]
+            self.add_properties(el, "ModelFurniture", {
+                "AssetId": item["id"],
+                "Category": item["category"],
+                "Appliance": item.get("appliance"),
+                "Zone": item.get("zone"),
+                "Scope": item.get("scope"),
+                "Facing": item.get("facing"),
+                "Room": str(item.get("room", 123)),
+                "Width": w, "Depth": d, "Height": h,
+                "RenovationStatus": item.get("renovation_status", "new"),
+                "Note": item.get("note"),
+            })
+            count += 1
+        return count
 
     def build_service_terminals_and_floor_data(self):
         run = ifcopenshell.api.run
@@ -905,6 +1151,7 @@ def main():
     equipment, route_segments = b.build_equipment_and_routes()
     terminals = b.build_service_terminals_and_floor_data()
     finishes = b.build_wall_finishes()
+    furniture = b.build_furniture()
     openings, placed, orphaned = b.build_doors()
     aperture_counts, win_orphaned = b.build_windows()
     b.write(dst)
@@ -913,7 +1160,7 @@ def main():
     print(f"[build_ifc] walls={len(b.walls)} openings={openings} doors={total_doors} "
           f"windows={aperture_counts.get('IfcWindow', 0)} spaces={len(data['rooms'])} "
           f"equipment={equipment} route_segments={route_segments} "
-          f"service_terminals={terminals} wall_finishes={finishes}")
+          f"service_terminals={terminals} wall_finishes={finishes} furniture={furniture}")
     if orphaned:
         print(f"[build_ifc] WARNING no host wall for doors: {orphaned}")
     if win_orphaned:

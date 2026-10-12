@@ -185,6 +185,26 @@ class ModelLoaderTest(unittest.TestCase):
         self.assertEqual(([3.37, 0.40], [0.10, 4.46]), (walls["W_bed5_6"]["at"], walls["W_bed5_6"]["size"]))
         self.assertEqual(([6.25, 1.34], [0.10, 4.54]), (walls["W_bed7_w"]["at"], walls["W_bed7_w"]["size"]))
 
+    def test_furniture_is_target_only_design_data(self):
+        root = Path(__file__).resolve().parents[1]
+        self.assertEqual([], load_model(root / "data" / "as_is.yaml")["furniture"])
+        furniture = {item["id"]: item for item in load_model(root / "data" / "target.yaml")["furniture"]}
+        self.assertEqual("corner_sofa", furniture["L_SOFA"]["category"])
+        self.assertNotIn("L_ARMCHAIR", furniture)
+        self.assertEqual([1.20, 0.60, 0.75], furniture["W_DESK"]["size"])
+        self.assertEqual([0.60, 1.20, 0.90], furniture["K_ISLAND"]["size"])
+        self.assertEqual([1.80, 0.90, 0.75], furniture["D_TABLE"]["size"])
+        self.assertEqual("bench", furniture["D_BENCH"]["category"])
+        # The sink stays centred on the surveyed connection under OB1.
+        sink = furniture["K_SINK"]
+        self.assertAlmostEqual(3.29, sink["at"][0] + sink["size"][0] / 2)
+        rooms = {room["id"]: room for room in load_model(root / "data" / "target.yaml")["rooms"]}
+        self.assertEqual(["parents", "boy", "grandmother"],
+                         [rooms[i]["occupant"] for i in (5, 6, 7)])
+        self.assertEqual({5: "B5_BED", 6: "B6_BED", 7: "B7_BED"},
+                         {item["room"]: item["id"] for item in furniture.values()
+                          if item["category"] == "bed"})
+
     def test_rejects_duplicate_addition(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

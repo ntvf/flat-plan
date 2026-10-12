@@ -44,6 +44,12 @@ contractors can price the work from generated bills of quantities.
 - All walls, including the bedroom partitions, are model data in `walls`; the
   IFC carries a `ModelWall` pset (id, kind, material, renovation status,
   length, thickness) on every wall and a `ModelSpace` pset on every space.
+- `furniture` is model data: empty in as-is (not surveyed), and the target
+  adds the designed kitchen (120x60 island, uppers, pantry), dining (180 table,
+  bench + 3 chairs), living (corner sofa, 70" TV), desk by OB3, entrance and
+  bedroom (parents / boy / grandmother) items as styled IfcFurniture/appliances with a
+  `ModelFurniture` pset (zone, scope joinery/appliance/loose, size).
+  `scripts/sketch_living_layout.py` validates clearances and ergonomics.
 - The as-is IFC models leaves in all interior openings using practical assumed
   swings, plus the entrance, OB2, and the east DK6 panel; the target adds the
   new bathroom door.
