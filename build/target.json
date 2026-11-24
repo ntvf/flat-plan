@@ -59,6 +59,7 @@
       "id": 5,
       "name": "Sypialnia 1",
       "name_uk": "Спальня 1",
+      "name_ru": "Спальня 1",
       "function": "bedroom",
       "clear": [
         2.97,
@@ -87,6 +88,7 @@
       "id": 6,
       "name": "Sypialnia 2",
       "name_uk": "Спальня 2",
+      "name_ru": "Спальня 2",
       "function": "bedroom",
       "clear": [
         2.78,
@@ -123,6 +125,7 @@
       "id": 7,
       "name": "Sypialnia 3",
       "name_uk": "Спальня 3",
+      "name_ru": "Спальня 3",
       "function": "bedroom",
       "clear": [
         2.61,
@@ -151,6 +154,7 @@
       "id": 4,
       "name": "Łazienka",
       "name_uk": "Ванна кімната",
+      "name_ru": "Ванная",
       "function": "bathroom",
       "clear": [
         1.92,
@@ -183,6 +187,7 @@
       "id": 8,
       "name": "Schowek",
       "name_uk": "Комора",
+      "name_ru": "Кладовая",
       "function": "storage",
       "clear": [
         1.74,
@@ -229,6 +234,7 @@
       "id": 123,
       "name": "Hall / Kuchnia / Salon (otwarta przestrzeń)",
       "name_uk": "Хол / Кухня / Вітальня",
+      "name_ru": "Холл / Кухня / Гостиная",
       "function": "open_living",
       "label_edges": true,
       "subtract": [
@@ -302,6 +308,7 @@
       "id": 9,
       "name": "Łazienka 2",
       "name_uk": "Ванна кімната 2",
+      "name_ru": "Ванная 2",
       "function": "bathroom",
       "renovation_status": "new",
       "clear": [
@@ -494,6 +501,34 @@
       "material": "plasterboard",
       "renovation_status": "new",
       "note": "bathroom closure from storage to the room 7 wall face"
+    },
+    {
+      "id": "W_entry_screen",
+      "at": [
+        2.0,
+        9.28
+      ],
+      "size": [
+        1.2,
+        0.1
+      ],
+      "material": "plasterboard",
+      "renovation_status": "new",
+      "note": "kitchen screen wall along the entrance; fridge and prep 2 stand on its north face"
+    },
+    {
+      "id": "W_entry_closet_back",
+      "at": [
+        1.4,
+        9.88
+      ],
+      "size": [
+        0.6,
+        0.1
+      ],
+      "material": "plasterboard",
+      "renovation_status": "new",
+      "note": "back of the 60x60 coat closet that opens south onto the hall"
     }
   ],
   "columns": [
@@ -568,124 +603,9 @@
         "refrigerant_and_control": "reuse existing OB3 line plus bathroom-ceiling extension",
         "condensate": "separate gravity route to SH_san; final fall to be designed"
       }
-    },
-    {
-      "id": "HW_TANK_100L",
-      "name": "Zasobnik c.w.u. Viessmann 100 l",
-      "ifc_class": "IfcTank",
-      "at": [
-        1.4,
-        10.17,
-        0.0
-      ],
-      "size": [
-        0.6,
-        0.6,
-        1.15
-      ],
-      "shape": "cylinder",
-      "room": 123,
-      "mounting": "floor",
-      "manufacturer": "Viessmann",
-      "capacity_l": 100,
-      "measured": {
-        "offset_from_entry_door": 1.29,
-        "offset_to": "tank centre",
-        "reference": "north edge of entrance opening",
-        "adjacent_wall_length": 4.12
-      },
-      "connections": [
-        {
-          "service": "water",
-          "destination": "west wall",
-          "geometry": "not surveyed"
-        }
-      ],
-      "note": "beside the 4.12 m entrance wall; surveyed diameter, approximate height"
     }
   ],
-  "wall_finishes": [
-    {
-      "id": "BRICK_NORTH_OB1",
-      "material": "brick_tiles",
-      "ifc_class": "IfcCovering",
-      "segment": [
-        [
-          2.84,
-          12.88
-        ],
-        [
-          2.47,
-          12.88
-        ]
-      ],
-      "base_height": 0.8,
-      "top_height": 2.7,
-      "thickness": 0.015,
-      "room": 123,
-      "note": "from the west edge of OB1 to the 1.29 m chamfer"
-    },
-    {
-      "id": "BRICK_NW_CHAMFER",
-      "material": "brick_tiles",
-      "ifc_class": "IfcCovering",
-      "segment": [
-        [
-          2.47,
-          12.88
-        ],
-        [
-          1.4,
-          12.17
-        ]
-      ],
-      "base_height": 0.8,
-      "top_height": 2.7,
-      "thickness": 0.015,
-      "room": 123,
-      "note": "full 1.29 m north-west chamfer"
-    },
-    {
-      "id": "BRICK_WEST_TO_TANK",
-      "material": "brick_tiles",
-      "ifc_class": "IfcCovering",
-      "segment": [
-        [
-          1.4,
-          12.17
-        ],
-        [
-          1.4,
-          10.77
-        ]
-      ],
-      "base_height": 0.8,
-      "top_height": 2.7,
-      "thickness": 0.015,
-      "room": 123,
-      "note": "from chamfer to the north edge of the hot-water tank"
-    },
-    {
-      "id": "BRICK_EAST",
-      "material": "brick_tiles",
-      "ifc_class": "IfcCovering",
-      "segment": [
-        [
-          8.95,
-          9.12
-        ],
-        [
-          8.95,
-          10.62
-        ]
-      ],
-      "base_height": 0.0,
-      "top_height": 2.7,
-      "thickness": 0.015,
-      "room": 123,
-      "note": "1.50 m full-height strip beginning 1.00 m north of SH_vent"
-    }
-  ],
+  "wall_finishes": [],
   "service_routes": [
     {
       "id": "AC_living_lines",
@@ -942,9 +862,9 @@
       ],
       "swing": [
         "start",
-        "+"
+        "-"
       ],
-      "note": "wejście / entrance; south edge touches the outer-wall step line"
+      "note": "wejście / entrance; opens outward from the flat; south edge touches the outer-wall step line"
     },
     {
       "id": "D4",
@@ -1215,5 +1135,1251 @@
   ],
   "balcony": {
     "area": 4.26
-  }
+  },
+  "finishes": {
+    "door_head": 2.05,
+    "materials": {
+      "tile_floor": {
+        "kind": "tile",
+        "size": [
+          0.6,
+          0.6
+        ],
+        "waste": 0.1,
+        "colour": "#d9c9ac",
+        "name_uk": "Керамограніт 60×60, бежевий з ефектом подряпин"
+      },
+      "tile_wall": {
+        "kind": "tile",
+        "size": [
+          0.6,
+          0.3
+        ],
+        "waste": 0.1,
+        "colour": "#e4d7bf",
+        "name_uk": "Плитка настінна 30×60 горизонтально, бежева з ефектом подряпин"
+      },
+      "tile_leaves": {
+        "kind": "tile",
+        "size": [
+          1.2,
+          0.6
+        ],
+        "waste": 0.15,
+        "colour": "#6f9a5a",
+        "name_uk": "Декор 120×60 «великі зелені листки», горизонтально, різати по ширині стіни"
+      },
+      "tile_circles": {
+        "kind": "tile",
+        "size": [
+          1.2,
+          0.6
+        ],
+        "waste": 0.15,
+        "colour": "#cfb48c",
+        "name_uk": "Декор 120×60 бежевий з колами, горизонтально"
+      },
+      "splash_green": {
+        "kind": "tile",
+        "size": [
+          0.08,
+          0.25
+        ],
+        "waste": 0.1,
+        "colour": "#4e7f5c",
+        "name_uk": "Плитка 8×25 зелена, вертикально, шов у шов"
+      },
+      "wood_oak": {
+        "kind": "plank",
+        "size": [
+          0.2,
+          1.2
+        ],
+        "waste": 0.07,
+        "colour": "#b88a58",
+        "name_uk": "Інженерна дошка (фанера + шар дуба) ~120×20, теплий дуб"
+      }
+    },
+    "floors": [
+      {
+        "id": "FL_OPEN",
+        "room": 123,
+        "material": "tile_floor",
+        "within": [
+          1.4,
+          8.05,
+          4.13,
+          12.89
+        ],
+        "name_uk": "Вхід і кухня"
+      },
+      {
+        "id": "FL_LIVING",
+        "room": 123,
+        "material": "wood_oak",
+        "exclude": [
+          1.4,
+          8.05,
+          4.13,
+          12.89
+        ],
+        "direction": "N",
+        "name_uk": "Коридор, обідня зона, вітальня, робоче місце"
+      },
+      {
+        "id": "FL_BATH1",
+        "room": 4,
+        "material": "tile_floor",
+        "exclude_items": [
+          "B11"
+        ],
+        "name_uk": "Ванна кімната 1"
+      },
+      {
+        "id": "FL_BATH2",
+        "room": 9,
+        "material": "tile_floor",
+        "name_uk": "Ванна кімната 2"
+      },
+      {
+        "id": "FL_BED1",
+        "room": 5,
+        "material": "wood_oak",
+        "direction": "N",
+        "name_uk": "Спальня 1"
+      },
+      {
+        "id": "FL_BED2",
+        "room": 6,
+        "material": "wood_oak",
+        "direction": "N",
+        "name_uk": "Спальня 2"
+      },
+      {
+        "id": "FL_BED3",
+        "room": 7,
+        "material": "wood_oak",
+        "direction": "N",
+        "name_uk": "Спальня 3"
+      },
+      {
+        "id": "FL_STORE",
+        "room": 8,
+        "material": "wood_oak",
+        "direction": "N",
+        "name_uk": "Комора"
+      }
+    ],
+    "walls": [
+      {
+        "id": "WT_BATH1",
+        "room": 4,
+        "material": "tile_wall",
+        "height": 2.7,
+        "name_uk": "Ванна кімната 1",
+        "features": [
+          {
+            "segment": [
+              [
+                0.4,
+                4.96
+              ],
+              [
+                2.32,
+                4.96
+              ]
+            ],
+            "material": "tile_circles"
+          }
+        ]
+      },
+      {
+        "id": "WT_BATH2",
+        "room": 9,
+        "material": "tile_wall",
+        "height": 2.4,
+        "name_uk": "Ванна кімната 2",
+        "features": [
+          {
+            "segment": [
+              [
+                8.96,
+                6.37
+              ],
+              [
+                8.96,
+                7.33
+              ]
+            ],
+            "material": "tile_leaves"
+          }
+        ]
+      }
+    ],
+    "splash": {
+      "material": "splash_green",
+      "base": 0.9,
+      "top": 1.5,
+      "segments": [
+        {
+          "id": "SP1",
+          "from": [
+            1.4,
+            9.98
+          ],
+          "to": [
+            2.0,
+            9.98
+          ],
+          "name_uk": "торець шафи-купе над K03"
+        },
+        {
+          "id": "SP2",
+          "from": [
+            1.4,
+            9.98
+          ],
+          "to": [
+            1.4,
+            12.17
+          ],
+          "name_uk": "західна стіна K03–K05"
+        },
+        {
+          "id": "SP3",
+          "from": [
+            1.4,
+            12.17
+          ],
+          "to": [
+            2.47,
+            12.89
+          ],
+          "name_uk": "скіс K06"
+        },
+        {
+          "id": "SP4",
+          "from": [
+            2.47,
+            12.89
+          ],
+          "to": [
+            2.84,
+            12.89
+          ],
+          "name_uk": "північна стіна до вікна OB1"
+        },
+        {
+          "id": "SP5",
+          "from": [
+            3.74,
+            12.89
+          ],
+          "to": [
+            4.13,
+            12.89
+          ],
+          "name_uk": "північна стіна над ПММ K08"
+        }
+      ]
+    }
+  },
+  "furniture": [
+    {
+      "id": "K01",
+      "kind": "oven_tower",
+      "back": "S",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        2.0,
+        9.38
+      ],
+      "size": [
+        0.6,
+        0.6,
+        2.0
+      ],
+      "name_uk": "Висока колона 60: духова шафа + мікрохвильова піч",
+      "ifc_class": "IfcElectricAppliance",
+      "services": [
+        "power_oven",
+        "socket"
+      ],
+      "note": "духова шафа низ на 0,80 м, мікрохвильова над нею на 1,40 м; вентиляційні щілини в цоколі та вгорі"
+    },
+    {
+      "id": "K02",
+      "kind": "fridge",
+      "back": "S",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        2.6,
+        9.38
+      ],
+      "size": [
+        0.6,
+        0.6,
+        2.0
+      ],
+      "name_uk": "Холодильник у високій колоні 60",
+      "ifc_class": "IfcElectricAppliance",
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "K03",
+      "kind": "worktop",
+      "back": "W",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        1.4,
+        9.98
+      ],
+      "size": [
+        0.6,
+        0.59,
+        0.9
+      ],
+      "name_uk": "Тумба зі стільницею 59 (біля варильної)",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "K04",
+      "kind": "hob",
+      "back": "W",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        1.4,
+        10.57
+      ],
+      "size": [
+        0.6,
+        0.6,
+        0.9
+      ],
+      "name_uk": "Індукційна варильна поверхня 60, шухляди під нею",
+      "ifc_class": "IfcElectricAppliance",
+      "services": [
+        "power_hob",
+        "socket"
+      ],
+      "note": "рециркуляційна витяжка над варильною поверхнею"
+    },
+    {
+      "id": "K05",
+      "kind": "worktop",
+      "back": "W",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        1.4,
+        11.17
+      ],
+      "size": [
+        0.6,
+        0.6,
+        0.9
+      ],
+      "name_uk": "Тумба зі стільницею 60 (основна робоча зона)",
+      "ifc_class": "IfcFurniture",
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "K06",
+      "kind": "worktop",
+      "back": "W",
+      "room": 123,
+      "zone": "kitchen",
+      "name_uk": "Кутова стільниця на скосі 1,29 м (основна робоча зона)",
+      "ifc_class": "IfcFurniture",
+      "polygon": [
+        [
+          1.4,
+          11.77
+        ],
+        [
+          2.0,
+          11.77
+        ],
+        [
+          2.0,
+          11.851
+        ],
+        [
+          2.652,
+          12.29
+        ],
+        [
+          2.88,
+          12.29
+        ],
+        [
+          2.88,
+          12.89
+        ],
+        [
+          2.47,
+          12.89
+        ],
+        [
+          1.4,
+          12.17
+        ]
+      ],
+      "size": [
+        null,
+        null,
+        0.9
+      ],
+      "services": [
+        "socket"
+      ],
+      "note": "індивідуальний корпус і стільниця; стики зі стінами під кутами 124° та 146°"
+    },
+    {
+      "id": "K07",
+      "kind": "sink",
+      "back": "N",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        2.88,
+        12.29
+      ],
+      "size": [
+        0.8,
+        0.6,
+        0.9
+      ],
+      "name_uk": "Мийка в тумбі 80",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain"
+      ],
+      "note": "на існуючому виводі під OB1 (глухе вікно)"
+    },
+    {
+      "id": "K08",
+      "kind": "dishwasher",
+      "back": "N",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        3.68,
+        12.29
+      ],
+      "size": [
+        0.45,
+        0.6,
+        0.9
+      ],
+      "name_uk": "Посудомийна машина 45, вбудована",
+      "ifc_class": "IfcElectricAppliance",
+      "services": [
+        "water",
+        "drain",
+        "socket"
+      ]
+    },
+    {
+      "id": "H01",
+      "kind": "closet",
+      "back": "N",
+      "room": 123,
+      "zone": "hall",
+      "at": [
+        1.4,
+        9.28
+      ],
+      "size": [
+        0.6,
+        0.6,
+        2.4
+      ],
+      "name_uk": "Вбудована шафа для верхнього одягу 60×60, двері з передпокою",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "H02",
+      "kind": "wardrobe",
+      "back": "S",
+      "room": 123,
+      "zone": "hall",
+      "at": [
+        3.32,
+        8.05
+      ],
+      "size": [
+        1.94,
+        0.6,
+        2.4
+      ],
+      "name_uk": "Шафа-купе в передпокої 194×60",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "L01",
+      "kind": "table",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        5.7,
+        11.2
+      ],
+      "size": [
+        1.6,
+        0.9,
+        0.75
+      ],
+      "name_uk": "Обідній стіл 160×90 під вікном OB3",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L02",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        5.78,
+        10.7
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L03",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        6.275,
+        10.7
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L04",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        6.77,
+        10.7
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L05",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        5.78,
+        12.15
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L06",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        6.275,
+        12.15
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L07",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        6.77,
+        12.15
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L09",
+      "kind": "sofa",
+      "back": "W",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        5.4,
+        7.5
+      ],
+      "size": [
+        1.8,
+        2.5,
+        0.85
+      ],
+      "l_shape": {
+        "seat": 0.95,
+        "end": "start"
+      },
+      "name_uk": "Кутовий диван 250×180, шезлонг на півдні",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "L10",
+      "kind": "coffee_table",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        6.8,
+        8.75
+      ],
+      "size": [
+        0.5,
+        1.1,
+        0.4
+      ],
+      "name_uk": "Журнальний столик",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L11",
+      "kind": "tv_unit",
+      "back": "E",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        8.56,
+        8.75
+      ],
+      "size": [
+        0.4,
+        1.2,
+        0.5
+      ],
+      "name_uk": "ТВ-тумба 120×40, телевізор на стіні",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket",
+        "tv"
+      ]
+    },
+    {
+      "id": "L12",
+      "kind": "desk",
+      "back": "E",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        8.36,
+        11.35
+      ],
+      "size": [
+        0.6,
+        1.4,
+        0.75
+      ],
+      "name_uk": "Робочий стіл 140×60 у кутку біля OB3",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket",
+        "tv"
+      ]
+    },
+    {
+      "id": "L13",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        7.8,
+        11.825
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Робоче крісло",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "B11",
+      "kind": "bath",
+      "room": 4,
+      "at": [
+        0.4,
+        4.96
+      ],
+      "size": [
+        1.7,
+        0.75,
+        0.55
+      ],
+      "panel": "tiled",
+      "name_uk": "Ванна 170×75, екран у плитці з люком ревізії",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain"
+      ]
+    },
+    {
+      "id": "B12",
+      "kind": "basin",
+      "back": "W",
+      "room": 4,
+      "at": [
+        0.4,
+        6.2
+      ],
+      "size": [
+        0.4,
+        0.5,
+        0.85
+      ],
+      "wall_hung": true,
+      "name_uk": "Підвісний умивальник 50×40",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain",
+        "socket"
+      ]
+    },
+    {
+      "id": "B13",
+      "kind": "wc",
+      "back": "N",
+      "room": 4,
+      "at": [
+        0.72,
+        7.4
+      ],
+      "size": [
+        0.36,
+        0.55,
+        0.4
+      ],
+      "wall_hung": true,
+      "name_uk": "Підвісний унітаз (інсталяція в стіні вже є)",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain"
+      ]
+    },
+    {
+      "id": "B14",
+      "kind": "washer",
+      "room": 4,
+      "at": [
+        1.52,
+        7.35
+      ],
+      "size": [
+        0.6,
+        0.6,
+        1.75
+      ],
+      "stacked": true,
+      "name_uk": "Пральна машина 60×60 + сушильна машина зверху (колона)",
+      "ifc_class": "IfcElectricAppliance",
+      "services": [
+        "water",
+        "drain",
+        "socket"
+      ],
+      "note": "з'єднувальний комплект пральна/сушильна; 2 розетки IP44; підводка в коробі вздовж західної та північної стін"
+    },
+    {
+      "id": "B21",
+      "kind": "basin",
+      "back": "S",
+      "room": 9,
+      "at": [
+        6.25,
+        5.98
+      ],
+      "size": [
+        0.5,
+        0.4,
+        0.85
+      ],
+      "wall_hung": true,
+      "name_uk": "Підвісний умивальник 50×40 прямо на стіні",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain",
+        "socket"
+      ]
+    },
+    {
+      "id": "B22",
+      "kind": "wc",
+      "back": "S",
+      "room": 9,
+      "at": [
+        6.97,
+        6.18
+      ],
+      "size": [
+        0.36,
+        0.55,
+        0.4
+      ],
+      "wall_hung": true,
+      "name_uk": "Підвісний унітаз на інсталяції",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain"
+      ]
+    },
+    {
+      "id": "B26",
+      "kind": "install_box",
+      "back": "S",
+      "room": 9,
+      "at": [
+        6.85,
+        5.98
+      ],
+      "size": [
+        0.99,
+        0.2,
+        1.2
+      ],
+      "flush_u": 0.3,
+      "name_uk": "Короб ГКЛ h 1,20 з інсталяцією WC, у плитці",
+      "ifc_class": "IfcFurniture",
+      "note": "каналізація Ø110 від WC і умивальника до SH_san у коробі"
+    },
+    {
+      "id": "B27",
+      "kind": "install_box",
+      "back": "S",
+      "room": 9,
+      "at": [
+        7.84,
+        5.98
+      ],
+      "size": [
+        0.8,
+        0.45,
+        2.4
+      ],
+      "name_uk": "Забудова ГКЛ у плитці до стелі (труба Ø110 до SH_san)",
+      "ifc_class": "IfcFurniture",
+      "note": "південна опора рами душу"
+    },
+    {
+      "id": "B23",
+      "kind": "shower_tray",
+      "room": 9,
+      "at": [
+        8.06,
+        6.43
+      ],
+      "size": [
+        0.9,
+        0.9,
+        0.03
+      ],
+      "tiled": true,
+      "name_uk": "Піддон під плитку 90×90 з лінійним трапом, урівень з підлогою",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain"
+      ]
+    },
+    {
+      "id": "B24",
+      "kind": "glass",
+      "room": 9,
+      "at": [
+        8.05,
+        6.43
+      ],
+      "size": [
+        0.02,
+        0.45,
+        2.0
+      ],
+      "hinge": "S",
+      "opens": "W",
+      "name_uk": "Душова рама 90: дверцята 45, відкриваються назовні",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "B25",
+      "kind": "glass",
+      "room": 9,
+      "at": [
+        8.05,
+        6.88
+      ],
+      "size": [
+        0.02,
+        0.45,
+        2.0
+      ],
+      "hinge": "N",
+      "opens": "W",
+      "name_uk": "Душова рама 90: дверцята 45, відкриваються назовні",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "S11",
+      "kind": "bed",
+      "room": 5,
+      "at": [
+        0.4,
+        1.9
+      ],
+      "size": [
+        2.0,
+        1.6,
+        0.5
+      ],
+      "name_uk": "Ліжко 160×200",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S12",
+      "kind": "nightstand",
+      "room": 5,
+      "at": [
+        0.4,
+        1.45
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S13",
+      "kind": "nightstand",
+      "room": 5,
+      "at": [
+        0.4,
+        3.55
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S14",
+      "kind": "wardrobe",
+      "room": 5,
+      "at": [
+        0.4,
+        4.26
+      ],
+      "size": [
+        2.0,
+        0.6,
+        2.4
+      ],
+      "name_uk": "Шафа 200×60",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S15",
+      "kind": "desk",
+      "room": 5,
+      "at": [
+        1.25,
+        0.4
+      ],
+      "size": [
+        1.2,
+        0.6,
+        0.75
+      ],
+      "name_uk": "Письмовий стіл 120×60",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S21",
+      "kind": "bed",
+      "room": 6,
+      "at": [
+        3.47,
+        1.9
+      ],
+      "size": [
+        2.0,
+        1.6,
+        0.5
+      ],
+      "name_uk": "Ліжко 160×200",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S22",
+      "kind": "nightstand",
+      "room": 6,
+      "at": [
+        3.47,
+        1.45
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S23",
+      "kind": "nightstand",
+      "room": 6,
+      "at": [
+        3.47,
+        3.55
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S24",
+      "kind": "wardrobe",
+      "room": 6,
+      "at": [
+        4.45,
+        4.26
+      ],
+      "size": [
+        1.8,
+        0.6,
+        2.4
+      ],
+      "name_uk": "Шафа 180×60",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S31",
+      "kind": "bed",
+      "room": 7,
+      "at": [
+        6.96,
+        2.8
+      ],
+      "size": [
+        2.0,
+        1.6,
+        0.5
+      ],
+      "name_uk": "Ліжко 160×200",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S32",
+      "kind": "nightstand",
+      "room": 7,
+      "at": [
+        8.56,
+        2.35
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S33",
+      "kind": "nightstand",
+      "room": 7,
+      "at": [
+        8.56,
+        4.45
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S34",
+      "kind": "wardrobe",
+      "room": 7,
+      "at": [
+        7.36,
+        5.28
+      ],
+      "size": [
+        1.6,
+        0.6,
+        2.4
+      ],
+      "name_uk": "Шафа 160×60",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S35",
+      "kind": "desk",
+      "room": 7,
+      "at": [
+        6.7,
+        1.34
+      ],
+      "size": [
+        1.2,
+        0.6,
+        0.75
+      ],
+      "name_uk": "Письмовий стіл 120×60",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "R01",
+      "kind": "shelving",
+      "room": 8,
+      "at": [
+        4.76,
+        5.98
+      ],
+      "size": [
+        0.4,
+        1.97,
+        2.2
+      ],
+      "name_uk": "Стелаж 40 см",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "R02",
+      "kind": "shelving",
+      "room": 8,
+      "at": [
+        3.42,
+        7.55
+      ],
+      "size": [
+        1.34,
+        0.4,
+        2.2
+      ],
+      "name_uk": "Стелаж 40 см",
+      "ifc_class": "IfcFurniture"
+    }
+  ]
 }

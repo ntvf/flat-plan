@@ -1,3 +1,5 @@
 numpy>=2,<3
 Pillow>=12,<13
 PyYAML>=6,<7
+matplotlib>=3.8,<4
+openpyxl>=3.1,<4

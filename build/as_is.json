@@ -59,6 +59,7 @@
       "id": 5,
       "name": "Sypialnia 1",
       "name_uk": "Спальня 1",
+      "name_ru": "Спальня 1",
       "function": "bedroom",
       "clear": [
         2.97,
@@ -87,6 +88,7 @@
       "id": 6,
       "name": "Sypialnia 2",
       "name_uk": "Спальня 2",
+      "name_ru": "Спальня 2",
       "function": "bedroom",
       "clear": [
         2.78,
@@ -123,6 +125,7 @@
       "id": 7,
       "name": "Sypialnia 3",
       "name_uk": "Спальня 3",
+      "name_ru": "Спальня 3",
       "function": "bedroom",
       "clear": [
         2.61,
@@ -151,6 +154,7 @@
       "id": 4,
       "name": "Łazienka",
       "name_uk": "Ванна кімната",
+      "name_ru": "Ванная",
       "function": "bathroom",
       "clear": [
         1.92,
@@ -183,6 +187,7 @@
       "id": 8,
       "name": "Schowek",
       "name_uk": "Комора",
+      "name_ru": "Кладовая",
       "function": "storage",
       "clear": [
         1.74,
@@ -229,6 +234,7 @@
       "id": 123,
       "name": "Hall / Kuchnia / Salon (otwarta przestrzeń)",
       "name_uk": "Хол / Кухня / Вітальня",
+      "name_ru": "Холл / Кухня / Гостиная",
       "function": "open_living",
       "label_edges": true,
       "subtract": [
@@ -762,9 +768,9 @@
       ],
       "swing": [
         "start",
-        "+"
+        "-"
       ],
-      "note": "wejście / entrance; south edge touches the outer-wall step line"
+      "note": "wejście / entrance; opens outward from the flat; south edge touches the outer-wall step line"
     },
     {
       "id": "D4",

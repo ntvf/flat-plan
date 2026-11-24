@@ -50,6 +50,7 @@ rooms:
   - id: 5
     name: Sypialnia 1
     name_uk: Спальня 1
+    name_ru: Спальня 1
     function: bedroom
     clear: [2.97, 4.46]
     polygon: [[0.40, 0.40], [3.37, 0.40], [3.37, 4.86], [0.40, 4.86]]
@@ -57,6 +58,7 @@ rooms:
   - id: 6
     name: Sypialnia 2
     name_uk: Спальня 2
+    name_ru: Спальня 2
     function: bedroom
     clear: [2.78, 4.46]          # 2.52 wide over the southern 0.94
     polygon: [[3.47, 0.40], [5.99, 0.40], [5.99, 1.34], [6.25, 1.34], [6.25, 4.86], [3.47, 4.86]]
@@ -64,6 +66,7 @@ rooms:
   - id: 7
     name: Sypialnia 3
     name_uk: Спальня 3
+    name_ru: Спальня 3
     function: bedroom
     clear: [2.61, 4.54]
     polygon: [[6.35, 1.34], [8.96, 1.34], [8.96, 5.88], [6.35, 5.88]]
@@ -71,6 +74,7 @@ rooms:
   - id: 4
     name: Łazienka
     name_uk: Ванна кімната
+    name_ru: Ванная
     function: bathroom
     # Depth fitted to the survey: the north wall's south face reads 7.95,
     # which scores better on the overlay than the 2.92 first assumed.
@@ -82,6 +86,7 @@ rooms:
   - id: 8
     name: Schowek
     name_uk: Комора
+    name_ru: Кладовая
     function: storage
     clear: [1.74, 1.97]
     # 0.10 plaster-panel walls; corridor is 0.90 west and 1.02 south.
@@ -99,6 +104,7 @@ rooms:
   - id: 123
     name: Hall / Kuchnia / Salon (otwarta przestrzeń)
     name_uk: Хол / Кухня / Вітальня
+    name_ru: Холл / Кухня / Гостиная
     function: open_living
     label_edges: true
     subtract: [8]
@@ -316,7 +322,7 @@ floor_assemblies:
 # Swing directions are a reasonable reading of the survey, not surveyed -
 # confirm on site before ordering doors.
 doors:
-  - { id: entry, at: [1.00, 8.28], size: [0.40, 0.90], swing: [start, "+"], note: "wejście / entrance; south edge touches the outer-wall step line" }
+  - { id: entry, at: [1.00, 8.28], size: [0.40, 0.90], swing: [start, "-"], note: "wejście / entrance; opens outward from the flat; south edge touches the outer-wall step line" }
   - { id: D4, at: [2.32, 6.005], size: [0.10, 0.90], has_leaf: false, swing: [start, "-"], note: "centred in the bathroom east wall; unfilled opening in as-is state" }
   - { id: D8, at: [3.32, 6.515], size: [0.10, 0.90], has_leaf: false, swing: [start, "-"], note: "centred in the storage west wall; unfilled opening in as-is state" }
   - { id: D5, at: [2.47, 4.86], size: [0.90, 0.10], has_leaf: false, swing: [start, "-"], note: "against the 5/6 partition; unfilled opening in as-is state" }

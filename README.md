@@ -38,9 +38,31 @@ authoritative model data.
   A3 portrait @ 1:50 with the Polish titleblock in `data/titleblocks/A3-PL.svg`.
 - `scripts/render_textured_views.py` — renders three fixed target-state interior
   views and saves the prepared Blender scene.
-- `scripts/sketch_bathroom_layouts.py` — generates six comparative fixture-layout
-  concepts for the existing and proposed bathrooms, with all proposed water
+- `scripts/sketch_bathroom_layouts.py` — generates the working balanced fixture
+  layout for the existing and proposed bathrooms, with all proposed water
   and waste routes kept out of the floor in accessible wall/plinth boxes.
+- `scripts/sketch_kitchen_layouts.py` — kitchen and furniture options for the
+  open hall/kitchen/living space, drawn over the resolved target model. Prep
+  lengths, sink/hob/fridge landings, work-triangle legs, aisle widths and
+  service-route lengths are computed from the module layout; overlaps and
+  keep-clear zones (entrance swing, corridor mouth, OB2) are asserted.
+- `scripts/make_room_sheets.py` with `scripts/render_room_views.py` and
+  `scripts/room_views.py` — Ukrainian per-room contractor sheets (`make rooms`):
+  for each room a dimensioned furnished plan (1:20–1:50), a schedule of
+  furniture and fixtures with their service connections, notes, and a
+  top-down and a cut-away (walls at 1.25 m) Blender render from the target IFC.
+  Furniture comes from the `furniture:` list in `data/target.yaml` and is
+  checked for overlaps and room containment. Renders show the modelled
+  finishes (tile/oak floors, bathroom tiling, kitchen splash-back).
+- `scripts/finishes.py` with `scripts/finish_sheets.py` — finish setting-out
+  from the `finishes:` section of `data/target.yaml`: floor zones (tile vs
+  engineered oak), bathroom wall tiling with feature walls and the kitchen
+  splash-back. Joint origins are chosen to maximise the smallest cut; areas,
+  piece counts and order quantities (with waste) are computed from geometry.
+  `python3 scripts/finishes.py data/target.yaml` prints the quantities.
+- `scripts/make_tender_docs.py` — Russian tender documents (`make tender`): an
+  A3 1:50 PDF of both states with room edge dimensions, dimension chains and
+  areas, plus an XLSX work list with quantities computed from the models.
 
 ## Rebuild after any YAML edit
 
@@ -78,6 +100,7 @@ Generate the target visualisations and bathroom layout studies separately:
 ```sh
 /snap/bin/blender -b --python scripts/render_textured_views.py -- exports/target.ifc exports/renders/target
 python3 scripts/sketch_bathroom_layouts.py
+python3 scripts/sketch_kitchen_layouts.py
 ```
 
 ## Outputs
@@ -93,12 +116,26 @@ python3 scripts/sketch_bathroom_layouts.py
   layout alongside.
 - `exports/drawings/target/sheets/A01 - RZUT - STAN PROJEKTOWANY.pdf` — the
   separate target-state A3 @ 1:50 plan.
+- `exports/rooms/rooms_uk.pdf` — 25 A4 landscape pages for the contractor:
+  a plan page and a schedule/render page for the overview, kitchen and
+  entrance (G1), living/dining, both bathrooms, three bedrooms and the storage
+  room, then finish pages (floor zones, tile setting-out, bathroom wall
+  elevations, splash-back); renders are under `exports/rooms/renders/`.
+- `exports/tender/plans_as_is_target.pdf` — Russian A3 @ 1:50 as-is and
+  target plans with every room edge dimensioned, areas, and an area table.
+- `exports/tender/work_list_ru.xlsx` — Russian work list: rough quantities,
+  empty price column, formula sum column and grand total, plus an areas sheet.
 - `exports/renders/target/` — three fixed textured PNG views and the generated
   Blender scene.
-- `exports/concepts/bathroom_layouts/` — six fixture-layout studies and a
-  comparison overview, showing boxed surface pipe routes to the surveyed
-  connection points and `SH_san`; these have not yet been adopted into
-  `data/target.yaml`.
+- `exports/concepts/bathroom_layouts/balanced.png` — the working fixture-layout
+  study, showing boxed surface pipe routes to the surveyed
+  connection points and `SH_san`; the fixtures are adopted into
+  `data/target.yaml` as `furniture:` items (pipe routes are not yet modeled).
+- [`exports/concepts/kitchen_layouts/overview.png`](exports/concepts/kitchen_layouts/overview.png)
+  compares kitchen, dining and living layouts A–H. G1 is adopted into
+  `data/target.yaml`: a NW U-kitchen behind a new 1.20 m entrance screen with a
+  60 cm coat closet, the sink on the existing NW connection, and 170 + 60 cm of
+  straight prep.
 
 ## Status
 
@@ -117,8 +154,8 @@ door assumption is an 0.80 m leaf opening outward into the corridor. The
 living-area AC moves to the new north partition with backing requirements and
 a modeled extension of the retained OB3 line set above the bathroom ceiling.
 
-Six bathroom fixture-layout concepts have been generated, but no option has
-been selected or promoted into the target model. Bathroom fixtures, hot/cold
+The balanced bathroom fixture-layout concept is being refined iteratively and
+has not been promoted into the target model. Bathroom fixtures, hot/cold
 water, sanitary drainage with verified falls and inverts, ventilation,
 penetrations, waterproofing, electrical changes, and finish zones are therefore
 not yet modeled.

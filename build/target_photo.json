@@ -1,0 +1,2350 @@
+{
+  "meta": {
+    "title": "Mieszkanie - wariant ze szkicu",
+    "title_en": "Flat - sketch layout variant",
+    "state": "target",
+    "sheet_name": "RZUT - STAN PROJEKTOWANY",
+    "sheet_description": "Projekt mieszkania - rzut kondygnacji",
+    "source_survey": "7106fea6-ce4f-4979-8eac-ebf5f4a6972b.jfif",
+    "stated_total_area": 95.0,
+    "ceiling_height": 2.7,
+    "notes_uk": {
+      "00_flat": [
+        "Варіант за ескізом власника: без екрана біля входу, острів зі столом, кутовий диван у північно-східному куті.",
+        "Ванні кімнати — як в основному варіанті.",
+        "Меблі в спальнях і вітальні орієнтовні: показують розстановку для розеток і світла."
+      ],
+      "01_kitchen": [
+        "Західна стіна: холодильник, колона духова + мікрохвильова, тумба 40, варильна 60, кут на скосі.",
+        "Мийка 80 і ПММ 45 на північній стіні, на існуючому виводі під OB1.",
+        "Острів 120×70 (робоча зона, розетка в підлозі/торці); стіл 180×90 примикає до острова.",
+        "Прохід між кухнею й островом ≈ 1,08 м. Бойлер 100 л демонтується; нове місце уточнити.",
+        "Кутовий корпус і стільниця на скосі — індивідуальний розмір, обміряти на об'єкті."
+      ],
+      "02_living": [
+        "Меблі орієнтовні. Кутовий диван 250×180 спинкою до вікон, ТВ на стіні ванної 2.",
+        "Робоче місце 120×60 поруч із шафою в передпокої. Кондиціонер — над ТВ."
+      ]
+    }
+  },
+  "thickness": {
+    "exterior": 0.4,
+    "partition": 0.1
+  },
+  "outline": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      6.09,
+      0.0
+    ],
+    [
+      6.09,
+      0.94
+    ],
+    [
+      9.43,
+      0.94
+    ],
+    [
+      9.43,
+      13.29
+    ],
+    [
+      2.35,
+      13.29
+    ],
+    [
+      1.0,
+      12.38
+    ],
+    [
+      1.0,
+      8.28
+    ],
+    [
+      0.0,
+      8.28
+    ]
+  ],
+  "outline_thickness": {
+    "3": 0.47
+  },
+  "rooms": [
+    {
+      "id": 5,
+      "name": "Sypialnia 1",
+      "name_uk": "Спальня 1",
+      "name_ru": "Спальня 1",
+      "function": "bedroom",
+      "clear": [
+        2.97,
+        4.46
+      ],
+      "polygon": [
+        [
+          0.4,
+          0.4
+        ],
+        [
+          3.37,
+          0.4
+        ],
+        [
+          3.37,
+          4.86
+        ],
+        [
+          0.4,
+          4.86
+        ]
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Sypialnia 2",
+      "name_uk": "Спальня 2",
+      "name_ru": "Спальня 2",
+      "function": "bedroom",
+      "clear": [
+        2.78,
+        4.46
+      ],
+      "polygon": [
+        [
+          3.47,
+          0.4
+        ],
+        [
+          5.99,
+          0.4
+        ],
+        [
+          5.99,
+          1.34
+        ],
+        [
+          6.25,
+          1.34
+        ],
+        [
+          6.25,
+          4.86
+        ],
+        [
+          3.47,
+          4.86
+        ]
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Sypialnia 3",
+      "name_uk": "Спальня 3",
+      "name_ru": "Спальня 3",
+      "function": "bedroom",
+      "clear": [
+        2.61,
+        4.54
+      ],
+      "polygon": [
+        [
+          6.35,
+          1.34
+        ],
+        [
+          8.96,
+          1.34
+        ],
+        [
+          8.96,
+          5.88
+        ],
+        [
+          6.35,
+          5.88
+        ]
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Łazienka",
+      "name_uk": "Ванна кімната",
+      "name_ru": "Ванная",
+      "function": "bathroom",
+      "clear": [
+        1.92,
+        2.99
+      ],
+      "polygon": [
+        [
+          0.4,
+          4.96
+        ],
+        [
+          2.32,
+          4.96
+        ],
+        [
+          2.32,
+          7.95
+        ],
+        [
+          0.4,
+          7.95
+        ]
+      ],
+      "label_at": [
+        1.36,
+        5.6
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Schowek",
+      "name_uk": "Комора",
+      "name_ru": "Кладовая",
+      "function": "storage",
+      "clear": [
+        1.74,
+        1.97
+      ],
+      "polygon": [
+        [
+          3.42,
+          5.98
+        ],
+        [
+          5.16,
+          5.98
+        ],
+        [
+          5.16,
+          7.95
+        ],
+        [
+          3.42,
+          7.95
+        ]
+      ],
+      "footprint": [
+        [
+          3.32,
+          5.88
+        ],
+        [
+          5.26,
+          5.88
+        ],
+        [
+          5.26,
+          8.05
+        ],
+        [
+          3.32,
+          8.05
+        ]
+      ]
+    },
+    {
+      "id": 123,
+      "name": "Hall / Kuchnia / Salon (otwarta przestrzeń)",
+      "name_uk": "Хол / Кухня / Вітальня",
+      "name_ru": "Холл / Кухня / Гостиная",
+      "function": "open_living",
+      "label_edges": true,
+      "subtract": [
+        8,
+        9
+      ],
+      "polygon": [
+        [
+          1.4,
+          8.05
+        ],
+        [
+          1.4,
+          12.17
+        ],
+        [
+          2.47,
+          12.89
+        ],
+        [
+          8.96,
+          12.89
+        ],
+        [
+          8.96,
+          8.12
+        ],
+        [
+          8.64,
+          8.12
+        ],
+        [
+          8.64,
+          7.33
+        ],
+        [
+          8.96,
+          7.33
+        ],
+        [
+          8.96,
+          6.37
+        ],
+        [
+          8.64,
+          6.37
+        ],
+        [
+          8.64,
+          5.98
+        ],
+        [
+          6.34,
+          5.98
+        ],
+        [
+          6.34,
+          4.96
+        ],
+        [
+          2.42,
+          4.96
+        ],
+        [
+          2.42,
+          8.05
+        ]
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Łazienka 2",
+      "name_uk": "Ванна кімната 2",
+      "name_ru": "Ванная 2",
+      "function": "bathroom",
+      "renovation_status": "new",
+      "clear": [
+        3.38,
+        1.35
+      ],
+      "label_at": [
+        7.1,
+        6.72
+      ],
+      "polygon": [
+        [
+          5.26,
+          5.98
+        ],
+        [
+          8.64,
+          5.98
+        ],
+        [
+          8.64,
+          6.37
+        ],
+        [
+          8.96,
+          6.37
+        ],
+        [
+          8.96,
+          7.33
+        ],
+        [
+          8.64,
+          7.33
+        ],
+        [
+          5.26,
+          7.33
+        ]
+      ],
+      "footprint": [
+        [
+          5.26,
+          5.88
+        ],
+        [
+          6.34,
+          5.88
+        ],
+        [
+          6.34,
+          5.98
+        ],
+        [
+          8.64,
+          5.98
+        ],
+        [
+          8.64,
+          6.37
+        ],
+        [
+          8.96,
+          6.37
+        ],
+        [
+          8.96,
+          7.33
+        ],
+        [
+          8.64,
+          7.33
+        ],
+        [
+          8.64,
+          7.455
+        ],
+        [
+          5.26,
+          7.455
+        ]
+      ]
+    }
+  ],
+  "walls": [
+    {
+      "id": "W_bath_e",
+      "at": [
+        2.32,
+        4.96
+      ],
+      "size": [
+        0.1,
+        2.99
+      ],
+      "note": "bathroom east wall, holds D4"
+    },
+    {
+      "id": "W_store_w",
+      "at": [
+        3.32,
+        5.88
+      ],
+      "size": [
+        0.1,
+        2.17
+      ]
+    },
+    {
+      "id": "W_store_e",
+      "at": [
+        5.16,
+        5.88
+      ],
+      "size": [
+        0.1,
+        2.17
+      ]
+    },
+    {
+      "id": "W_store_n",
+      "at": [
+        3.32,
+        7.95
+      ],
+      "size": [
+        1.94,
+        0.1
+      ]
+    },
+    {
+      "id": "W_store_s",
+      "at": [
+        3.32,
+        5.88
+      ],
+      "size": [
+        1.94,
+        0.1
+      ]
+    },
+    {
+      "id": "W_258",
+      "at": [
+        6.25,
+        5.88
+      ],
+      "size": [
+        2.71,
+        0.1
+      ],
+      "note": "overlaps the room 7 perpendicular wall to form a closed corner; 2.30 of its north face is exposed"
+    },
+    {
+      "id": "W_bath_n",
+      "at": [
+        1.4,
+        7.95
+      ],
+      "size": [
+        1.02,
+        0.1
+      ],
+      "note": "bathroom north wall"
+    },
+    {
+      "id": "W_bath2_n",
+      "at": [
+        5.26,
+        7.33
+      ],
+      "size": [
+        3.38,
+        0.125
+      ],
+      "material": "plasterboard",
+      "renovation_status": "new",
+      "note": "0.125 m north bathroom wall from storage to ventilation riser"
+    },
+    {
+      "id": "W_bath2_door",
+      "at": [
+        5.26,
+        5.88
+      ],
+      "size": [
+        0.99,
+        0.1
+      ],
+      "material": "plasterboard",
+      "renovation_status": "new",
+      "note": "bathroom closure from storage to the room 7 wall face"
+    }
+  ],
+  "columns": [
+    {
+      "id": "C_store",
+      "at": [
+        3.99,
+        5.88
+      ],
+      "size": [
+        0.6,
+        0.25
+      ]
+    }
+  ],
+  "shafts": [
+    {
+      "id": "SH_vent",
+      "at": [
+        8.64,
+        7.33
+      ],
+      "size": [
+        0.32,
+        0.79
+      ],
+      "service": "wentylacja / ventilation"
+    },
+    {
+      "id": "SH_san",
+      "at": [
+        8.64,
+        5.98
+      ],
+      "size": [
+        0.32,
+        0.39
+      ],
+      "service": "kanalizacja / drainage"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "AC_living",
+      "name": "Klimatyzator ścienny",
+      "ifc_class": "IfcUnitaryEquipment",
+      "at": [
+        7.09,
+        7.455,
+        2.33
+      ],
+      "size": [
+        0.8,
+        0.22,
+        0.3
+      ],
+      "host": "W_bath2_n",
+      "room": 123,
+      "faces": "open_living",
+      "mounting": "wall",
+      "measured": {
+        "wall_position": "centre of exposed 2.30 m wall face",
+        "top_below_ceiling": 0.07
+      },
+      "note": "relocated on the as-is pipe projection x=7.49 to the open-living face of the new 0.125 m plasterboard wall",
+      "renovation_status": "relocated",
+      "support": {
+        "backing": "18 mm plywood or OSB between reinforced studs",
+        "bracket_load": "verify against selected unit"
+      },
+      "connections": {
+        "refrigerant_and_control": "reuse existing OB3 line plus bathroom-ceiling extension",
+        "condensate": "separate gravity route to SH_san; final fall to be designed"
+      }
+    }
+  ],
+  "wall_finishes": [],
+  "service_routes": [
+    {
+      "id": "AC_living_lines",
+      "name": "Przewody klimatyzacji do OB3",
+      "ifc_class": "IfcPipeSegment",
+      "system": "refrigerant_and_condensate_bundle",
+      "nominal_diameter": 0.04,
+      "installation": "mixed",
+      "destination": "OB3",
+      "points": [
+        [
+          7.49,
+          5.93,
+          2.48
+        ],
+        [
+          7.49,
+          5.93,
+          0.05
+        ],
+        [
+          7.49,
+          6.08,
+          0.05
+        ],
+        [
+          7.49,
+          12.68,
+          0.05
+        ],
+        [
+          6.765,
+          12.68,
+          0.05
+        ],
+        [
+          6.765,
+          12.89,
+          0.05
+        ]
+      ],
+      "segments": [
+        {
+          "from": 0,
+          "to": 1,
+          "installation": "concealed_in_wall",
+          "host": "W_258"
+        },
+        {
+          "from": 1,
+          "to": 5,
+          "installation": "in_floor"
+        }
+      ],
+      "note": "existing concealed line set retained from OB3 to the former AC connection",
+      "renovation_status": "retained_and_reused"
+    },
+    {
+      "id": "AC_living_extension_bath_ceiling",
+      "name": "Przedłużenie przewodów nad sufitem łazienki 2",
+      "ifc_class": "IfcPipeSegment",
+      "system": "refrigerant_and_control",
+      "nominal_diameter": 0.04,
+      "installation": "mixed",
+      "source": "AC_living_lines",
+      "destination": "AC_living",
+      "renovation_status": "new",
+      "points": [
+        [
+          7.49,
+          5.93,
+          2.48
+        ],
+        [
+          7.49,
+          5.93,
+          2.63
+        ],
+        [
+          7.49,
+          7.3925,
+          2.63
+        ],
+        [
+          7.49,
+          7.3925,
+          2.48
+        ]
+      ],
+      "segments": [
+        {
+          "from": 0,
+          "to": 1,
+          "installation": "concealed_in_wall",
+          "host": "W_258"
+        },
+        {
+          "from": 1,
+          "to": 2,
+          "installation": "above_bathroom_ceiling",
+          "room": 9
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "installation": "concealed_in_wall",
+          "host": "W_bath2_n"
+        }
+      ],
+      "note": "straight extension on the as-is x=7.49 projection; brazed joint accessible above bathroom ceiling; condensate routed separately to SH_san"
+    }
+  ],
+  "service_terminals": [
+    {
+      "id": "B4_BATH_CONNECTION",
+      "name": "Existing bath water and drainage",
+      "at": [
+        0.4,
+        5.46
+      ],
+      "room": 4,
+      "host": "west_wall",
+      "offset_from": "south_wall",
+      "offset": 0.5,
+      "connections": [
+        {
+          "service": "hot_and_cold_water",
+          "height": 0.3,
+          "mounting": "wall"
+        },
+        {
+          "service": "sanitary_drainage",
+          "installation": "in_floor",
+          "invert": "not_surveyed"
+        }
+      ],
+      "plan_label": "BATH W30 / S FLOOR",
+      "label_at": [
+        1.03,
+        5.2
+      ]
+    },
+    {
+      "id": "B4_BASIN_CONNECTION",
+      "name": "Existing basin water and drainage",
+      "at": [
+        0.4,
+        6.455
+      ],
+      "room": 4,
+      "host": "west_wall",
+      "measured": "middle of west wall",
+      "connections": [
+        {
+          "service": "hot_and_cold_water",
+          "height": 0.85,
+          "mounting": "wall"
+        },
+        {
+          "service": "sanitary_drainage",
+          "height": 0.35,
+          "mounting": "wall"
+        }
+      ],
+      "plan_label": "BASIN W85 / S35",
+      "label_at": [
+        0.98,
+        6.78
+      ]
+    },
+    {
+      "id": "B4_WC_DRAIN",
+      "name": "Existing WC drainage",
+      "at": [
+        1.0,
+        7.95
+      ],
+      "room": 4,
+      "host": "north_wall",
+      "offset_from": "west_wall",
+      "offset": 0.6,
+      "connections": [
+        {
+          "service": "sanitary_drainage",
+          "height": "not_surveyed",
+          "mounting": "wall"
+        }
+      ],
+      "plan_label": "WC S / h VERIFY",
+      "label_at": [
+        1.02,
+        7.62
+      ]
+    },
+    {
+      "id": "KITCHEN_SINK_CONNECTION",
+      "name": "Existing kitchen sink water and drainage",
+      "at": [
+        3.29,
+        12.89
+      ],
+      "room": 123,
+      "host": "north_wall_below_OB1",
+      "measured": "under centre of OB1",
+      "connections": [
+        {
+          "service": "hot_and_cold_water",
+          "height": "not_surveyed",
+          "mounting": "wall"
+        },
+        {
+          "service": "sanitary_drainage",
+          "height": "not_surveyed",
+          "mounting": "wall"
+        }
+      ],
+      "plan_label": "KITCHEN W+S / h VERIFY",
+      "label_at": [
+        3.29,
+        12.45
+      ]
+    }
+  ],
+  "floor_assemblies": [
+    {
+      "id": "FLOOR_EXISTING",
+      "status": "existing_finished",
+      "scope": "flat",
+      "layers_top_down": [
+        {
+          "material": "semi_dry_screed",
+          "thickness": 0.05
+        },
+        {
+          "material": "extruded_polyethylene_reported",
+          "thickness": 0.05,
+          "note": "verify exact insulation product/material on site"
+        }
+      ],
+      "total_thickness": 0.1,
+      "note": "finished screed; concealed drainage alterations require coordinated local opening and reinstatement"
+    }
+  ],
+  "doors": [
+    {
+      "id": "entry",
+      "at": [
+        1.0,
+        8.28
+      ],
+      "size": [
+        0.4,
+        0.9
+      ],
+      "swing": [
+        "start",
+        "-"
+      ],
+      "note": "wejście / entrance; opens outward from the flat; south edge touches the outer-wall step line"
+    },
+    {
+      "id": "D4",
+      "at": [
+        2.32,
+        6.005
+      ],
+      "size": [
+        0.1,
+        0.9
+      ],
+      "has_leaf": true,
+      "swing": [
+        "start",
+        "-"
+      ],
+      "note": "centred in the bathroom east wall; unfilled opening in as-is state"
+    },
+    {
+      "id": "D8",
+      "at": [
+        3.32,
+        6.515
+      ],
+      "size": [
+        0.1,
+        0.9
+      ],
+      "has_leaf": true,
+      "swing": [
+        "start",
+        "-"
+      ],
+      "note": "centred in the storage west wall; unfilled opening in as-is state"
+    },
+    {
+      "id": "D5",
+      "at": [
+        2.47,
+        4.86
+      ],
+      "size": [
+        0.9,
+        0.1
+      ],
+      "has_leaf": true,
+      "swing": [
+        "start",
+        "-"
+      ],
+      "note": "against the 5/6 partition; unfilled opening in as-is state"
+    },
+    {
+      "id": "D6",
+      "at": [
+        3.47,
+        4.86
+      ],
+      "size": [
+        0.9,
+        0.1
+      ],
+      "has_leaf": true,
+      "swing": [
+        "end",
+        "-"
+      ],
+      "note": "against the 5/6 partition; unfilled opening in as-is state"
+    },
+    {
+      "id": "D7",
+      "at": [
+        6.25,
+        4.98
+      ],
+      "size": [
+        0.1,
+        0.9
+      ],
+      "has_leaf": true,
+      "swing": [
+        "start",
+        "+"
+      ],
+      "note": "opening ends at the south face of W_258; unfilled opening in as-is state"
+    },
+    {
+      "id": "D9",
+      "at": [
+        5.36,
+        5.88
+      ],
+      "size": [
+        0.8,
+        0.1
+      ],
+      "has_leaf": true,
+      "swing": [
+        "start",
+        "-"
+      ],
+      "renovation_status": "new",
+      "note": "0.80 m bathroom door opening outward into the corridor"
+    }
+  ],
+  "openings": {
+    "doors": [
+      {
+        "room": "entry",
+        "width": 0.9,
+        "note": "drzwi wejściowe / entrance"
+      },
+      {
+        "room": 4,
+        "width": 0.8
+      },
+      {
+        "room": 5,
+        "width": 0.9
+      },
+      {
+        "room": 6,
+        "width": 0.8
+      },
+      {
+        "room": 7,
+        "width": 0.9
+      },
+      {
+        "room": 8,
+        "width": 0.8
+      }
+    ],
+    "windows": [
+      {
+        "room": 5,
+        "width": 1.6,
+        "wall": "south"
+      },
+      {
+        "room": 6,
+        "width": 1.6,
+        "wall": "south"
+      },
+      {
+        "room": 7,
+        "width": 1.6,
+        "wall": "south"
+      }
+    ],
+    "balcony_glazing": [
+      {
+        "width": 1.0
+      },
+      {
+        "width": 1.6
+      },
+      {
+        "width": 1.01
+      }
+    ]
+  },
+  "windows": [
+    {
+      "id": "OK5",
+      "at": [
+        1.05,
+        0.0
+      ],
+      "size": [
+        1.6,
+        0.4
+      ],
+      "sill": 0.9,
+      "head": 2.2,
+      "room": 5
+    },
+    {
+      "id": "OK6",
+      "at": [
+        4.26,
+        0.0
+      ],
+      "size": [
+        1.6,
+        0.4
+      ],
+      "sill": 0.0,
+      "head": 2.2,
+      "room": 6,
+      "note": "full-height south panel of the room 6 corner glazing"
+    },
+    {
+      "id": "DK6",
+      "at": [
+        5.69,
+        0.0
+      ],
+      "size": [
+        0.4,
+        0.79
+      ],
+      "sill": 0.0,
+      "head": 2.2,
+      "room": 6,
+      "ifc_class": "IfcDoor",
+      "note": "door in east return wall, 0.15 before the OK7 corner"
+    },
+    {
+      "id": "OK7",
+      "at": [
+        6.63,
+        0.94
+      ],
+      "size": [
+        1.6,
+        0.4
+      ],
+      "sill": 0.9,
+      "head": 2.2,
+      "room": 7
+    },
+    {
+      "id": "OB1",
+      "at": [
+        2.84,
+        12.89
+      ],
+      "size": [
+        0.9,
+        0.4
+      ],
+      "sill": 0.9,
+      "head": 2.2,
+      "room": 123,
+      "note": "fixed balcony window"
+    },
+    {
+      "id": "OB2",
+      "at": [
+        4.13,
+        12.89
+      ],
+      "size": [
+        1.46,
+        0.4
+      ],
+      "sill": 0.0,
+      "head": 2.2,
+      "room": 123,
+      "ifc_class": "IfcDoor",
+      "note": "drzwi balkonowe / balcony door"
+    },
+    {
+      "id": "OB3",
+      "at": [
+        5.96,
+        12.89
+      ],
+      "size": [
+        1.61,
+        0.4
+      ],
+      "sill": 0.9,
+      "head": 2.2,
+      "room": 123
+    }
+  ],
+  "balcony": {
+    "area": 4.26
+  },
+  "finishes": {
+    "door_head": 2.05,
+    "materials": {
+      "tile_floor": {
+        "kind": "tile",
+        "size": [
+          0.6,
+          0.6
+        ],
+        "waste": 0.1,
+        "colour": "#d9c9ac",
+        "name_uk": "Керамограніт 60×60, бежевий з ефектом подряпин"
+      },
+      "tile_wall": {
+        "kind": "tile",
+        "size": [
+          0.6,
+          0.3
+        ],
+        "waste": 0.1,
+        "colour": "#e4d7bf",
+        "name_uk": "Плитка настінна 30×60 горизонтально, бежева з ефектом подряпин"
+      },
+      "tile_leaves": {
+        "kind": "tile",
+        "size": [
+          1.2,
+          0.6
+        ],
+        "waste": 0.15,
+        "colour": "#6f9a5a",
+        "name_uk": "Декор 120×60 «великі зелені листки», горизонтально, різати по ширині стіни"
+      },
+      "tile_circles": {
+        "kind": "tile",
+        "size": [
+          1.2,
+          0.6
+        ],
+        "waste": 0.15,
+        "colour": "#cfb48c",
+        "name_uk": "Декор 120×60 бежевий з колами, горизонтально"
+      },
+      "splash_green": {
+        "kind": "tile",
+        "size": [
+          0.08,
+          0.25
+        ],
+        "waste": 0.1,
+        "colour": "#4e7f5c",
+        "name_uk": "Плитка 8×25 зелена, вертикально, шов у шов"
+      },
+      "wood_oak": {
+        "kind": "plank",
+        "size": [
+          0.2,
+          1.2
+        ],
+        "waste": 0.07,
+        "colour": "#b88a58",
+        "name_uk": "Інженерна дошка (фанера + шар дуба) ~120×20, теплий дуб"
+      }
+    },
+    "floors": [
+      {
+        "id": "FL_OPEN",
+        "room": 123,
+        "material": "tile_floor",
+        "within": [
+          1.4,
+          8.05,
+          3.78,
+          12.89
+        ],
+        "name_uk": "Вхід і кухня",
+        "notes_uk": [
+          "Під кухонними меблями та островом плитку кладемо.",
+          "Межа плитка/паркет: x = 3,78 (стик острова і столу) та y = 8,05; поріг-профіль в одному рівні."
+        ]
+      },
+      {
+        "id": "FL_LIVING",
+        "room": 123,
+        "material": "wood_oak",
+        "exclude": [
+          1.4,
+          8.05,
+          3.78,
+          12.89
+        ],
+        "direction": "N",
+        "name_uk": "Коридор, обідня зона, вітальня, робоче місце"
+      },
+      {
+        "id": "FL_BATH1",
+        "room": 4,
+        "material": "tile_floor",
+        "exclude_items": [
+          "B11"
+        ],
+        "name_uk": "Ванна кімната 1"
+      },
+      {
+        "id": "FL_BATH2",
+        "room": 9,
+        "material": "tile_floor",
+        "name_uk": "Ванна кімната 2"
+      },
+      {
+        "id": "FL_BED1",
+        "room": 5,
+        "material": "wood_oak",
+        "direction": "N",
+        "name_uk": "Спальня 1"
+      },
+      {
+        "id": "FL_BED2",
+        "room": 6,
+        "material": "wood_oak",
+        "direction": "N",
+        "name_uk": "Спальня 2"
+      },
+      {
+        "id": "FL_BED3",
+        "room": 7,
+        "material": "wood_oak",
+        "direction": "N",
+        "name_uk": "Спальня 3"
+      },
+      {
+        "id": "FL_STORE",
+        "room": 8,
+        "material": "wood_oak",
+        "direction": "N",
+        "name_uk": "Комора"
+      }
+    ],
+    "walls": [
+      {
+        "id": "WT_BATH1",
+        "room": 4,
+        "material": "tile_wall",
+        "height": 2.7,
+        "name_uk": "Ванна кімната 1",
+        "features": [
+          {
+            "segment": [
+              [
+                0.4,
+                4.96
+              ],
+              [
+                2.32,
+                4.96
+              ]
+            ],
+            "material": "tile_circles"
+          }
+        ]
+      },
+      {
+        "id": "WT_BATH2",
+        "room": 9,
+        "material": "tile_wall",
+        "height": 2.4,
+        "name_uk": "Ванна кімната 2",
+        "features": [
+          {
+            "segment": [
+              [
+                8.96,
+                6.37
+              ],
+              [
+                8.96,
+                7.33
+              ]
+            ],
+            "material": "tile_leaves"
+          }
+        ]
+      }
+    ],
+    "splash": {
+      "material": "splash_green",
+      "base": 0.9,
+      "top": 1.5,
+      "segments": [
+        {
+          "id": "SP2",
+          "from": [
+            1.4,
+            10.5
+          ],
+          "to": [
+            1.4,
+            12.17
+          ],
+          "name_uk": "західна стіна K03–K06"
+        },
+        {
+          "id": "SP3",
+          "from": [
+            1.4,
+            12.17
+          ],
+          "to": [
+            2.47,
+            12.89
+          ],
+          "name_uk": "скіс K06"
+        },
+        {
+          "id": "SP4",
+          "from": [
+            2.47,
+            12.89
+          ],
+          "to": [
+            2.84,
+            12.89
+          ],
+          "name_uk": "північна стіна до вікна OB1"
+        },
+        {
+          "id": "SP5",
+          "from": [
+            3.74,
+            12.89
+          ],
+          "to": [
+            4.13,
+            12.89
+          ],
+          "name_uk": "північна стіна над ПММ K08"
+        }
+      ]
+    }
+  },
+  "furniture": [
+    {
+      "id": "K01",
+      "kind": "oven_tower",
+      "back": "W",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        1.4,
+        9.9
+      ],
+      "size": [
+        0.6,
+        0.6,
+        2.0
+      ],
+      "name_uk": "Висока колона 60: духова шафа + мікрохвильова піч",
+      "ifc_class": "IfcElectricAppliance",
+      "services": [
+        "power_oven",
+        "socket"
+      ],
+      "note": "духова шафа низ на 0,80 м, мікрохвильова над нею на 1,40 м; вентиляційні щілини в цоколі та вгорі"
+    },
+    {
+      "id": "K02",
+      "kind": "fridge",
+      "back": "W",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        1.4,
+        9.3
+      ],
+      "size": [
+        0.6,
+        0.6,
+        2.0
+      ],
+      "name_uk": "Холодильник у високій колоні 60 біля входу",
+      "ifc_class": "IfcElectricAppliance",
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "K03",
+      "kind": "worktop",
+      "back": "W",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        1.4,
+        10.5
+      ],
+      "size": [
+        0.6,
+        0.4,
+        0.9
+      ],
+      "name_uk": "Тумба зі стільницею 40",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "K04",
+      "kind": "hob",
+      "back": "W",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        1.4,
+        10.9
+      ],
+      "size": [
+        0.6,
+        0.6,
+        0.9
+      ],
+      "name_uk": "Індукційна варильна поверхня 60, шухляди під нею",
+      "ifc_class": "IfcElectricAppliance",
+      "services": [
+        "power_hob",
+        "socket"
+      ],
+      "note": "рециркуляційна витяжка над варильною поверхнею"
+    },
+    {
+      "id": "K06",
+      "kind": "worktop",
+      "back": "W",
+      "room": 123,
+      "zone": "kitchen",
+      "name_uk": "Кутова стільниця на скосі (основна робоча зона між плитою і мийкою)",
+      "ifc_class": "IfcFurniture",
+      "polygon": [
+        [
+          1.4,
+          11.5
+        ],
+        [
+          2.0,
+          11.5
+        ],
+        [
+          2.0,
+          11.851
+        ],
+        [
+          2.652,
+          12.29
+        ],
+        [
+          2.88,
+          12.29
+        ],
+        [
+          2.88,
+          12.89
+        ],
+        [
+          2.47,
+          12.89
+        ],
+        [
+          1.4,
+          12.17
+        ]
+      ],
+      "size": [
+        null,
+        null,
+        0.9
+      ],
+      "services": [
+        "socket"
+      ],
+      "note": "індивідуальний корпус і стільниця; стики зі стінами під кутами 124° та 146°"
+    },
+    {
+      "id": "K07",
+      "kind": "sink",
+      "back": "N",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        2.88,
+        12.29
+      ],
+      "size": [
+        0.8,
+        0.6,
+        0.9
+      ],
+      "name_uk": "Мийка в тумбі 80",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain"
+      ],
+      "note": "на існуючому виводі під OB1 (глухе вікно)"
+    },
+    {
+      "id": "K08",
+      "kind": "dishwasher",
+      "back": "N",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        3.68,
+        12.29
+      ],
+      "size": [
+        0.45,
+        0.6,
+        0.9
+      ],
+      "name_uk": "Посудомийна машина 45, вбудована",
+      "ifc_class": "IfcElectricAppliance",
+      "services": [
+        "water",
+        "drain",
+        "socket"
+      ]
+    },
+    {
+      "id": "H02",
+      "kind": "wardrobe",
+      "back": "S",
+      "room": 123,
+      "zone": "hall",
+      "at": [
+        3.32,
+        8.05
+      ],
+      "size": [
+        1.94,
+        0.6,
+        2.4
+      ],
+      "name_uk": "Шафа-купе в передпокої 194×60",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "L01",
+      "kind": "table",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        3.78,
+        10.24
+      ],
+      "size": [
+        1.8,
+        0.9,
+        0.75
+      ],
+      "name_uk": "Обідній стіл 180×90, примикає до острова",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L02",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        3.855,
+        9.77
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L03",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        4.455,
+        9.77
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L04",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        5.055,
+        9.77
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L05",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        3.855,
+        11.16
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L06",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        4.455,
+        11.16
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L07",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        5.055,
+        11.16
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Стілець",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L09",
+      "kind": "sofa",
+      "back": "N",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        6.3,
+        10.8
+      ],
+      "size": [
+        2.5,
+        1.8,
+        0.85
+      ],
+      "l_shape": {
+        "seat": 0.95,
+        "end": "end"
+      },
+      "name_uk": "Кутовий диван 250×180, шезлонг біля східної стіни",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "L10",
+      "kind": "coffee_table",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        6.5,
+        10.85
+      ],
+      "size": [
+        1.0,
+        0.6,
+        0.4
+      ],
+      "name_uk": "Журнальний столик",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "L11",
+      "kind": "tv_unit",
+      "back": "S",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        6.6,
+        7.455
+      ],
+      "size": [
+        1.8,
+        0.4,
+        0.5
+      ],
+      "name_uk": "ТВ-тумба 180×40, телевізор на стіні ванної 2",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket",
+        "tv"
+      ]
+    },
+    {
+      "id": "L13",
+      "kind": "chair",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        5.64,
+        8.1
+      ],
+      "size": [
+        0.45,
+        0.45,
+        0.9
+      ],
+      "name_uk": "Робоче крісло",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "B11",
+      "kind": "bath",
+      "room": 4,
+      "at": [
+        0.4,
+        4.96
+      ],
+      "size": [
+        1.7,
+        0.75,
+        0.55
+      ],
+      "panel": "tiled",
+      "name_uk": "Ванна 170×75, екран у плитці з люком ревізії",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain"
+      ]
+    },
+    {
+      "id": "B12",
+      "kind": "basin",
+      "back": "W",
+      "room": 4,
+      "at": [
+        0.4,
+        6.2
+      ],
+      "size": [
+        0.4,
+        0.5,
+        0.85
+      ],
+      "wall_hung": true,
+      "name_uk": "Підвісний умивальник 50×40",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain",
+        "socket"
+      ]
+    },
+    {
+      "id": "B13",
+      "kind": "wc",
+      "back": "N",
+      "room": 4,
+      "at": [
+        0.72,
+        7.4
+      ],
+      "size": [
+        0.36,
+        0.55,
+        0.4
+      ],
+      "wall_hung": true,
+      "name_uk": "Підвісний унітаз (інсталяція в стіні вже є)",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain"
+      ]
+    },
+    {
+      "id": "B14",
+      "kind": "washer",
+      "room": 4,
+      "at": [
+        1.52,
+        7.35
+      ],
+      "size": [
+        0.6,
+        0.6,
+        1.75
+      ],
+      "stacked": true,
+      "name_uk": "Пральна машина 60×60 + сушильна машина зверху (колона)",
+      "ifc_class": "IfcElectricAppliance",
+      "services": [
+        "water",
+        "drain",
+        "socket"
+      ],
+      "note": "з'єднувальний комплект пральна/сушильна; 2 розетки IP44; підводка в коробі вздовж західної та північної стін"
+    },
+    {
+      "id": "B21",
+      "kind": "basin",
+      "back": "S",
+      "room": 9,
+      "at": [
+        6.25,
+        5.98
+      ],
+      "size": [
+        0.5,
+        0.4,
+        0.85
+      ],
+      "wall_hung": true,
+      "name_uk": "Підвісний умивальник 50×40 прямо на стіні",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain",
+        "socket"
+      ]
+    },
+    {
+      "id": "B22",
+      "kind": "wc",
+      "back": "S",
+      "room": 9,
+      "at": [
+        6.97,
+        6.18
+      ],
+      "size": [
+        0.36,
+        0.55,
+        0.4
+      ],
+      "wall_hung": true,
+      "name_uk": "Підвісний унітаз на інсталяції",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain"
+      ]
+    },
+    {
+      "id": "B26",
+      "kind": "install_box",
+      "back": "S",
+      "room": 9,
+      "at": [
+        6.85,
+        5.98
+      ],
+      "size": [
+        0.99,
+        0.2,
+        1.2
+      ],
+      "flush_u": 0.3,
+      "name_uk": "Короб ГКЛ h 1,20 з інсталяцією WC, у плитці",
+      "ifc_class": "IfcFurniture",
+      "note": "каналізація Ø110 від WC і умивальника до SH_san у коробі"
+    },
+    {
+      "id": "B27",
+      "kind": "install_box",
+      "back": "S",
+      "room": 9,
+      "at": [
+        7.84,
+        5.98
+      ],
+      "size": [
+        0.8,
+        0.45,
+        2.4
+      ],
+      "name_uk": "Забудова ГКЛ у плитці до стелі (труба Ø110 до SH_san)",
+      "ifc_class": "IfcFurniture",
+      "note": "південна опора рами душу"
+    },
+    {
+      "id": "B23",
+      "kind": "shower_tray",
+      "room": 9,
+      "at": [
+        8.06,
+        6.43
+      ],
+      "size": [
+        0.9,
+        0.9,
+        0.03
+      ],
+      "tiled": true,
+      "name_uk": "Піддон під плитку 90×90 з лінійним трапом, урівень з підлогою",
+      "ifc_class": "IfcSanitaryTerminal",
+      "services": [
+        "water",
+        "drain"
+      ]
+    },
+    {
+      "id": "B24",
+      "kind": "glass",
+      "room": 9,
+      "at": [
+        8.05,
+        6.43
+      ],
+      "size": [
+        0.02,
+        0.45,
+        2.0
+      ],
+      "hinge": "S",
+      "opens": "W",
+      "name_uk": "Душова рама 90: дверцята 45, відкриваються назовні",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "B25",
+      "kind": "glass",
+      "room": 9,
+      "at": [
+        8.05,
+        6.88
+      ],
+      "size": [
+        0.02,
+        0.45,
+        2.0
+      ],
+      "hinge": "N",
+      "opens": "W",
+      "name_uk": "Душова рама 90: дверцята 45, відкриваються назовні",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "S11",
+      "kind": "bed",
+      "room": 5,
+      "at": [
+        0.4,
+        1.9
+      ],
+      "size": [
+        2.0,
+        1.6,
+        0.5
+      ],
+      "name_uk": "Ліжко 160×200",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S12",
+      "kind": "nightstand",
+      "room": 5,
+      "at": [
+        0.4,
+        1.45
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S13",
+      "kind": "nightstand",
+      "room": 5,
+      "at": [
+        0.4,
+        3.55
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S14",
+      "kind": "wardrobe",
+      "room": 5,
+      "at": [
+        0.4,
+        4.26
+      ],
+      "size": [
+        2.0,
+        0.6,
+        2.4
+      ],
+      "name_uk": "Шафа 200×60",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S15",
+      "kind": "desk",
+      "room": 5,
+      "at": [
+        1.25,
+        0.4
+      ],
+      "size": [
+        1.2,
+        0.6,
+        0.75
+      ],
+      "name_uk": "Письмовий стіл 120×60",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S21",
+      "kind": "bed",
+      "room": 6,
+      "at": [
+        3.47,
+        1.9
+      ],
+      "size": [
+        2.0,
+        1.6,
+        0.5
+      ],
+      "name_uk": "Ліжко 160×200",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S22",
+      "kind": "nightstand",
+      "room": 6,
+      "at": [
+        3.47,
+        1.45
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S23",
+      "kind": "nightstand",
+      "room": 6,
+      "at": [
+        3.47,
+        3.55
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S24",
+      "kind": "wardrobe",
+      "room": 6,
+      "at": [
+        4.45,
+        4.26
+      ],
+      "size": [
+        1.8,
+        0.6,
+        2.4
+      ],
+      "name_uk": "Шафа 180×60",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S31",
+      "kind": "bed",
+      "room": 7,
+      "at": [
+        6.96,
+        2.8
+      ],
+      "size": [
+        2.0,
+        1.6,
+        0.5
+      ],
+      "name_uk": "Ліжко 160×200",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S32",
+      "kind": "nightstand",
+      "room": 7,
+      "at": [
+        8.56,
+        2.35
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S33",
+      "kind": "nightstand",
+      "room": 7,
+      "at": [
+        8.56,
+        4.45
+      ],
+      "size": [
+        0.4,
+        0.4,
+        0.5
+      ],
+      "name_uk": "Приліжкова тумба",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "S34",
+      "kind": "wardrobe",
+      "room": 7,
+      "at": [
+        7.36,
+        5.28
+      ],
+      "size": [
+        1.6,
+        0.6,
+        2.4
+      ],
+      "name_uk": "Шафа 160×60",
+      "ifc_class": "IfcFurniture",
+      "indicative": true
+    },
+    {
+      "id": "S35",
+      "kind": "desk",
+      "room": 7,
+      "at": [
+        6.7,
+        1.34
+      ],
+      "size": [
+        1.2,
+        0.6,
+        0.75
+      ],
+      "name_uk": "Письмовий стіл 120×60",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket"
+      ]
+    },
+    {
+      "id": "R01",
+      "kind": "shelving",
+      "room": 8,
+      "at": [
+        4.76,
+        5.98
+      ],
+      "size": [
+        0.4,
+        1.97,
+        2.2
+      ],
+      "name_uk": "Стелаж 40 см",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "R02",
+      "kind": "shelving",
+      "room": 8,
+      "at": [
+        3.42,
+        7.55
+      ],
+      "size": [
+        1.34,
+        0.4,
+        2.2
+      ],
+      "name_uk": "Стелаж 40 см",
+      "ifc_class": "IfcFurniture"
+    },
+    {
+      "id": "K09",
+      "kind": "worktop",
+      "back": "E",
+      "room": 123,
+      "zone": "kitchen",
+      "at": [
+        3.08,
+        10.09
+      ],
+      "size": [
+        0.7,
+        1.2,
+        0.9
+      ],
+      "name_uk": "Острів 120×70 зі стільницею (робоча зона)",
+      "ifc_class": "IfcFurniture",
+      "services": [
+        "socket"
+      ],
+      "note": "живлення розетки острова — у стяжці до торця острова"
+    },
+    {
+      "id": "L14",
+      "kind": "desk",
+      "back": "S",
+      "room": 123,
+      "zone": "living",
+      "at": [
+        5.26,
+        7.455
+      ],
+      "size": [
+        1.2,
+        0.6,
+        0.75
+      ],
+      "name_uk": "Робочий стіл 120×60",
+      "ifc_class": "IfcFurniture",
+      "indicative": true,
+      "services": [
+        "socket",
+        "tv"
+      ]
+    }
+  ]
+}

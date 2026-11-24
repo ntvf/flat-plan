@@ -75,7 +75,8 @@ class ModelLoaderTest(unittest.TestCase):
         self.assertEqual([[8.95, 9.12], [8.95, 10.62]],
                          finishes["BRICK_EAST"]["segment"])
         self.assertEqual(0.8, finishes["BRICK_NORTH_OB1"]["base_height"])
-        self.assertEqual(base["wall_finishes"], target["wall_finishes"])
+        # All brick coverings are removed (green splash-back, painted TV wall).
+        self.assertEqual([], target.get("wall_finishes", []))
         terminals = {item["id"]: item for item in base["service_terminals"]}
         self.assertEqual([0.4, 5.46], terminals["B4_BATH_CONNECTION"]["at"])
         self.assertEqual(

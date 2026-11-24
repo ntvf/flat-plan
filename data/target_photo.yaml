@@ -1,0 +1,81 @@
+# Layout variant from the owner's hand sketch (photo_2026-11-24_17-13-21.jpg):
+# no entrance screen; kitchen run fridge-tower-hob on the west wall, island
+# 120x70 joined to a 180x90 dining table, L-sofa in the NE corner facing a TV
+# on the bathroom 2 wall, desk beside the hall wardrobe.
+extends: target.yaml
+
+meta:
+  title: Mieszkanie - wariant ze szkicu
+  title_en: Flat - sketch layout variant
+  notes_uk:
+    00_flat:
+      - "Варіант за ескізом власника: без екрана біля входу, острів зі столом, кутовий диван у північно-східному куті."
+      - "Ванні кімнати — як в основному варіанті."
+      - "Меблі в спальнях і вітальні орієнтовні: показують розстановку для розеток і світла."
+    01_kitchen:
+      - "Західна стіна: холодильник, колона духова + мікрохвильова, тумба 40, варильна 60, кут на скосі."
+      - "Мийка 80 і ПММ 45 на північній стіні, на існуючому виводі під OB1."
+      - "Острів 120×70 (робоча зона, розетка в підлозі/торці); стіл 180×90 примикає до острова."
+      - "Прохід між кухнею й островом ≈ 1,08 м. Бойлер 100 л демонтується; нове місце уточнити."
+      - "Кутовий корпус і стільниця на скосі — індивідуальний розмір, обміряти на об'єкті."
+    02_living:
+      - "Меблі орієнтовні. Кутовий диван 250×180 спинкою до вікон, ТВ на стіні ванної 2."
+      - "Робоче місце 120×60 поруч із шафою в передпокої. Кондиціонер — над ТВ."
+
+changes:
+  remove:
+    walls: [W_entry_screen, W_entry_closet_back]
+    furniture: [H01, K05, L12]
+  update:
+    furniture:
+      - { id: K02, back: W, at: [1.40, 9.30], name_uk: "Холодильник у високій колоні 60 біля входу" }
+      - { id: K01, back: W, at: [1.40, 9.90] }
+      - { id: K03, at: [1.40, 10.50], size: [0.60, 0.40, 0.90], name_uk: "Тумба зі стільницею 40" }
+      - { id: K04, at: [1.40, 10.90] }
+      - id: K06
+        polygon: [[1.40, 11.50], [2.00, 11.50], [2.00, 11.851], [2.652, 12.29],
+                  [2.88, 12.29], [2.88, 12.89], [2.47, 12.89], [1.40, 12.17]]
+        name_uk: "Кутова стільниця на скосі (основна робоча зона між плитою і мийкою)"
+      - { id: L01, at: [3.78, 10.24], size: [1.80, 0.90, 0.75],
+          name_uk: "Обідній стіл 180×90, примикає до острова" }
+      - { id: L02, at: [3.855, 9.77] }
+      - { id: L03, at: [4.455, 9.77] }
+      - { id: L04, at: [5.055, 9.77] }
+      - { id: L05, at: [3.855, 11.16] }
+      - { id: L06, at: [4.455, 11.16] }
+      - { id: L07, at: [5.055, 11.16] }
+      - { id: L09, back: N, at: [6.30, 10.80], size: [2.50, 1.80, 0.85], l_shape: { seat: 0.95, end: end },
+          name_uk: "Кутовий диван 250×180, шезлонг біля східної стіни" }
+      - { id: L10, at: [6.50, 10.85], size: [1.00, 0.60, 0.40] }
+      - { id: L11, back: S, at: [6.60, 7.455], size: [1.80, 0.40, 0.50],
+          name_uk: "ТВ-тумба 180×40, телевізор на стіні ванної 2" }
+      - { id: L13, at: [5.64, 8.10], name_uk: "Робоче крісло" }
+  add:
+    furniture:
+      - { id: K09, kind: worktop, back: E, room: 123, zone: kitchen, at: [3.08, 10.09], size: [0.70, 1.20, 0.90],
+          name_uk: "Острів 120×70 зі стільницею (робоча зона)", ifc_class: IfcFurniture,
+          services: [socket], note: "живлення розетки острова — у стяжці до торця острова" }
+      - { id: L14, kind: desk, back: S, room: 123, zone: living, at: [5.26, 7.455], size: [1.20, 0.60, 0.75],
+          name_uk: "Робочий стіл 120×60", ifc_class: IfcFurniture, indicative: true,
+          services: [socket, tv] }
+
+finishes:
+  floors:
+    - { id: FL_OPEN, room: 123, material: tile_floor, within: [1.40, 8.05, 3.78, 12.89],
+        name_uk: "Вхід і кухня",
+        notes_uk: ["Під кухонними меблями та островом плитку кладемо.",
+                   "Межа плитка/паркет: x = 3,78 (стик острова і столу) та y = 8,05; поріг-профіль в одному рівні."] }
+    - { id: FL_LIVING, room: 123, material: wood_oak, exclude: [1.40, 8.05, 3.78, 12.89], direction: N,
+        name_uk: "Коридор, обідня зона, вітальня, робоче місце" }
+    - { id: FL_BATH1, room: 4, material: tile_floor, exclude_items: [B11], name_uk: "Ванна кімната 1" }
+    - { id: FL_BATH2, room: 9, material: tile_floor, name_uk: "Ванна кімната 2" }
+    - { id: FL_BED1, room: 5, material: wood_oak, direction: N, name_uk: "Спальня 1" }
+    - { id: FL_BED2, room: 6, material: wood_oak, direction: N, name_uk: "Спальня 2" }
+    - { id: FL_BED3, room: 7, material: wood_oak, direction: N, name_uk: "Спальня 3" }
+    - { id: FL_STORE, room: 8, material: wood_oak, direction: N, name_uk: "Комора" }
+  splash:
+    segments:
+      - { id: SP2, from: [1.40, 10.50], to: [1.40, 12.17], name_uk: "західна стіна K03–K06" }
+      - { id: SP3, from: [1.40, 12.17], to: [2.47, 12.89], name_uk: "скіс K06" }
+      - { id: SP4, from: [2.47, 12.89], to: [2.84, 12.89], name_uk: "північна стіна до вікна OB1" }
+      - { id: SP5, from: [3.74, 12.89], to: [4.13, 12.89], name_uk: "північна стіна над ПММ K08" }

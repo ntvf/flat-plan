@@ -391,6 +391,34 @@ class Builder:
                 route_segment_count += 1
         return equipment_count, route_segment_count
 
+    def build_furniture(self):
+        run = ifcopenshell.api.run
+        count = 0
+        for item in self.data.get("furniture", []):
+            height = float(item["size"][2])
+            name = f"{item['id']} {item['name_uk']}"
+            ifc_class = item.get("ifc_class", "IfcFurniture")
+            z = float(item.get("z", 0.0))
+            if item.get("polygon"):
+                el = self.prism(ifc_class, name, item["polygon"], z, height)
+            else:
+                x, y = item["at"]
+                w, d = item["size"][:2]
+                el = self.box(ifc_class, name, x, y, z, w, d, height)
+            run("spatial.assign_container", self.model, relating_structure=self.storey,
+                products=[el])
+            self.add_properties(el, "RenovationFurnishing", {
+                "AssetId": item["id"],
+                "Kind": item["kind"],
+                "Room": str(item["room"]),
+                "Zone": item.get("zone"),
+                "Indicative": bool(item.get("indicative", False)),
+                "Services": ", ".join(item.get("services", [])) or None,
+                "Note": item.get("note"),
+            })
+            count += 1
+        return count
+
     def build_service_terminals_and_floor_data(self):
         run = ifcopenshell.api.run
         terminal_count = 0
@@ -583,6 +611,7 @@ def main():
     equipment, route_segments = b.build_equipment_and_routes()
     terminals = b.build_service_terminals_and_floor_data()
     finishes = b.build_wall_finishes()
+    furniture = b.build_furniture()
     openings, placed, orphaned = b.build_doors()
     aperture_counts, win_orphaned = b.build_windows()
     b.write(dst)
@@ -591,7 +620,7 @@ def main():
     print(f"[build_ifc] walls={len(b.walls)} openings={openings} doors={total_doors} "
           f"windows={aperture_counts.get('IfcWindow', 0)} spaces={len(data['rooms'])} "
           f"equipment={equipment} route_segments={route_segments} "
-          f"service_terminals={terminals} wall_finishes={finishes}")
+          f"service_terminals={terminals} wall_finishes={finishes} furniture={furniture}")
     if orphaned:
         print(f"[build_ifc] WARNING no host wall for doors: {orphaned}")
     if win_orphaned:
